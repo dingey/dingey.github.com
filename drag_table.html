@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>拖拽表格行</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <table id="sort" class="grid table table-bordered table-hover" title="Kurt Vonnegut novels">
+                <thead>
+                <tr><th class="index">主键</th><th>Year</th><th>Title</th><th>Grade</th></tr>
+                </thead>
+                <tbody>
+                <tr><td class="id">1</td><td class="index">11</td><td>Slaughterhouse-Five</td><td>A+</td></tr>
+                <tr><td class="id">2</td><td class="index">12</td><td>Player Piano</td><td>B</td></tr>
+                <tr><td class="id">3</td><td class="index">13</td><td>Cat's Cradle</td><td>A+</td></tr>
+                <tr><td class="id">4</td><td class="index">14</td><td>Breakfast of Champions</td><td>C</td></tr>
+                <tr><td class="id">5</td><td class="index">15</td><td>God Bless You, Mr. Rosewater</td><td>A</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+<script>
+    <!-- 表格拖动行-->
+    var oriPosition,tdId,targetPosition,startIndex=0;
+    var fixHelperModified = function(e, tr) {
+                var $originals = tr.children();
+                var $helper = tr.clone();
+                $helper.children().each(function(index) {
+                    $(this).width($originals.eq(index).width())
+                });
+                return $helper;
+            },
+            updateIndex = function(e, ui) {
+                $('td.index', ui.item.parent()).each(function (i) {
+                    $(this).html(i +startIndex);
+                });
+                updateTargetPosition();
+                updatePosition();
+            };
+    $("#sort tbody").sortable({
+        helper: fixHelperModified,
+        stop: updateIndex,
+        start:function (event, ui) {
+            startIndex=$("#sort>tbody").find("tr").eq(0).find("td").eq(1).text();
+            startIndex=parseInt(startIndex);
+            tdId=$(ui.item[0]).find("td").eq(0).text();
+            oriPosition=$(ui.item[0]).find("td").eq(1).text();
+        }
+    }).disableSelection();
+    function updatePosition() {
+        $("td.id").each(function (i) {
+            if($(this).text()==tdId){
+                targetPosition=$(this).next().text();
+            }
+        });
+        //console.log(oriPosition+"移动到"+targetPosition);
+    }
+    function updateTargetPosition() {
+        $("#sort>tbody").find("td.id").each(function () {
+            if($(this).text()==tdId){
+                targetPosition=$(this).next().text();
+            }
+        })
+        //console.log("update:"+targetPosition);
+    }
+</script>
+</body>
+</html>
