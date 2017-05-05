@@ -297,7 +297,7 @@
               <i class="fa fa-gear"></i>
             </a>
             <ul class="dropdown-menu" style="min-width: 60px;">
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">关闭所有</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="closeTabs()">关闭所有</a></li>
             </ul>
           </li>
           <li class="active" id="li_1"><a href="#tab_1" data-toggle="tab">Tab 1<i class="fa fa-fw fa-close" onclick="closeTab('1')"></i></a></li>
@@ -577,6 +577,14 @@
     }
     $("#li_"+id).remove();
     $("#tab_"+id).remove();
+  }
+  function closeTabs() {
+    $("#tabs-body").empty();
+    $("#tabs-head>li").each(function () {
+      if(!$(this).hasClass("pull-right")){
+        $(this).remove();
+      }
+    })
   }
   $(function () {
     stopJump();
