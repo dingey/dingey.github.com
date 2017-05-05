@@ -35,7 +35,7 @@
     .tab-pane{
       height: 100%;
     }
-    #tabs-body{
+    #tabs_body{
       height: 760px;
     }
   </style>
@@ -291,7 +291,7 @@
     <section class="content">
 
       <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs" id="tabs-head">
+        <ul class="nav nav-tabs" id="tabs_head">
           <li class="pull-right dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <i class="fa fa-gear"></i>
@@ -300,9 +300,9 @@
               <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="closeTabs()">关闭所有</a></li>
             </ul>
           </li>
-          <li class="active" id="li_1"><a href="#tab_1" data-toggle="tab">Tab 1<i class="fa fa-fw fa-close" onclick="closeTab('1')"></i></a></li>
+          <li class="active" id="li_tab_1"><a href="#tab_1" data-toggle="tab">Tab 1<i class="fa fa-fw fa-close" onclick="closeTab('1')"></i></a></li>
         </ul>
-        <div class="tab-content" id="tabs-body">
+        <div class="tab-content" id="tabs_body">
           <div class="tab-pane active" id="tab_1">
             The European languages are members of the same family. Their separate existence is a myth.
             For science, music, sport, etc, Europe uses the same vocabulary.
@@ -534,7 +534,7 @@
   function println(s) {
     console.log(s);
   }
-  var count=$("#tabs-head>li").size();
+  var count=$("#tabs_head>li").size();
   println(count);
   function getCount() {
     count++;
@@ -542,45 +542,60 @@
   }
   function stopJump() {
     $(".treeview a,.sidebar-menu a").each(function () {
-      var url=$(this).prop("href");
-      $(this).attr("href","#");
-      $(this).attr("url",url);
+      var url=$(this).attr("href");
+      if(url!="#"&&url!=""){
+        $(this).attr("href","#");
+        $(this).attr("url",url);
+      }
     })
   }
   function bindClick() {
     $(".treeview a,.sidebar-menu a").click(function () {
-      println($(this).attr("url"));
-      if($(this).attr("url")!=""&&$(this).attr("url")!="#"){
-        $("#tabs-head>li").removeClass("active");
-        $("#tabs-body>div").removeClass("active");
-        var i=getCount();
-        var li="<li class=\"active\" id=\"li_"+i+"\"><a href=\"#tab_"+i+"\" data-toggle=\"tab\">"+$(this).text()+"<i class=\"fa fa-fw fa-close\" onclick=\"closeTab('"+i+"')\"></i></a></li>";
-        var con="<div class=\"tab-pane active\" id=\"tab_"+i+"\"><iframe src=\""+$(this).attr("url")+"\"></iframe></div>";
-        $("#tabs-head").append(li);
-        $("#tabs-body").append(con);
+      //println($(this).attr("url"));
+      if($(this).attr("url")!=""&&$(this).attr("url")!="#"&&!checkExists($(this).attr("url"))){
+        var b=false;
+        var obj=this;
+        $("#tabs_head>li").removeClass("active");
+        $("#tabs_body>div").removeClass("active");
+        var i = getCount();
+        var li = "<li class=\"active\" id=\"li_tab_" + i + "\"><a href=\"#tab_" + i + "\" data-toggle=\"tab\">" + $(this).text() + "<i class=\"fa fa-fw fa-close\" onclick=\"closeTab('" + i + "')\"></i></a></li>";
+        var con = "<div class=\"tab-pane active\" id=\"tab_" + i + "\"><iframe src=\"" + $(this).attr("url") + "\"></iframe></div>";
+        $("#tabs_head").append(li);
+        $("#tabs_body").append(con);
       }
     });
   }
+  function checkExists(url) {
+    println($("#tabs_body iframe").length);
+    $("#tabs_body iframe").each(function () {
+      if($(this).attr("src")==url){
+        $("#tabs_head>li").removeClass("active");
+        $("#tabs_body>div").removeClass("active");
+        $(this).parent().addClass("active");
+        $("#li_"+$(this).parent().attr("id")).addClass("active");
+        return true;
+      }
+    });
+    return false;
+  }
   function closeTab(id) {
-    if($("#li_"+id).hasClass("active")){
-      var obj=$("#li_"+id).next();
+    if($("#li_tab_"+id).hasClass("active")){
+      var obj=$("#li_tab_"+id).next();
       if(obj.length==0){
-        obj=$("#li_"+id).prev();
+        obj=$("#li_tab_"+id).prev();
         if(obj.length>0&&!$(obj).hasClass("pull-right")){
           $(obj).find("a").click();
-          println($(obj).attr("id"));
         }
       }else{
         $(obj).find("a").click();
-        println($(obj).attr("id"));
       }
     }
-    $("#li_"+id).remove();
+    $("#li_tab_"+id).remove();
     $("#tab_"+id).remove();
   }
   function closeTabs() {
-    $("#tabs-body").empty();
-    $("#tabs-head>li").each(function () {
+    $("#tabs_body").empty();
+    $("#tabs_head>li").each(function () {
       if(!$(this).hasClass("pull-right")){
         $(this).remove();
       }
