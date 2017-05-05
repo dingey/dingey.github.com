@@ -566,17 +566,20 @@
     });
   }
   function checkExists(url) {
-    println($("#tabs_body iframe").length);
-    $("#tabs_body iframe").each(function () {
-      if($(this).attr("src")==url){
+    var exists=false;
+    $("#tabs_head>li").each(function () {
+      var tb=$(this).attr("id")+"";
+      tb=tb.substring(3);
+      var url2=$("#"+tb).children().attr("src");
+      if(url2!=undefined&&url2==url){
         $("#tabs_head>li").removeClass("active");
         $("#tabs_body>div").removeClass("active");
-        $(this).parent().addClass("active");
-        $("#li_"+$(this).parent().attr("id")).addClass("active");
-        return true;
+        $(this).addClass("active");
+        $("#"+tb).addClass("active");
+        exists=true;
       }
     });
-    return false;
+    return exists;
   }
   function closeTab(id) {
     if($("#li_tab_"+id).hasClass("active")){
