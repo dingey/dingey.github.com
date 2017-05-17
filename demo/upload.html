@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>上传图片</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"><a class="btn btn-primary" href="../index.html">返回</a></div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <select class="form-control" id="cityId0">
+                                <option value="100000">北京</option>
+                                <option value="310000">杭州</option>
+                            </select>
+                        </div>
+                        <div class="form-group pull-right">
+                            <button type="button" class="btn btn-primary">新增</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <!-- Text input-->
+                            <label class="col-sm-2 control-label">* 标题：</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="" name="contentName" class="form-control"
+                                       value="标题" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">* 图片：</label>
+                            <!-- File Upload -->
+                            <input type="hidden" name="contentPicUrl" id="contentPicUrl" value="${(adContent.contentPicUrl)!}">
+                            <div class="col-sm-10">
+                                <input class="input-file" id="img" type="file"
+                                       onchange="uploadImg('#','img','contentPicUrl','preview');">
+                                <label>建议尺寸：600*800</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-primary" onclick="save();">保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    function save() {
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        setTimeout(function () {
+            parent.layer.close(index);
+        },5000);
+    }
+</script>
+<script>
+    /*
+     上传图片
+     fileInputId:文件所在框
+     valueSetId:返回地址赋值框
+     previewId: 预览元素ID
+     */
+    function uploadImg(url,fileInputId, valueSetId, previewId) {
+        if ($('#' + fileInputId).val() == "") {
+            alert("请选择图片后再点击上传");
+            return;
+        }
+        var formData = new FormData();
+        formData.append('img', $('#' + fileInputId)[0].files[0]);
+        var index = layer.load(1, {shade: [0.1,'#fff'] });
+        $.ajax({
+            url: url,
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "html"
+        }).done(function (data) {
+            $("#" + valueSetId).val(data);
+            $("#" + previewId).attr('src',data);
+            parent.layer.close(index);
+        }).fail(function () {
+            alert("保存失败，服务器出错，或网络异常。");
+            parent.layer.close(index);
+        });
+    }
+</script>
+</body>
+</html>
