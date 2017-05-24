@@ -138,7 +138,7 @@
         helper: fixHelperModified,
         stop: updateIndex,
         start:function (event, ui) {
-            startIndex=$("table>tbody").find("tr").eq(0).find("td").eq(1).text();
+            startIndex=$("table>tbody").find("tr").eq(0).find("td").eq(2).text();
             startIndex=parseInt(startIndex);
             tdId=$(ui.item[0]).find("td").eq(0).text();
             oriPosition=$(ui.item[0]).find("td").eq(1).text();
