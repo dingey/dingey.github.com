@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>数据表格</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            padding: 10px;
+        }
+        .page-input, .pagination>li>select {
+            float: left;
+            width: 40px;
+            height: 34px;
+            background-color: #fff;
+            background-image: none;
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            border-left: 0px;
+            border-right: 0px;
+            padding: 6px;
+        }
+        .pagination>li>span {
+            border-top: 0px;
+            border-bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="title">标题</label>
+                <input type="text" class="form-control" id="title" placeholder="标题">
+            </div>
+            <div class="form-group">
+                <label for="score">评分</label>
+                <input type="text" class="form-control" id="score" placeholder="评分">
+            </div>
+            <button type="submit" class="btn btn-default">查询</button>
+            <button type="submit" class="btn btn-default pull-right">新增</button>
+        </form>
+    </div>
+    <br/>
+    <div class="row">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+            <tr>
+                <th style="width: 60px;"><input type="checkbox"></th>
+                <th class="index">主键</th><th>序号</th><th>标题</th><th>评分</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr><td><input type="checkbox"></td><td class="id">1</td><td class="index">11</td><td>Slaughterhouse-Five</td><td>A+</td></tr>
+                <tr><td><input type="checkbox"></td><td class="id">2</td><td class="index">12</td><td>Player Piano</td><td>B</td></tr>
+                <tr><td><input type="checkbox"></td><td class="id">3</td><td class="index">13</td><td>Cat's Cradle</td><td>A+</td></tr>
+                <tr><td><input type="checkbox"></td><td class="id">4</td><td class="index">14</td><td>Breakfast of Champions</td><td>C</td></tr>
+                <tr><td><input type="checkbox"></td><td class="id">5</td><td class="index">15</td><td>God Bless You, Mr. Rosewater</td><td>A</td></tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation pull-right" style="float: right">
+            <ul class="pagination">
+                <li><a href="#" aria-label="Previous" title="前一页"> <span
+                        aria-hidden="true">&laquo;</span>
+                </a></li>
+                <li><a href="#page=1">1</a></li>
+                <li><a href="#page=2">2</a></li>
+                <li class="active"><a href="#page=3">3</a></li>
+                <li><a href="#page=4">4</a></li>
+                <li><a href="#page=5">5</a></li>
+                <li><span>…</span></li>
+                <li><a href="#page=10">10</a></li>
+                <li><a href="#" aria-label="Next"> <span
+                        aria-hidden="true" title="下一页">&raquo;</span>
+                </a></li>
+                <li><span>每页</span></li>
+                <li><select>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select></li>
+                <li><span>共 10 页，100条记录， 到第</span></li>
+                <li><input type="text" class="page-input"></li>
+                <li><span>页</span></li>
+                <li><a href="#">确定</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("table>thead>tr>th>input[type='checkbox']").click(
+                function() {
+                    $("table>tbody>tr>td>input[type='checkbox']").prop(
+                            "checked", $(this).prop("checked"));
+                })
+    });
+</script>
+<script>
+    <!-- 表格拖动行-->
+    var oriPosition,tdId,targetPosition,startIndex=0;
+    var fixHelperModified = function(e, tr) {
+                var $originals = tr.children();
+                var $helper = tr.clone();
+                $helper.children().each(function(index) {
+                    $(this).width($originals.eq(index).width())
+                });
+                return $helper;
+            },
+            updateIndex = function(e, ui) {
+                $('td.index', ui.item.parent()).each(function (i) {
+                    $(this).html(i +startIndex);
+                });
+                updateTargetPosition();
+                updatePosition();
+            };
+    $("table tbody").sortable({
+        helper: fixHelperModified,
+        stop: updateIndex,
+        start:function (event, ui) {
+            startIndex=$("table>tbody").find("tr").eq(0).find("td").eq(1).text();
+            startIndex=parseInt(startIndex);
+            tdId=$(ui.item[0]).find("td").eq(0).text();
+            oriPosition=$(ui.item[0]).find("td").eq(1).text();
+        }
+    }).disableSelection();
+    function updatePosition() {
+        $("td.id").each(function (i) {
+            if($(this).text()==tdId){
+                targetPosition=$(this).next().text();
+            }
+        });
+        //console.log(oriPosition+"移动到"+targetPosition);
+    }
+    function updateTargetPosition() {
+        $("#sort>tbody").find("td.id").each(function () {
+            if($(this).text()==tdId){
+                targetPosition=$(this).next().text();
+            }
+        })
+        //console.log("update:"+targetPosition);
+    }
+</script>
+</body>
+</html>
