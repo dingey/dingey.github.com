@@ -11,6 +11,7 @@
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/summernote/0.8.2/summernote.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -81,6 +82,10 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="message-text" class="control-label">message:</label>
+                            <textarea class="form-control" id="message"></textarea>
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-2"></div>
                             <div class="col-sm-10">
                                 <button type="button" class="btn btn-primary" onclick="save();">保存</button>
@@ -146,6 +151,7 @@
 <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdn.bootcss.com/summernote/0.8.2/summernote.min.js"></script>
 <script src="layer/layer.js"></script>
 <script>
     $('#date1,#date2').datetimepicker({
@@ -155,6 +161,42 @@
         locale: 'zh_CN',
         format: 'YYYY-MM-DD HH:mm:ss'
     });
+    $(function () {
+        //初始化文本框编辑器
+        $("#message").summernote({
+            height: 200,
+            callbacks: {
+                onImageUpload: function (files) {
+                    for (var i = 0; i < files.length; i++) {
+                        sendFile(files[i], this);
+                    }
+                }
+            }
+        });
+    })
+    function sendFile(file, el) {
+        var formData = new FormData();
+        formData.append("img", file);
+        var fileData = URL.createObjectURL(file);
+        $(el).summernote('insertImage', fileData, function ($image) {
+            $.ajax({
+                url: "upload.do",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "text",
+                type: 'POST',
+                success: function (url) {
+                    if (url == "") {
+                        $image.attr('src', "");
+                    } else {
+                        $image.attr('src', url);
+                    }
+                }
+            });
+        });
+    }
 </script>
 <script>
     function save() {
