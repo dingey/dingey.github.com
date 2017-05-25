@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>上传图片</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="summernote/summernote.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+    <br/>
+    <div class="row">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="title">标题</label>
+                <input type="text" class="form-control" id="title" placeholder="标题">
+            </div>
+            <div class="form-group">
+                <label for="score">评分</label>
+                <input type="text" class="form-control" id="score" placeholder="评分">
+            </div>
+            <button type="submit" class="btn btn-default">查询</button>
+            <a href="edit.html" class="btn btn-primary pull-right" >edit</a>
+        </form>
+    </div>
+    <br/>
+    <div class="row" id="_ba">
+        <div class="col-md-12" id="ba">
+            <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+            <tr>
+                <th style="width: 60px;"><input type="checkbox"></th>
+                <th class="index">主键</th><th>序号</th><th>标题</th><th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td><input type="checkbox"></td><td class="id">1</td><td class="index">11</td><td>Slaughterhouse-Five</td><td><a href="edit.html" class="btn btn-primary btn-xs">编辑</a></td></tr>
+            <tr><td><input type="checkbox"></td><td class="id">2</td><td class="index">12</td><td>Player Piano</td><td><a href="edit.html" class="btn btn-primary btn-xs">编辑</a></td></tr>
+            <tr><td><input type="checkbox"></td><td class="id">3</td><td class="index">13</td><td>Cat's Cradle</td><td><a href="edit.html" class="btn btn-primary btn-xs">编辑</a></td></tr>
+            <tr><td><input type="checkbox"></td><td class="id">4</td><td class="index">14</td><td>Breakfast of Champions</td><td><a href="edit.html" class="btn btn-primary btn-xs">编辑</a></td></tr>
+            <tr><td><input type="checkbox"></td><td class="id">5</td><td class="index">15</td><td>God Bless You, Mr. Rosewater</td><td><a href="edit.html" class="btn btn-primary btn-xs">编辑</a></td></tr>
+            </tbody>
+        </table>
+            <div class="col-xs-12" style="float: right">
+            <a href="#" onclick="pageTo('${pageInfo.prePage}')">上一页</a>
+            <a href="#" onclick="pageTo('${pageInfo.nextPage}')">下一页</a>
+            ,当前第 1 页 ， 共 20 项 2 页，每页
+                <select style="height: 32px;" id="pgSize" onchange="changePgSize()">
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="20">50</option>
+                </select> 项 到第 <input type="text"
+                                      style="width:48px;height: 32px;" id="pgNum"> 页
+                <button class="btn btn-default" onclick="pageJunp()">GO</button>
+        </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="common/upload.js"></script>
+<script src="summernote/summernote.zh-CN.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    <!-- 分页-->
+    function changePgSize() {
+        $("#pageSize").val($("#pgSize").val());
+        query();
+    }
+    function pageJunp() {
+        pageTo($("#pgNum").val())
+    }
+    function pageTo(num) {
+        $("#pageNum").val(num);
+        $("#_ba").load("list.html #ba", $("form").eq(0).serialize(),function(){
+            layer.msg('加载成功');
+        });
+    }
+</script>
+<script type="text/javascript">
+    $(function() {
+        $("table>thead>tr>th>input[type='checkbox']").click(
+                function() {
+                    $("table>tbody>tr>td>input[type='checkbox']").prop(
+                            "checked", $(this).prop("checked"));
+                })
+    });
+</script>
+</body>
+</html>
