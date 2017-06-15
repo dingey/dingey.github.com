@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>上传图片</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="summernote/summernote.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+    <br/>
+    <div class="row">
+        <form class="form-horizontal" id="form">
+            <div class="form-group">
+                <!-- Text input-->
+                <label class="col-sm-2 control-label">*标题：</label>
+                <div class="col-sm-10">
+                    <input type="text" placeholder="标题" name="title" class="form-control"
+                           value="" title="标题" minlength="2" maxlength="3" pattern="^[_A-z0-9]{1,}$" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <!-- Text input-->
+                <label class="col-sm-2 control-label">*邮箱：</label>
+                <div class="col-sm-10">
+                    <input type="email" placeholder="邮箱" name="email" class="form-control"
+                           value="" title="邮箱" minlength="" maxlength="" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <!-- Text input-->
+                <label class="col-sm-2 control-label">*网站：</label>
+                <div class="col-sm-10">
+                    <input type="text" placeholder="网站" name="url" class="form-control"
+                           value="" pattern="url" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <!-- Text input-->
+                <label class="col-sm-2 control-label">*电话：</label>
+                <div class="col-sm-10">
+                    <input type="text" placeholder="请输入电话" id="phone" name="phone" class="form-control"
+                           value="" title="电话" minlength="6" maxlength="13" pattern="^[0-9]{1,}$" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <!-- Text input-->
+                <label class="col-sm-2 control-label" for="date1">*时间1：</label>
+                <div class="col-sm-4">
+                    <input id="date1" type="text" placeholder="" name="date" class="form-control"
+                           value="" required>
+                </div>
+                <label class="col-sm-2 control-label" for="date2">*时间2：</label>
+                <div class="col-sm-4">
+                    <input id="date2" type="text" placeholder="" name="date" class="form-control"
+                           value="" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="date2">消息</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="message" minlength="5" required></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <a class="btn btn-primary" onclick="save();">保存</a>
+                    <a class="btn btn-info" href="list.html">列表</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="common/upload.js"></script>
+<script src="summernote/summernote.zh-CN.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    var emailReg=/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/;
+    var urlReg=/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/;
+    var phoneReg=/^1[3|4|5|8][0-9]\d{4,8}$/;
+    var ipReg=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+    var sfzReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;//身份证
+    var commonReg=/[A-Za-z0-9_-\u4e00-\u9fa5]+/;//中文、数字或字母
+    function validate(formId) {
+        var b=true;
+        var msg="";
+        $("#"+formId).find("input[type!='hidden'], select,textarea").each(function (data) {
+            var n=$(this).attr("title");
+            if(n==undefined||n==""){
+                if($(this).prev().is("label")){
+                    n=$(this).prev().text();
+                }else if($(this).parent().prev().is("label")){
+                    n=$(this).parent().prev().text();
+                }else{
+                    n=$(this).attr("name");
+                }
+                if(n.indexOf("*")==0){
+                    n=n.substr(1);
+                }
+                if(n.indexOf("：")==(n.length-1)||n.indexOf(":")==(n.length-1)){
+                    n=n.substr(0,n.length-1);
+                }
+                n=n.trim();
+            }
+            if($(this).val()==""){
+                if($(this).attr("required")!=undefined){
+                    b=false;
+                    msg+=n+"不能为空、";
+                }
+            }else{
+                if($(this).attr("minlength")!=undefined&&$(this).attr("minlength")!=""&&$(this).val().length<$(this).attr("minlength")){
+                    b=false;
+                    msg+=n+"长度不能小于"+$(this).attr("minlength")+"、";
+                }
+                if($(this).attr("maxlength")!=undefined&&$(this).attr("maxlength")!=""&&$(this).val().length>$(this).attr("maxlength")){
+                    b=false;
+                    msg+=n+"长度不能大于"+$(this).attr("maxlength")+"、";
+                }
+                if($(this).attr("pattern")!=undefined&&$(this).attr("pattern")!=""){
+                    if($(this).attr("pattern")=="email"&&!emailReg.test($(this).val())){
+                        b=false;
+                        msg+=n+"必须输入正确的邮箱、";
+                    }else if($(this).attr("pattern")=="url"){
+                        b=false;
+                        msg+=n+"必须输入正确的网址、";
+                    }else if($(this).attr("pattern")=="phone"){
+                        b=false;
+                        msg+=n+"必须输入正确的电话号码、";
+                    }else if($(this).attr("pattern")=="ip"){
+                        b=false;
+                        msg+=n+"必须输入正确的IP、";
+                    }else if($(this).attr("pattern")=="sfz"){
+                        b=false;
+                        msg+=n+"必须输入正确的身份证、";
+                    }else if($(this).attr("pattern")=="common"){
+                        b=false;
+                        msg+=n+"必须输入正确的中文、数字或字母、";
+                    }else if(!new RegExp($(this).attr("pattern")).test($(this).val())){
+                        b=false;
+                        msg+=n+"必须匹配"+$(this).attr("pattern")+"、";
+                    }
+                }
+            }
+        })
+        layer.msg(msg);
+        console.log(msg);
+        return b;
+    }
+    function save() {
+       validate("form");
+    }
+</script>
+</body>
+</html>

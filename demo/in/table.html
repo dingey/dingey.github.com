@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSPINIA | Tabs </title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+</head>
+<body>
+<div class="common">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="title">标题</label>
+                    <input type="text" class="form-control" id="title" placeholder="标题">
+                </div>
+                <div class="form-group">
+                    <label for="score">评分</label>
+                    <input type="text" class="form-control" id="score" placeholder="评分">
+                </div>
+                <button type="submit" class="btn btn-default">查询</button>
+                <a href="#" class="btn btn-primary pull-right">edit</a>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+            <span style="float: right">
+                                                <a href="#" onclick="pageTo('${pageInfo.prePage}')">上一页</a>
+                                                <a href="#" onclick="pageTo('${pageInfo.nextPage}')">下一页</a>
+                                                ,当前第 1 页 ， 共 20 项 2 页，每页
+                                                <select style="height: 26px;" id="pgSize" onchange="changePgSize()">
+                                                    <option value="10" selected="">10</option>
+                                                    <option value="20">20</option>
+                                                    <option value="20">50</option>
+                                                </select> 项 到第 <input type="text" style="width:48px;height: 26px;" id="pgNum"> 页
+                                                <button class="btn btn-default btn-sm" onclick="pageJunp()">GO</button>
+                                            </span>
+        </div>
+    </div>
+</div>
+<!-- Mainly scripts -->
+<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+</body>
+</html>
