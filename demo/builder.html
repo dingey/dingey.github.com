@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>表单布局生成</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .block {
+            border: 1px lightgrey solid;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <br/>
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-horizontal left">
+                <div class="form-group div">
+                    <!-- Text input-->
+                    <label class="col-sm-2 control-label">文本1：</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
+                               required="">
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <!-- Text input-->
+                    <label class="col-sm-2 control-label">文本2：</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="1/2宽度" name="contentName" class="form-control" value=""
+                               required="">
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <!-- Text input-->
+                    <label class="col-sm-2 control-label">文本3-1：</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
+                               required="">
+                    </div>
+                    <label class="col-sm-2 control-label">文本3-2：</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
+                               required="">
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <!-- Text input-->
+                    <label class="col-sm-2 control-label">文本4：</label>
+                    <div class="col-sm-10">
+                        <input type="text" placeholder="5/6宽度" name="contentName" class="form-control" value=""
+                               required="">
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <label class="col-sm-2 control-label">密码：</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="password">
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <!-- Text input-->
+                    <label class="col-sm-2 control-label">下拉：</label>
+                    <div class="col-sm-10">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <label class="col-sm-2 control-label">文件上传：</label>
+                    <div class="col-sm-10">
+                        <input type="file">
+                        <p class="help-block">上传说明</p>
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <label class="col-sm-2 control-label">单选：</label>
+                    <div class="col-sm-10">
+                        <label class="radio-inline">
+                            <input type="radio" name="radio" value="option1"> 1
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio" value="option2"> 2
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <label class="col-sm-2 control-label">多选：</label>
+                    <div class="col-sm-10">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="checkbox" value="option1"> 1
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="checkbox" value="option2"> 2
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <!-- Text input-->
+                    <label class="col-sm-2 control-label">时间1：</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="" name="date" class="form-control time" value="">
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <!-- Text input-->
+                    <label class="col-sm-2 control-label">时间1：</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="" name="date" class="form-control time" value="">
+                    </div>
+                    <label class="col-sm-2 control-label">* 时间2：</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="" name="date" class="form-control time" value="">
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <!-- Text input-->
+                    <label class="col-sm-2 control-label">描述：</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group div">
+                    <div class="col-sm-2"></div>
+                    <a href="#" class="btn btn-primary">提交</a>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 block" style="min-height: 561px;">
+            <form class="form-horizontal right">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-3"><button type="button" class="btn btn-danger btn-lg btn-block">清空</button></div>
+        <div class="col-md-3"><button type="button" class="btn btn-success btn-lg btn-block">生成form元素</button></div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">source</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="https://dingey.github.io/demo/layer/layer.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+<script>
+    function init() {
+        $(".time").datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});
+        $(".right>.div>label").click(function () {
+            var lab = $(this);
+            layer.prompt({title: '输入标签名', formType: 3}, function (pass, index) {
+                console.log(pass);
+                $(lab).html(pass);
+                layer.close(index);
+            });
+        });
+    }
+    $(function () {
+        init();
+        $(".right>.div").draggable({revert: true, helper: 'clone'});
+        $(".right").sortable();
+        $(".left>.div").click(function () {
+            $(".right").append($(this).clone());
+            init();
+        });
+        $(".btn-danger").click(function () {
+            $(".right").empty();
+        });
+        $(".btn-success").click(function () {
+            var blk=$(".block").clone();
+            $(blk).find("form").attr("class","form-horizontal");
+            $(blk).find(".form-group").attr("class","form-group");
+            console.log($(blk).html());
+            $(".modal-body").html("<xmp>"+$(blk).html()+"</xmp>");
+            $('#myModal').modal({
+                backdrop: false,//点击空白处不关闭对话框
+                keyboard: false,//键盘关闭对话框
+                show:true//弹出对话框
+            });
+            //layer.msg("<xmp>"+$(blk).html()+"</xmp>");
+        });
+    })
+</script>
+</body>
+</html>
