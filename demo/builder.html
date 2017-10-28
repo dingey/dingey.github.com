@@ -23,240 +23,261 @@
     <br/>
     <div class="row">
         <div class="col-md-6">
-            <form class="form-horizontal left">
+            <form class="form-horizontal">
                 <input type="file" style="display: none;">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">文本：</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
-                               required="">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#text" aria-controls="home" role="tab"
+                                                              data-toggle="tab">文本框</a></li>
+                    <li role="presentation"><a href="#select" aria-controls="select" role="tab" data-toggle="tab">下拉</a>
+                    </li>
+                    <li role="presentation"><a href="#radio" aria-controls="radio" role="tab" data-toggle="tab">单选多选</a>
+                    </li>
+                    <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">其他</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active left" id="text">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="1/2宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <div class="col-sm-3">
+                                <input type="text" placeholder="1/6宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" placeholder="1/6宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" placeholder="1/6宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="5/6宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">只读文本：</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="5/6宽度" name="contentName" class="form-control" value=""
+                                       readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">密码：</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="password">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">文本：</label>
-                    <div class="col-sm-6">
-                        <input type="text" placeholder="1/2宽度" name="contentName" class="form-control" value=""
-                               required="">
+                    <div role="tabpanel" class="tab-pane left" id="select">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">下拉：</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">下拉：</label>
+                            <div class="col-sm-4">
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">下拉：</label>
+                            <div class="col-sm-4">
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">下拉组合：</label>
+                            <div class="col-sm-4">
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
+                                       required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">下拉组合：</label>
+                            <div class="col-sm-4">
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">多选：</label>
+                            <div class="col-sm-4">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="checkbox" value="option1"> 1
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="checkbox" value="option2"> 2
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">下拉：</label>
+                            <div class="col-sm-3">
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">下拉</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">下拉</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">下拉多选：</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" multiple>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">文本：</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
-                               required="">
+                    <div role="tabpanel" class="tab-pane left" id="radio">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">单选：</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="radio" value="option1"> 1
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radio" value="option2"> 2
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">多选：</label>
+                            <div class="col-sm-10">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="checkbox" value="option1"> 1
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="checkbox" value="option2"> 2
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
-                               required="">
+                    <div role="tabpanel" class="tab-pane left" id="other">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">时间：</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="" name="date" class="form-control time" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">时间：</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="" name="date" class="form-control time" value="">
+                            </div>
+                            <label class="col-sm-1 control-label">至</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="" name="date" class="form-control time" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文件上传：</label>
+                            <div class="col-sm-10">
+                                <input type="file">
+                                <p class="help-block">上传说明</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">图片上传</label>
+                            <div class="col-sm-10">
+                                <img src="https://dingey.github.io/images/img.png" style="width: 86px;height: 81px;"
+                                     onclick="$('input[type=file]')[0].click();">
+                                <input type="file" style="display: none">
+                                <p class="help-block">建议尺寸</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">描述：</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2"></div>
+                            <a href="#" class="btn btn-primary">提交</a>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">文本：</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
-                               required="">
-                    </div>
-                    <label class="col-sm-2 control-label">文本：</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
-                               required="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">文本：</label>
-                    <div class="col-sm-3">
-                        <input type="text" placeholder="1/6宽度" name="contentName" class="form-control" value=""
-                               required="">
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="text" placeholder="1/6宽度" name="contentName" class="form-control" value=""
-                               required="">
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="text" placeholder="1/6宽度" name="contentName" class="form-control" value=""
-                               required="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">文本：</label>
-                    <div class="col-sm-10">
-                        <input type="text" placeholder="5/6宽度" name="contentName" class="form-control" value=""
-                               required="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">只读文本：</label>
-                    <div class="col-sm-10">
-                        <input type="text" placeholder="5/6宽度" name="contentName" class="form-control" value=""
-                               readonly>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">密码：</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" name="password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">下拉：</label>
-                    <div class="col-sm-10">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">下拉：</label>
-                    <div class="col-sm-4">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-2 control-label">下拉：</label>
-                    <div class="col-sm-4">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">下拉组合：</label>
-                    <div class="col-sm-4">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-2 control-label">文本：</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value=""
-                               required="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">下拉组合：</label>
-                    <div class="col-sm-4">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-2 control-label">多选：</label>
-                    <div class="col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="checkbox" value="option1"> 1
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="checkbox" value="option2"> 2
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">下拉：</label>
-                    <div class="col-sm-3">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-1 control-label">下拉</label>
-                    <div class="col-sm-2">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-1 control-label">下拉</label>
-                    <div class="col-sm-2">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">下拉多选：</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" multiple>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">单选：</label>
-                    <div class="col-sm-10">
-                        <label class="radio-inline">
-                            <input type="radio" name="radio" value="option1"> 1
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="radio" value="option2"> 2
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">多选：</label>
-                    <div class="col-sm-10">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="checkbox" value="option1"> 1
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="checkbox" value="option2"> 2
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">时间：</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="" name="date" class="form-control time" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">时间：</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="" name="date" class="form-control time" value="">
-                    </div>
-                    <label class="col-sm-1 control-label">至</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="" name="date" class="form-control time" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">文件上传：</label>
-                    <div class="col-sm-10">
-                        <input type="file">
-                        <p class="help-block">上传说明</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">图片上传</label>
-                    <div class="col-sm-10">
-                        <img src="https://dingey.github.io/images/img.png" style="width: 86px;height: 81px;" onclick="$('input[type=file]')[0].click();">
-                        <input type="file" style="display: none">
-                        <p class="help-block">建议尺寸</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">描述：</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-2"></div>
-                    <a href="#" class="btn btn-primary">提交</a>
                 </div>
             </form>
         </div>
