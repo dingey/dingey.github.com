@@ -27,7 +27,7 @@
                 <input type="file" style="display: none;">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#text" aria-controls="home" role="tab"
-                                                              data-toggle="tab">文本框</a></li>
+                                                              data-toggle="tab">文本标签</a></li>
                     <li role="presentation"><a href="#select" aria-controls="select" role="tab" data-toggle="tab">下拉</a>
                     </li>
                     <li role="presentation"><a href="#radio" aria-controls="radio" role="tab" data-toggle="tab">单选多选</a>
@@ -37,6 +37,10 @@
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active left" id="text">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <label class="col-sm-2 control-label">文本</label>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">文本：</label>
                             <div class="col-sm-4">
@@ -209,6 +213,30 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">下拉多选：</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" multiple>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <a href="#" class="btn btn-default btn-xs">->></a>
+                                <a href="#" class="btn btn-default btn-xs">-></a>
+                                <a href="#" class="btn btn-default btn-xs"><-</a>
+                                <a href="#" class="btn btn-default btn-xs"><<-</a>
+                            </div>
+                            <label class="col-sm-1 control-label">右</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" multiple>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane left" id="radio">
                         <div class="form-group">
@@ -281,7 +309,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-6 block" style="min-height: 561px;">
+        <div class="front col-md-6 block" style="min-height: 561px;">
             <form class="form-horizontal">
             </form>
         </div>
@@ -289,7 +317,7 @@
     <div class="row">
         <div class="col-md-6"></div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-danger btn-lg btn-block">清空</button>
+            <button type="button" class="front btn btn-danger btn-lg btn-block">清空</button>
         </div>
         <div class="col-md-3">
             <button type="button" class="btn btn-success btn-lg btn-block">源码</button>
@@ -337,6 +365,10 @@
                         $(va).find("p").html(text);
                         return true;
                     }
+                    if ($(va).prop("tagName") == "LABEL") {
+                        $(va).html(text);
+                        return true;
+                    }
 
                     var strs = new Array(); //定义一数组
                     strs = text.split("\n"); //字符分割
@@ -369,8 +401,8 @@
 <script>
     $(function () {
         init();
-        $(".block>form>.form-group").draggable({revert: true, helper: 'clone'});
-        $(".block>form").sortable();
+        $(".block>form").sortable();//表单排序
+        $(".block>form>.form-group").draggable({revert: true, helper: 'clone'});//表单元素可拖动
         $(".left>.form-group").click(function () {
             $(".block>form").append($(this).clone());
             init();
