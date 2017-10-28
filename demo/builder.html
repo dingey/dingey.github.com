@@ -24,6 +24,7 @@
     <div class="row">
         <div class="col-md-6">
             <form class="form-horizontal left">
+                <input type="file" style="display: none;">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">文本：</label>
                     <div class="col-sm-4">
@@ -195,13 +196,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">文件上传：</label>
-                    <div class="col-sm-10">
-                        <input type="file">
-                        <p class="help-block">上传说明</p>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="col-sm-2 control-label">单选：</label>
                     <div class="col-sm-10">
                         <label class="radio-inline">
@@ -237,6 +231,20 @@
                     <label class="col-sm-1 control-label">至</label>
                     <div class="col-sm-4">
                         <input type="text" placeholder="" name="date" class="form-control time" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">文件上传：</label>
+                    <div class="col-sm-10">
+                        <input type="file">
+                        <p class="help-block">上传说明</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">图片上传</label>
+                    <div class="col-sm-10">
+                        <img src="../images/img.png" style="width: 86px;height: 81px;" onclick="$('input[type=file]')[0].click();">
+                        <p class="help-block">建议尺寸</p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -301,6 +309,10 @@
                     var va = $(lab).next();
                     if ($(va).find("input[type=text]").length > 0) {
                         $(va).find("input[type=text]").val(text);
+                        return true;
+                    }
+                    if ($(va).find("p").length > 0) {
+                        $(va).find("p").html(text);
                         return true;
                     }
 
