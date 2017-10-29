@@ -309,7 +309,7 @@
                 </div>
             </form>
         </div>
-        <div class="front col-md-6 block" style="min-height: 561px;">
+        <div class="col-md-6 block" style="min-height: 561px;">
             <form class="form-horizontal">
             </form>
         </div>
@@ -317,7 +317,7 @@
     <div class="row">
         <div class="col-md-6"></div>
         <div class="col-md-3">
-            <button type="button" class="front btn btn-danger btn-lg btn-block">清空</button>
+            <button type="button" class="btn btn-danger btn-lg btn-block">清空</button>
         </div>
         <div class="col-md-3">
             <button type="button" class="btn btn-success btn-lg btn-block">源码</button>
@@ -403,6 +403,11 @@
         init();
         $(".block>form").sortable();//表单排序
         $(".block>form>.form-group").draggable({revert: true, helper: 'clone'});//表单元素可拖动
+        $(".block>form").droppable({ //droppable事件,即拖拽到文件夹时触发的事件
+            drop : function(event, ui) {//释放时触发
+                ui.draggable.remove();
+            }
+        });
         $(".left>.form-group").click(function () {
             $(".block>form").append($(this).clone());
             init();
