@@ -349,7 +349,6 @@
         $(".time").datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});
         $(".block>form>.form-group>label").click(function () {
             var lab = $(this);
-			layer.closeAll();
             layer.prompt({title: '输入标签名', formType: 0}, function (name, index) {
                 console.log(name);
                 $(lab).html(name);
