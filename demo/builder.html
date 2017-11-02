@@ -592,7 +592,7 @@
         });
         $(".btn-success").click(function () {
             var blk = $(".block").clone();
-            $(blk).find("form").removeClass("ui-sortable");
+            $(blk).find("form").attr("class","form-horizontal");
             console.log(blk.html());
             $("#modal-textarea").html(blk.html());
             $('.bs-example-modal-lg').modal({
