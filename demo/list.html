@@ -54,35 +54,35 @@
                     <td class="id">1</td>
                     <td class="index">11</td>
                     <td>Slaughterhouse-Five</td>
-                    <td><a href="#" onclick="edit(0)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a href="#" onclick="edit(1)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td class="id">2</td>
                     <td class="index">12</td>
                     <td>Player Piano</td>
-                    <td><a href="#" onclick="edit(1)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a href="#" onclick="edit(2)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td class="id">3</td>
                     <td class="index">13</td>
                     <td>Cat's Cradle</td>
-                    <td><a href="#" onclick="edit(2)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a href="#" onclick="edit(3)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td class="id">4</td>
                     <td class="index">14</td>
                     <td>Breakfast of Champions</td>
-                    <td><a href="#" onclick="edit(3)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a href="#" onclick="edit(4)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td class="id">5</td>
                     <td class="index">15</td>
                     <td>God Bless You Mr. Rosewater</td>
-                    <td><a href="#" onclick="edit(4)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a href="#" onclick="edit(5)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -153,9 +153,14 @@
 <script>
     function edit(index){
         if(index!=undefined){
-            var tr=$("tbody").find("tr").eq(index);
-            var id=$(tr).find("td").eq(1).html();
-            var title=$(tr).find("td").eq(3).html();
+            var id_td;
+            $("tbody").find("td[class=id]").each(function () {
+                if($(this).html()==index){
+                    id_td=$(this);
+                }
+            });
+            var id=$(id_td).html();
+            var title=$(id_td).next().next().html();
             $("#id").val(id);
             $("#title").val(title);
         }else {
@@ -185,7 +190,7 @@
         $(".bs-example-modal-sm").modal('hide');
     }
 </script>
-<script type="text/javascript">
+<script>
     $(function () {
         $("table>thead>tr>th>input[type='checkbox']").click(
                 function () {
