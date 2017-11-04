@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>列表</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="https://dingey.github.io/demo/summernote/summernote.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -25,14 +25,15 @@
                     <option value="1">进行中</option>
                     <option value="2">已结束</option>
                 </select>
-            </div>
-            <div class="form-group">
                 <label>标题</label>
                 <input type="text" name="title" class="form-control" placeholder="标题">
+                <div class="input-group">
+                    <input class="form-control date" name="date" placeholder="日期" />
+                </div>
             </div>
             <button type="submit" class="btn btn-default">查询</button>
             <a href="edit.html" class="btn btn-primary">edit</a>
-            <a href="#" onclick="edit()" class="btn btn-primary pull-right">新增</a>
+            <a onclick="edit()" class="btn btn-primary pull-right">新增</a>
         </form>
     </div>
     <br/>
@@ -54,35 +55,35 @@
                     <td class="id">1</td>
                     <td class="index">11</td>
                     <td>Slaughterhouse-Five</td>
-                    <td><a href="#" onclick="edit(1)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a onclick="edit(1)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td class="id">2</td>
                     <td class="index">12</td>
                     <td>Player Piano</td>
-                    <td><a href="#" onclick="edit(2)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a onclick="edit(2)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td class="id">3</td>
                     <td class="index">13</td>
                     <td>Cat's Cradle</td>
-                    <td><a href="#" onclick="edit(3)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a onclick="edit(3)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td class="id">4</td>
                     <td class="index">14</td>
                     <td>Breakfast of Champions</td>
-                    <td><a href="#" onclick="edit(4)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a onclick="edit(4)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td class="id">5</td>
                     <td class="index">15</td>
                     <td>God Bless You Mr. Rosewater</td>
-                    <td><a href="#" onclick="edit(5)" class="btn btn-primary btn-xs">编辑</a></td>
+                    <td><a onclick="edit(5)" class="btn btn-primary btn-xs">编辑</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -97,7 +98,7 @@
                     <option value="20">50</option>
                 </select> 项 到第 <input type="text"
                                       style="width:48px;height: 32px;" id="pgNum"> 页
-                <button class="btn btn-default" onclick="pageJunp()">GO</button>
+                <a class="btn btn-default" onclick="pageJunp()">GO</a>
             </div>
         </div>
     </div>
@@ -122,15 +123,17 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="save()">保存</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a class="btn btn-primary" onclick="save()">保存</a>
+                <a class="btn btn-default" data-dismiss="modal">取消</a>
             </div>
         </div>
     </div>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 <script src="common/upload.js"></script>
 <script src="summernote/summernote.zh-CN.js"></script>
 <script src="layer/layer.js"></script>
@@ -165,6 +168,7 @@
             $("#title").val(title);
         }else {
             $("#id").val($("tbody").find("tr").length+1);
+            $("#title").val("");
         }
         $(".bs-example-modal-sm").modal({backdrop: 'static', keyboard: false});
     }
@@ -181,7 +185,7 @@
         if(!exsits){
             var len=$("tbody").find("tr").length;
             var last=$("tbody").find("tr").eq(len-1).clone();
-            $(last).find("a").attr("onclick","edit("+(len)+")");
+            $(last).find("a").attr("onclick","edit("+(len+1)+")");
             $(last).find("td").eq(1).html(len+1);
             $(last).find("td").eq(2).html(parseInt($(last).find("td").eq(2).html())+1);
             $(last).find("td").eq(3).html($("#title").val());
@@ -198,13 +202,13 @@
                             "checked", $(this).prop("checked"));
                 }
         );
-        /**$.get("edit.html",function (data) {
-            layer.open({
-                content: data,
-                area: ['720px', '360px'],
-                scrollbar: true
-            });
-        },"html")**/
+        $('.date').datetimepicker({
+            showTodayButton:true,
+            showClear:true,
+            defaultDate: "2017-11-11 11:11:11",
+            locale: 'zh_CN',
+            format: 'YYYY-MM-DD HH:mm:ss'
+        });
     });
 </script>
 <script>
@@ -245,6 +249,51 @@
         document.body.removeChild(eleLink);
     }
     ;
+</script>
+<script>
+    <!-- 表格拖动行-->
+    var oriPosition,tdId,targetPosition,startIndex=0;
+    var fixHelperModified = function(e, tr) {
+                var $originals = tr.children();
+                var $helper = tr.clone();
+                $helper.children().each(function(index) {
+                    $(this).width($originals.eq(index).width())
+                });
+                return $helper;
+            },
+            updateIndex = function(e, ui) {
+                $('td.index', ui.item.parent()).each(function (i) {
+                    $(this).html(i +startIndex);
+                });
+                updateTargetPosition();
+                updatePosition();
+            };
+    $("table>tbody").sortable({
+        helper: fixHelperModified,
+        stop: updateIndex,
+        start:function (event, ui) {
+            startIndex=$("table>tbody").find("tr").eq(0).find("td.index").text();
+            startIndex=parseInt(startIndex);
+            tdId=$(ui.item[0]).find("td.id").text();
+            oriPosition=$(ui.item[0]).find("td.index").text();
+        }
+    }).disableSelection();
+    function updatePosition() {
+        $("td.id").each(function (i) {
+            if($(this).text()==tdId){
+                targetPosition=$(this).next().text();
+            }
+        });
+        //console.log(oriPosition+"移动到"+targetPosition);
+    }
+    function updateTargetPosition() {
+        $("#sort>tbody").find("td.id").each(function () {
+            if($(this).text()==tdId){
+                targetPosition=$(this).next().text();
+            }
+        })
+        //console.log("update:"+targetPosition);
+    }
 </script>
 </body>
 </html>

@@ -71,10 +71,10 @@
         helper: fixHelperModified,
         stop: updateIndex,
         start:function (event, ui) {
-            startIndex=$("#sort>tbody").find("tr").eq(0).find("td").eq(1).text();
+            startIndex=$("#sort>tbody").find("tr").eq(0).find("td[class=index]").text();
             startIndex=parseInt(startIndex);
-            tdId=$(ui.item[0]).find("td").eq(0).text();
-            oriPosition=$(ui.item[0]).find("td").eq(1).text();
+            tdId=$(ui.item[0]).find("td[class=id]").text();
+            oriPosition=$(ui.item[0]).find("td[class=index]").text();
         }
     }).disableSelection();
     function updatePosition() {
