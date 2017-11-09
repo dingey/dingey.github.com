@@ -39,7 +39,7 @@ function rename(o) {
     if (n != undefined && n != "") {
         var re = /[A-Za-z]\[\d\]/;
         var len = 0;
-        if (n.test(re)) {
+        if (n.match(re)) {
             var prefix = n.substr(0, n.indexOf("[") + 1);
             var surfix = n.substr(n.indexOf("]"));
             while (true) {
