@@ -26,36 +26,91 @@
             <form class="form-horizontal">
                 <input type="file" style="display: none;">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation"><a href="#label" aria-controls="label" role="tab" data-toggle="tab">标签段落</a></li>
-                    <li role="presentation" class="active"><a href="#text" aria-controls="home" role="tab" data-toggle="tab">输入框</a></li>
-                    <li role="presentation"><a href="#select" aria-controls="select" role="tab" data-toggle="tab">下拉</a></li>
-                    <li role="presentation"><a href="#radio" aria-controls="radio" role="tab" data-toggle="tab">单选多选</a></li>
-                    <li role="presentation"><a href="#time" aria-controls="time" role="tab" data-toggle="tab">日期文件</a></li>
+                    <li role="presentation"><a href="#label" aria-controls="label" role="tab" data-toggle="tab">标签段落</a>
+                    </li>
+                    <li role="presentation" class="active"><a href="#text" aria-controls="home" role="tab"
+                                                              data-toggle="tab">输入框</a></li>
+                    <li role="presentation"><a href="#select" aria-controls="select" role="tab" data-toggle="tab">下拉</a>
+                    </li>
+                    <li role="presentation"><a href="#radio" aria-controls="radio" role="tab" data-toggle="tab">单选多选</a>
+                    </li>
+                    <li role="presentation"><a href="#time" aria-controls="time" role="tab" data-toggle="tab">日期文件</a>
+                    </li>
                     <li role="presentation"><a href="#btn" aria-controls="btn" role="tab" data-toggle="tab">按钮</a></li>
                     <li role="presentation"><a href="#other" aria-controls="其他" role="tab" data-toggle="tab">其他</a></li>
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane left" id="label">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">文本：</label>
-                            <label class="col-sm-2 control-label">文本</label>
+                            <label class="col-sm-2 control-label"><h4><b>标题</b></h4></label>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <p class="text-muted">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p>
-                                <p class="text-primary">Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                <p class="text-success">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                                <p class="text-left">居左文字.</p>
+                                <p class="text-center">居中文字.</p>
+                                <p class="text-right">居右文字.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本：</label>
+                            <label class="control-label">文本</label>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <p class="text-muted">Fusce dapibus, <b>tellus</b> ac cursus commodo, tortor mauris
+                                    nibh.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <p class="text-primary">Nullam id dolor <strong>id</strong> nibh ultricies vehicula ut
+                                    id elit.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <p class="text-success">Duis mollis, est non commodo luctus, nisi erat porttitor
+                                    ligula.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
                                 <p class="text-info">Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
                                 <p class="text-warning">Etiam porta sem malesuada magna mollis euismod.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
                                 <p class="text-danger">Donec ullamcorper nulla non metus auctor fringilla.</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <p class="bg-primary">Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                <p class="bg-success">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <p class="bg-success">Duis mollis, est non commodo luctus, nisi erat porttitor
+                                    ligula.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
                                 <p class="bg-info">Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
                                 <p class="bg-warning">Etiam porta sem malesuada magna mollis euismod.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
                                 <p class="bg-danger">Donec ullamcorper nulla non metus auctor fringilla.</p>
                             </div>
                         </div>
@@ -69,8 +124,19 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">文本：</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="1/3宽度" name="contentName" class="form-control" value="">
+                            </div>
+                            <a class="btn btn-default">确定</a>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本：</label>
                             <div class="col-sm-6">
-                                <input type="text" placeholder="1/2宽度" name="contentName" class="form-control" value="">
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                    <span class="input-group-addon">.00</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -394,6 +460,12 @@
                     </div>
                     <div role="tabpanel" class="tab-pane left" id="btn">
                         <div class="form-group">
+                            <div class="col-sm-10">
+                                <a class="btn btn-primary">提交</a>
+                                <a class="btn btn-default">返回</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <a class="btn btn-primary">提交</a>
                                 <a class="btn btn-default">返回</a>
@@ -433,8 +505,12 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" class="btn btn-primary btn-lg btn-block">（块级元素）Block level button</button>
-                                <button type="button" class="btn btn-default btn-lg btn-block">（块级元素）Block level button</button>
+                                <button type="button" class="btn btn-primary btn-lg btn-block">（块级元素）Block level
+                                    button
+                                </button>
+                                <button type="button" class="btn btn-default btn-lg btn-block">（块级元素）Block level
+                                    button
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -595,7 +671,7 @@
         });
         $(".btn-success").click(function () {
             var blk = $(".block").clone();
-            $(blk).find("form").attr("class","form-horizontal");
+            $(blk).find("form").attr("class", "form-horizontal");
             console.log(blk.html());
             $("#modal-textarea").html(blk.html());
             $('.bs-example-modal-lg').modal({
@@ -608,25 +684,25 @@
 </script>
 <script>
     function downCSv(name) {
-        if(name==undefined){
-            name=document.title;
+        if (name == undefined) {
+            name = document.title;
         }
-        var text="";
+        var text = "";
         var html = $("html").clone();
         var blk = $(".block").clone();
-        $(blk).find("form").attr("class","form-horizontal");
-        text="<div class='container'>\n"+$(blk).html()+"</div>\n";
-        $(html).find("script").each(function(){
-            if($(this).attr("src")!=undefined){
-                text+="<script src='"+$(this).attr("src")+"'><\/script>\n";
+        $(blk).find("form").attr("class", "form-horizontal");
+        text = "<div class='container'>\n" + $(blk).html() + "</div>\n";
+        $(html).find("script").each(function () {
+            if ($(this).attr("src") != undefined) {
+                text += "<script src='" + $(this).attr("src") + "'><\/script>\n";
             }
         });
-        text+="<script>\n    $(function () {$(\".time\").datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});})\n<\/script>\n";
+        text += "<script>\n    $(function () {$(\".time\").datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});})\n<\/script>\n";
         $(html).find("body").empty().append(text);
-        html="<html>\n"+$(html).html()+"\n</html>";
+        html = "<html>\n" + $(html).html() + "\n</html>";
         // 创建隐藏的可下载链接
         var eleLink = document.createElement('a');
-        eleLink.download = name+".html";
+        eleLink.download = name + ".html";
         eleLink.style.display = 'none';
         // 字符内容转变成blob地址
         var blob = new Blob([html], {type: 'text/html;charset=utf-8;'});
