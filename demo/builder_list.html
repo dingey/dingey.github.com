@@ -113,7 +113,7 @@
     }
     function pageTo(num) {
         if (num != undefined) {
-            $("input[name='pageSize']").val(num);
+            $("input[name='pageNum']").val(num);
         }
         $("#container").load("list.html #content", $("form").serialize(), function () {
             layer.msg('加载成功');
