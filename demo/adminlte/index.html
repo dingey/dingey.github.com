@@ -243,7 +243,7 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                <li><a href="../drag_table.html?v=1"><i class="fa fa-circle-o"></i> Level Two</a></li>
                 <li>
                   <a href="#"><i class="fa fa-circle-o"></i> Level Two
                     <span class="pull-right-container">
@@ -251,8 +251,8 @@
                     </span>
                   </a>
                   <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    <li><a href="../drag_table.html?v=2"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    <li><a href="../drag_table.html?v=3"><i class="fa fa-circle-o"></i> Level Three</a></li>
                   </ul>
                 </li>
               </ul>
@@ -540,28 +540,18 @@
     count++;
     return count;
   }
-  function stopJump() {
-    $(".treeview a,.sidebar-menu a").each(function () {
-      var url=$(this).attr("href");
-      if(url!="#"&&url!=""){
-        $(this).attr("href","#");
-        $(this).attr("url",url);
-      }else{
-        $(this).attr("url","#");
-      }
-    })
-  }
   function bindClick() {
-    $(".treeview a,.sidebar-menu a").click(function () {
+    $(".treeview a,.sidebar-menu a").click(function (e) {
+      e.preventDefault();
       //println($(this).attr("url"));
-      if($(this).attr("url")!=""&&$(this).attr("url")!="#"&&!checkExists($(this).attr("url"))){
+      if($(this).find("a").length<1&&$(this).attr("href")!=""&&$(this).attr("href")!="#"&&!checkExists($(this).attr("href"))){
         var b=false;
         var obj=this;
         $("#tabs_head>li").removeClass("active");
         $("#tabs_body>div").removeClass("active");
         var i = getCount();
         var li = "<li class=\"active\" id=\"li_tab_" + i + "\"><a href=\"#tab_" + i + "\" data-toggle=\"tab\">" + $(this).text() + "<i class=\"fa fa-fw fa-close\" onclick=\"closeTab('" + i + "')\"></i></a></li>";
-        var con = "<div class=\"tab-pane active\" id=\"tab_" + i + "\"><iframe src=\"" + $(this).attr("url") + "\"></iframe></div>";
+        var con = "<div class=\"tab-pane active\" id=\"tab_" + i + "\"><iframe src=\"" + $(this).attr("href") + "\"></iframe></div>";
         $("#tabs_head").append(li);
         $("#tabs_body").append(con);
       }
@@ -607,7 +597,6 @@
     })
   }
   $(function () {
-    stopJump();
     bindClick();
   })
 </script>

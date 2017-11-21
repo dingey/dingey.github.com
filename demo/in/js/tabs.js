@@ -19,16 +19,17 @@ function stopJump() {
     })
 }
 function bindClick() {
-    $("#side-menu>li>a,#side-menu>li>ul>li>a").click(function () {
+    $("#side-menu>li>a,#side-menu>li>ul>li>a").click(function (e) {
         //println($(this).attr("url"));
-        if($(this).attr("url")!=""&&$(this).attr("url")!="#"&&!checkExists($(this).attr("url"))){
+        e.preventDefault();
+        if($(this).attr("href")!=""&&$(this).attr("href")!="#"&&!checkExists($(this).attr("href"))){
             var b=false;
             var obj=this;
             $("#tabs_head>li").removeClass("active");
             $("#tabs_body>div").removeClass("active");
             var i = getCount();
             var li = "<li class=\"active\" id=\"li_tab_" + i + "\"><a href=\"#tab_" + i + "\" data-toggle=\"tab\">" + $(this).text() + "<i class=\"fa fa-fw fa-close\" onclick=\"closeTab('" + i + "')\"></i></a></li>";
-            var con = "<div class=\"tab-pane active\" id=\"tab_" + i + "\"><iframe src=\"" + $(this).attr("url") + "\"></iframe></div>";
+            var con = "<div class=\"tab-pane active\" id=\"tab_" + i + "\"><iframe src=\"" + $(this).attr("href") + "\"></iframe></div>";
             $("#tabs_head").append(li);
             $("#tabs_body").append(con);
         }
@@ -74,6 +75,6 @@ function closeTabs() {
     })
 }
 $(function () {
-    stopJump();
+    //stopJump();
     bindClick();
 })
