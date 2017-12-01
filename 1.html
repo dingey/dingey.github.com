@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>linux下备份mysql数据库，并ftp到远程linux服务器上</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/blog.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item" href="index.html">主页</a>
+            <a class="blog-nav-item" href="#">文章列表</a>
+            <a class="blog-nav-item" href="https://github.com/dingey">github</a>
+        </nav>
+    </div>
+</div>
+
+<div class="container">
+    <br>
+    <div class="row">
+
+        <div class="col-sm-12 blog-main">
+
+            <div class="blog-post">
+                <h2 class="blog-post-title">linux下备份mysql数据库，并ftp到远程linux服务器上</h2>
+                <p class="blog-post-meta">2015年12月31日 15:22:31<a href="#">d</a></p>
+               <p>
+                   一、检查FTP服务是否安装<br>
+                   1.架设mysql数据库装在172.22.1.77上，如何安装mysql略，简称为77。<br>
+                   2.作为备份机IP为172.22.1.150上，简称为150；<br>
+                   3.为150按照ftp命令，首先XSHELL远程连接到150上，确认ftp服务是否安装。<br>
+                   service vsftpd status<br>
+                   <img src="http://img.blog.csdn.net/20151231143914299"><br>
+                   显示vsftpd已停，说明服务停止，输入:service vsftpd start可启动服务。<br>
+                   如果显示：-bash vsftpd :command not find，说明服务未安装。<br>
+                   二、安装FTP服务<br>
+                   1.安装使用yum，如果linux上没有安装yum工具，前先安装yum，此处不赘述。<br>
+                   2.输入命令：yum install vsftpd ,如图所示安装。在is this ok [y/N] 后输入y<br>
+                   3.安装完毕后先创建一个ftp专用账号，该用户的登陆文件夹将作为以后远程备份的sql文件位置。在此我们创建一个 /opt/user 这个文件夹作为上传路径。以及一个user用户，密码也为user<br>
+                   输入命令：useradd –d /opt/user user<br>
+                   查看确认一下目录所有者权限，user是否可以写入：<br>
+                   在/opt目录下输入命令：ls –l<br>
+                   user目录所有者为user，权限为rwx<br>
+                   修改用户名密码<br>
+                   输入：passwd user<br>
+                   三、测试FTP服务<br>
+                   1.打开cmd命令，输入ftp命令，<br>
+                   open 172.22.1.150<br>
+                   输入账号密码user，成功登陆。表明ftp服务可用。<br>
+                   <img src="http://img.blog.csdn.net/20151231145751603"><br>
+                   四、编写sh脚本<br>
+                   在77上/home下新建mysql_data作为备份文件存放路径，并在该目录下新建bak.sh，拷贝以下内容至该文件中。
+                   修改完成后，保存并推出。修改文件可执行权限，<br>
+                   chmod +x bak.sh<br>
+                   测试该脚本是否运行正常:<br>
+                   sh bak.sh<br>
+                   这里请忽略语法和格式错误，该错误不影响备份。<br>
+                   <img src="http://img.blog.csdn.net/20151231151658854"><br>
+                   到150目录/opt/user和77目录/home/mysql_data下可以看到2015_12_31_15_14.sql的文件，远程备份成功。<br>
+                   <img src="http://img.blog.csdn.net/20151231151955041"><br>
+                   五、设置定时任务<br>
+                   shell到77上，输入crontab -l查看用户的定时任务，<br>
+                   输入crontab -e 编辑某个用户的cron服务<br>
+                   输入：<br>
+                   30 01 * * * /home/mysql_data/bak.sh<br>
+                   设置在凌晨1：30分运行bak脚本；<br>
+                   最后输入：/etc/init.d/crond restart<br>
+                   重启crond，让其生效。<br>
+                   六、还原mysql备份<br>
+                   xshell到150上，输入：mysql -uroot -p123456登陆到mysql；<br>
+                   <img src="http://img.blog.csdn.net/20151231161358453"><br>
+                   输入命令”show databases；”，回车，看看有些什么数据库；切换到要还原的数据库，输入”use funing_wms；”，回车；导入数据，<br>
+                   输入”source /opt/user/fn_wms_bak_2015_12_31_16_05.sql；”，回车，开始导入，再次出现”mysql>”并且没有提示错误即还原成功。<br>
+                   <br>
+                   附sh脚本：
+               </p>
+<pre>
+#!/bin/sh
+DUMP=/usr/bin/mysqldump    #mysqldump备份文件执行路径
+OUT_DIR=/home/mysql_data   #备份存放路径
+LINUX_USER=root            #系统用户名
+DB_NAME=funing_wms               #要备份的数据库名字
+DB_USER=root               #数据库账号 注意：非root用户要用备份参数 --skip-lock-tables，否则可能会报错
+DB_PASS=123456            #数据库密码
+DAYS=7                     #DAYS=7代表删除7天前的备份，即只保留最近7天的备份
+cd $OUT_DIR                #进入备份存放目录
+DATE=`date +%Y_%m_%d_%H_%M`      #获取当前系统时间
+OUT_SQL="$DATE.sql"        #备份数据库的文件名
+TAR_SQL="fn_wms_bak_$DATE.tar.gz" #最终保存的数据库备份文件名
+$DUMP -u$DB_USER -p$DB_PASS $DB_NAME --default-character-set=utf8 --opt -Q -R --skip-lock-tables> $OUT_SQL #备份
+chown  $LINUX_USER:$LINUX_USER $OUT_DIR/$OUT_SQL  #更改备份数据库文件的所有者
+find $OUT_DIR -name "fn_wms_bak_*" -type f -mtime +$DAYS -exec rm {} \;  #删除7天前的备份文件
+ftp -n<<!
+open 172.22.1.150
+type binary
+user user user
+prompt
+put $OUT_SQL fn_wms_bak_$OUT_SQL
+close
+bye
+!</pre>
+            </div><!-- /.blog-post -->
+
+            <nav>
+                <ul class="pager">
+                    <li><a href="#">上一页</a></li>
+                    <li><a href="#">下一页</a></li>
+                </ul>
+            </nav>
+
+        </div><!-- /.blog-main -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<footer class="blog-footer">
+    <p>
+        <a href="#">回到顶部</a>
+    </p>
+</footer>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
