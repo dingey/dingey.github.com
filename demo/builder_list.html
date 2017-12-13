@@ -173,7 +173,12 @@
         var e=$("#form>input,#form>label,#form>select,#content>table").eq(i);
         var text=$("#n"+i).val();
         if($(e).prop("tagName") == "LABEL"){
-            $(e).html(text);
+            if(text==""){
+                layer.msg("标签不允许为空");
+               return false;
+            }else{
+                $(e).html(text);
+            }
         }else{
             if ($(e).find("input[type=text]").length > 0) {
                 $(e).find("input[type=text]").val(text);

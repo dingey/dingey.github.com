@@ -722,7 +722,12 @@
         var o=$("#o"+i).val();
         var p=$("#r"+i).val();
         if($(e).prop("tagName") == "LABEL"){
-            $(e).html(text);
+            if(text==""){
+                layer.msg("标签不允许为空");
+                return false;
+            }else{
+                $(e).html(text);
+            }
             if(o!=''){
                 $(e).attr("class","col-sm-offset-"+o+" col-sm-"+len+" control-label");
             }else{
