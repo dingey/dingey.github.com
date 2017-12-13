@@ -16,6 +16,8 @@
         form.form-inline > .input-group, form.form-inline > label, form.form-inline > select, form.form-inline > input, form.form-inline > a, form.form-inline > button {
             margin: 5px;
         }
+    </style>
+    <style class="del">
         .block {
             border: 1px lightgrey solid;
             padding: 20px;
@@ -241,6 +243,9 @@
         var text = "";
         var html = $("html").clone();
         $(html).find(".del").remove();
+        $(html).find("div[class='popover-content']").remove();
+        $(html).find(".popover").remove();
+        $(html).find("div[class='datetimepicker datetimepicker-dropdown-bottom-right dropdown-menu']").remove();
         html = "<html>\n" + $(html).html() + "\n</html>";
         // 创建隐藏的可下载链接
         var eleLink = document.createElement('a');
