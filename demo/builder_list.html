@@ -165,6 +165,8 @@
                 html:true,
                 trigger: 'click'
             });
+            $(this).removeAttr("data-original-title");
+            $(this).removeAttr("title");
         });
     }
     function save(i){
