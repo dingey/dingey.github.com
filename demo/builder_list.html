@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>列表</title>
     <link href="https://dingey.github.io/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://dingey.github.io/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="https://dingey.github.io/demo/summernote/summernote.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -16,11 +16,13 @@
         form.form-inline > .input-group, form.form-inline > label, form.form-inline > select, form.form-inline > input, form.form-inline > a, form.form-inline > button {
             margin: 5px;
         }
-
         .block {
             border: 1px lightgrey solid;
             padding: 20px;
             margin-top: 5px;
+        }
+        .popover{
+            pointer-events: auto;max-width: 480px;min-width: 276px;
         }
     </style>
 </head>
@@ -34,10 +36,8 @@
                 <option value="1">选项1</option>
                 <option value="2">选项2</option>
             </select>
-            <input type="text" name="title" class="form-control" placeholder="文本">
-            <div class="input-group">
-                <input class="form-control date" style="border-radius: 5px" name="date" placeholder="日期"/>
-            </div>
+            <input type="text" class="form-control" name="title" placeholder="文本">
+            <input class="form-control date" name="date" placeholder="日期"/>
             <a class="btn btn-primary">查询</a>
             <button type="submit" onclick="return false;" class="btn btn-default">提交</button>
             <button type="reset" class="btn btn-default">重置</button>
@@ -98,8 +98,7 @@
 </div>
 <script src="https://dingey.github.io/js/jquery.min.js"></script>
 <script src="https://dingey.github.io/js/bootstrap.min.js"></script>
-<script src="https://dingey.github.io/js/moment-with-locales.js"></script>
-<script src="https://dingey.github.io/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 <script src="https://dingey.github.io/js/jquery-ui.js"></script>
 <script src="https://dingey.github.io/demo/layer/layer.js"></script>
 <script>
@@ -127,38 +126,74 @@
             if ($(obj).hasClass("input-group")) {
                 $(obj).find("div[class='bootstrap-datetimepicker-widget dropdown-menu usetwentyfour bottom']").remove();
             }
-            if ($(this)[0].tagName == "SELECT") {
-                layer.prompt({title: '输入多选的值以换行符分隔)', formType: 2}, function (text, index) {
-                    var strs = new Array(); //定义一数组
-                    strs = text.split("\n"); //字符分割
-                    $(obj).empty();
-                    for (var i = 0; i < strs.length; i++) {
-                        $(obj).append("<option value=\"" + i + "\">" + strs[i] + "</option>");
-                    }
-                    layer.close(index);
-                });
-            } else if ($(this)[0].tagName == "LABEL") {
-                layer.prompt({title: '输入标签名', formType: 0}, function (name, index) {
-                    $(obj).html(name);
-                    layer.close(index);
-                });
-            } else if ($(this)[0].tagName == "INPUT") {
-                layer.prompt({title: '输入文本提示', formType: 0}, function (name, index) {
-                    $(obj).attr("placeholder", name);
-                    layer.close(index);
-                });
-            }
-            $("#form").append(obj).trigger("create");
+            $("#form").append(obj);
             initDate();
+            initEdit();
         });
         $(".top>table").click(function () {
             var obj = $(this).clone();
             if ($("#content>table").length > 0) {
                 return false;
             }
-            layer.prompt({title: '输入表格值：以*分隔列以换行符分隔行)', formType: 2}, function (text, index) {
-                var strs = new Array(); //定义一数组
-                strs = text.split("\n"); //字符分割
+            if ($("#content>.page").length < 1) {
+                $("#content").append(obj).trigger("create");
+            } else {
+                $("#content>.page").before(obj).trigger("create");
+            }
+            initEdit();
+        });
+        $(".top>.page").click(function () {
+            var obj = $(this).clone();
+            if ($("#content>.page").length > 0) {
+                return false;
+            }
+            if ($("#content>table").length < 1) {
+                $("#content").append(obj).trigger("create");
+            } else {
+                $("#content>table").after(obj).trigger("create");
+            }
+        });
+    });
+    function initEdit() {
+        $("#form>input,#form>label,#form>select,#content>table").each(function (index){
+            var htm="标签名/文本占位符(表格：*分隔列,换行符分隔行)<textarea class='form-control rows='2' id='n"+index+"'></textarea>"+
+                    "<a class='btn btn-default btn-sm' onclick='save("+index+")'>保存</a>";
+            $(this).popover({
+                container:'body',
+                placement:'top',
+                content:htm,
+                html:true,
+                trigger: 'click'
+            });
+        });
+    }
+    function save(i){
+        var e=$("#form>input,#form>label,#form>select,#content>table").eq(i);
+        var text=$("#n"+i).val();
+        if($(e).prop("tagName") == "LABEL"){
+            $(e).html(text);
+        }else{
+            if ($(e).find("input[type=text]").length > 0) {
+                $(e).find("input[type=text]").val(text);
+            }else if($(e).prop("tagName") == "INPUT"){
+                $(e).val(text);
+            }
+            var strs = new Array(); //定义一数组
+            strs = text.split("\n"); //字符分割
+            if ($(e).find("select").length > 0) {
+                var sel = $(e).find("select")[0];
+                $(sel).empty();
+                for (var i = 0; i < strs.length; i++) {
+                    $(sel).append("<option value=\"" + i + "\">" + strs[i] + "</option>");
+                }
+            }else if($(e).prop("tagName") == "SELECT"){
+                $(e).empty();
+                for (var i = 0; i < strs.length; i++) {
+                    $(e).append("<option value=\"" + i + "\">" + strs[i] + "</option>");
+                }
+            }
+            if($(e).prop("tagName") == "TABLE"){
+                var obj = $(e);
                 $(obj).empty();
                 var tr = "";
                 for (var i = 0; i < strs.length; i++) {
@@ -178,36 +213,14 @@
                 }
                 tr += "</tbody>";
                 $(obj).append(tr);
-                layer.close(index);
-            });
-            if ($("#content>.page").length < 1) {
-                $("#content").append(obj).trigger("create");
-            } else {
-                $("#content>.page").before(obj).trigger("create");
             }
-        });
-        $(".top>.page").click(function () {
-            var obj = $(this).clone();
-            if ($("#content>.page").length > 0) {
-                return false;
-            }
-            if ($("#content>table").length < 1) {
-                $("#content").append(obj).trigger("create");
-            } else {
-                $("#content>table").after(obj).trigger("create");
-            }
-        });
-    });
+        }
+        $(e).click();
+    }
 </script>
 <script>
     function initDate() {
-        $('.date').datetimepicker({
-            showTodayButton: true,
-            showClear: true,
-            //defaultDate: "2017-11-11 11:11:11",
-            locale: 'zh_CN',
-            format: 'YYYY-MM-DD HH:mm:ss'
-        });
+        $('.date').datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});
     }
     $(function () {
         initDate();
