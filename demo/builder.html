@@ -644,56 +644,78 @@
 <script>
     function init() {
         $(".time").datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});
-        $(".block>form>.form-group>label").click(function () {
-            var lab = $(this);
-            layer.closeAll();
-            layer.prompt({title: '输入标签名', formType: 0}, function (name, index) {
-                console.log(name);
-                $(lab).html(name);
-                layer.close(index);
-                layer.prompt({title: '输入值(单选，多选的值以换行符分隔)', formType: 2}, function (text, index) {
-                    layer.close(index);
-                    console.log(text);
-                    var va = $(lab).next();
-                    if ($(va).find("input[type=text]").length > 0) {
-                        $(va).find("input[type=text]").val(text);
-                        return true;
-                    }
-                    if ($(va).find("p").length > 0) {
-                        $(va).find("p").html(text);
-                        return true;
-                    }
-                    if ($(va).prop("tagName") == "LABEL") {
-                        $(va).html(text);
-                        return true;
-                    }
-
-                    var strs = new Array(); //定义一数组
-                    strs = text.split("\n"); //字符分割
-                    if ($(va).find("input[type=radio]").length > 0) {
-                        $(va).empty();
-                        for (var i = 0; i < strs.length; i++) {
-                            if (strs[i] == "") continue;
-                            $(va).append("<label class=\"radio-inline\"><input type=\"radio\" name=\"radio\" value=\"" + i + "\">" + strs[i] + "</label>");
-                        }
-                    }
-                    if ($(va).find("input[type=checkbox]").length > 0) {
-                        $(va).empty();
-                        for (var i = 0; i < strs.length; i++) {
-                            if (strs[i] == "") continue;
-                            $(va).append("<label class=\"checkbox-inline\"><input type=\"checkbox\" name=\"checkbox\" value=\"" + i + "\">" + strs[i] + "</label>");
-                        }
-                    }
-                    if ($(va).find("select").length > 0) {
-                        var sel = $(va).find("select")[0];
-                        $(sel).empty();
-                        for (var i = 0; i < strs.length; i++) {
-                            $(sel).append("<option value=\"" + i + "\">" + strs[i] + "</option>");
-                        }
-                    }
+        $(".block>form>.form-group>label,.block>form>.form-group>div").each(function (index){
+            $(this).click(function () {
+                var htm="标签名/文本占位符<textarea class='form-control rows='2' id='n"+index+"'></textarea>"+
+                        "宽度<select class='form-control input-sm' id='l"+index+"'><option value='1'>1</option><option value='2' selected>2</option><option value='3'>3</option><option value='4'>4</option><option value='6'>6</option><option value='8'>8</option><option value='10'>10</option><option value='12'>12</option></select>"+
+                        "偏移宽度<select class='form-control input-sm' id='o"+index+"'><option value='' selected>无</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select>"+
+                        "备注说明<input type='text' class='form-control' id='r"+index+"'>"+
+                        "<a class='btn btn-default btn-sm' onclick='save("+index+")'>保存</a>";
+                $(this).popover({
+                    container:'body',
+                    placement:'left',
+                    content:htm,
+                    html:true,
+                    trigger: 'click'
                 });
             });
         });
+    }
+    function save(i){
+        var e=$(".block>form>.form-group>label,.block>form>.form-group>div").eq(i);
+        var text=$("#n"+i).val();
+        var len=$("#l"+i).val();
+        var o=$("#o"+i).val();
+        var p=$("#r"+i).val();
+        if($(e).prop("tagName") == "LABEL"){
+            $(e).html(text);
+            if(o!=''){
+                $(e).attr("class","col-sm-offset-"+o+" col-sm-"+len+" control-label");
+            }else{
+                $(e).attr("class","col-sm-"+len+" control-label");
+            }
+        }else{
+            if(o!=''){
+                $(e).attr("class","col-sm-offset-"+o+" col-sm-"+len);
+            }else{
+                $(e).attr("class","col-sm-"+len);
+            }
+            if ($(e).find("input[type=text]").length > 0) {
+                $(e).find("input[type=text]").val(text);
+                $(e).find("input[type=text]").attr("placeholder",text);
+            }
+            if ($(e).find("p[class='help-block']").length > 0){
+                $(e).find("p[class='help-block']").html(p);
+            }
+            if ($(e).find("p[class!='help-block']").length > 0){
+                $(e).find("p[class!='help-block']").html(text);
+            }
+
+            var strs = new Array(); //定义一数组
+            strs = text.split("\n"); //字符分割
+            if ($(e).find("input[type=radio]").length > 0) {
+                $(e).empty();
+                for (var i = 0; i < strs.length; i++) {
+                    if (strs[i] == "") continue;
+                    $(e).append("<label class=\"radio-inline\"><input type=\"radio\" name=\"radio\" value=\"" + i + "\">" + strs[i] + "</label>");
+                }
+            }
+            if ($(e).find("input[type=checkbox]").length > 0) {
+                $(e).empty();
+                for (var i = 0; i < strs.length; i++) {
+                    if (strs[i] == "") continue;
+                    $(e).append("<label class=\"checkbox-inline\"><input type=\"checkbox\" name=\"checkbox\" value=\"" + i + "\">" + strs[i] + "</label>");
+                }
+            }
+            if ($(e).find("select").length > 0) {
+                var sel = $(e).find("select")[0];
+                $(sel).empty();
+                for (var i = 0; i < strs.length; i++) {
+                    $(sel).append("<option value=\"" + i + "\">" + strs[i] + "</option>");
+                }
+            }
+        }
+        $(e).click();
     }
 </script>
 <script>
