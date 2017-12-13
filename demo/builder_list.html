@@ -116,32 +116,27 @@
         if (num != undefined) {
             $("input[name='pageNum']").val(num);
         }
-        $("#container").load("list.html #content", $("form").serialize(), function () {
+        $("#container").load("builder_list.html #content", $("form").serialize(), function () {
             layer.msg('加载成功');
         });
     }
 </script>
 <script class="del">
     $(function () {
-        $(".top>form>label,.top>form>select,.top>form>input,.top>form>a,.top>form>button,.top>form>.input-group").click(function () {
+        $(".top>form>label,.top>form>select,.top>form>input,.top>form>a,.top>form>button,.top>form>.input-group,.top>table").click(function () {
             var obj = $(this).clone();
-            if ($(obj).hasClass("input-group")) {
-                $(obj).find("div[class='bootstrap-datetimepicker-widget dropdown-menu usetwentyfour bottom']").remove();
-            }
             $("#form").append(obj);
+            if($(this).prop("tagName") == "TABLE"){
+                if ($("#content>table").length > 0) {
+                    return false;
+                }
+                if ($("#content>.page").length < 1) {
+                    $("#content").append(obj).trigger("create");
+                } else {
+                    $("#content>.page").before(obj).trigger("create");
+                }
+            }
             initDate();
-            initEdit();
-        });
-        $(".top>table").click(function () {
-            var obj = $(this).clone();
-            if ($("#content>table").length > 0) {
-                return false;
-            }
-            if ($("#content>.page").length < 1) {
-                $("#content").append(obj).trigger("create");
-            } else {
-                $("#content>.page").before(obj).trigger("create");
-            }
             initEdit();
         });
         $(".top>.page").click(function () {
