@@ -122,9 +122,11 @@
     }
 </script>
 <script class="del">
+    var index=0;
     $(function () {
         $(".top>form>label,.top>form>select,.top>form>input,.top>form>a,.top>form>button,.top>form>.input-group,.top>table").click(function () {
             var obj = $(this).clone();
+            $(obj).attr("id",index++);
             $("#form").append(obj);
             if($(this).prop("tagName") == "TABLE"){
                 if ($("#content>table").length > 0) {
@@ -152,9 +154,11 @@
         });
     });
     function initEdit() {
-        $("#form>input,#form>label,#form>select,#content>table").each(function (index){
-            var htm="标签名/文本占位符(表格：*分隔列,换行符分隔行)<textarea class='form-control rows='2' id='n"+index+"'></textarea>"+
-                    "<a class='btn btn-default btn-sm' onclick='save("+index+")'>保存</a>";
+        $("#form>input,#form>label,#form>select,#content>table,#form>a,#form>button").each(function (){
+            var i=$(this).attr("id");
+            var htm="标签名/文本占位符(表格：*分隔列,换行符分隔行)<textarea class='form-control rows='2' id='n"+i+"'></textarea>"+
+                    "<a class='btn btn-default btn-sm' onclick='save("+i+")'>保存</a>"+
+                    "<a class='btn btn-danger btn-sm' onclick='del("+i+")'>删除</a>";
             $(this).popover({
                 container:'body',
                 placement:'top',
@@ -166,8 +170,23 @@
             $(this).removeAttr("title");
         });
     }
+    function del(i) {
+        var e;
+        $("#form>input,#form>label,#form>select,#content>table,#form>a,#form>button").each(function(){
+            if($(this).attr("id")==i){
+                e=$(this);
+            }
+        });
+        $(e).click();
+        $(e).remove();
+    }
     function save(i){
-        var e=$("#form>input,#form>label,#form>select,#content>table").eq(i);
+        var e;
+        $("#form>input,#form>label,#form>select,#content>table,#form>a,#form>button").each(function(){
+            if($(this).attr("id")==i){
+                e=$(this);
+            }
+        });
         var text=$("#n"+i).val();
         if($(e).prop("tagName") == "LABEL"){
             if(text==""){
@@ -241,6 +260,11 @@
         $(html).find("div[class='popover-content']").remove();
         $(html).find(".popover").remove();
         $(html).find("div[class='datetimepicker datetimepicker-dropdown-bottom-right dropdown-menu']").remove();
+        $(html).find("#form").each(function(){
+            $(this).children().each(function () {
+                $(this).removeAttr("id");
+            });
+        });
         html = "<html>\n" + $(html).html() + "\n</html>";
         // 创建隐藏的可下载链接
         var eleLink = document.createElement('a');
