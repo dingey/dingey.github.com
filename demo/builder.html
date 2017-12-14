@@ -669,7 +669,7 @@
             <button type="button" class="btn btn-success btn-lg btn-block">源码</button>
         </div>
         <div class="col-md-2">
-            <button type="button" onclick="downCSv()" class="btn btn-info btn-lg btn-block">下载</button>
+            <button type="button" onclick="down()" class="btn btn-info btn-lg btn-block">下载</button>
         </div>
     </div>
 </div>
@@ -694,15 +694,17 @@
 <script src="https://dingey.github.io/demo/layer/layer.js"></script>
 <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 <script>
+    var index=0;
     function init() {
         $(".time").datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});
-        $(".block>form>.form-group>label,.block>form>.form-group>div,.block>form>.form-group>p").each(function (index){
-            var htm="标签名/文本占位符<textarea class='form-control rows='2' id='n"+index+"'></textarea>"+
-                    "宽度<select class='form-control input-sm' id='l"+index+"'><option value='1'>1</option><option value='2' selected>2</option><option value='3'>3</option><option value='4'>4</option><option value='6'>6</option><option value='8'>8</option><option value='10'>10</option><option value='12'>12</option></select>"+
-                    "偏移宽度<select class='form-control input-sm' id='o"+index+"'><option value='' selected>无</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select>"+
-                    "备注说明<input type='text' class='form-control' id='r"+index+"'>"+
-                    "<a class='btn btn-default btn-sm' onclick='save("+index+")'>保存</a>"+
-                    "<a class='btn btn-danger btn-sm' onclick='del("+index+")'>删除</a>";
+        $(".block>form>.form-group>label,.block>form>.form-group>div,.block>form>.form-group>p").each(function (){
+            var i=$(this).attr("id");
+            var htm="标签名/文本占位符<textarea class='form-control rows='2' id='n"+i+"'></textarea>"+
+                    "宽度<select class='form-control input-sm' id='l"+i+"'><option value='1'>1</option><option value='2' selected>2</option><option value='3'>3</option><option value='4'>4</option><option value='6'>6</option><option value='8'>8</option><option value='10'>10</option><option value='12'>12</option></select>"+
+                    "偏移宽度<select class='form-control input-sm' id='o"+i+"'><option value='' selected>无</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select>"+
+                    "备注说明<input type='text' class='form-control' id='r"+i+"'>"+
+                    "<a class='btn btn-default btn-sm' onclick='save("+i+")'>保存</a>"+
+                    "<a class='btn btn-danger btn-sm' onclick='del("+i+")'>删除</a>";
             $(this).popover({
                 container:'body',
                 placement:'left',
@@ -715,12 +717,22 @@
         });
     }
     function del(i) {
-        var e=$(".block>form>.form-group>label,.block>form>.form-group>div,.block>form>.form-group>p").eq(i);
+        var e;
+        $(".block>form>.form-group>label,.block>form>.form-group>div,.block>form>.form-group>p").each(function(){
+            if($(this).attr("id")==i){
+                e=$(this);
+            }
+        });
         $(e).click();
         $(e).remove();
     }
     function save(i){
-        var e=$(".block>form>.form-group>label,.block>form>.form-group>div,.block>form>.form-group>p").eq(i);
+        var e;
+        $(".block>form>.form-group>label,.block>form>.form-group>div,.block>form>.form-group>p").each(function(){
+            if($(this).attr("id")==i){
+                e=$(this);
+            }
+        });
         var text=$("#n"+i).val();
         var len=$("#l"+i).val();
         var o=$("#o"+i).val();
@@ -795,7 +807,11 @@
             }
         });
         $(".left>.form-group").click(function () {
-            $(".block>form").append($(this).clone());
+            var c=$(this).clone();
+            $(c).children().each(function(){
+                $(this).attr("id",index++);
+            });
+            $(".block>form").append(c);
             init();
         });
         $(".btn-danger").click(function () {
@@ -804,7 +820,11 @@
         $(".btn-success").click(function () {
             var blk = $(".block").clone();
             $(blk).find("form").attr("class", "form-horizontal");
-            console.log(blk.html());
+            $(blk).find("form>div.form-group").each(function(){
+               $(this).children().each(function () {
+                 $(this).removeAttr("id");
+               });
+            });
             $("#modal-textarea").html(blk.html());
             $('.bs-example-modal-lg').modal({
                 backdrop: false,//点击空白处不关闭对话框
@@ -815,7 +835,7 @@
     })
 </script>
 <script>
-    function downCSv(name) {
+    function down(name) {
         if (name == undefined) {
             name = document.title;
         }
@@ -823,6 +843,11 @@
         var html = $("html").clone();
         var blk = $(".block").clone();
         $(blk).find("form").attr("class", "form-horizontal");
+        $(blk).find("form>div.form-group").each(function(){
+            $(this).children().each(function () {
+                $(this).removeAttr("id");
+            });
+        });
         text = "<div class='container'>\n" + $(blk).html() + "</div>\n";
         $(html).find("script").each(function () {
             if ($(this).attr("src") != undefined) {
