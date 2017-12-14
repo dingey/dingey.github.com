@@ -697,22 +697,20 @@
     function init() {
         $(".time").datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});
         $(".block>form>.form-group>label,.block>form>.form-group>div,.block>form>.form-group>p").each(function (index){
-            $(this).click(function () {
-                var htm="标签名/文本占位符<textarea class='form-control rows='2' id='n"+index+"'></textarea>"+
-                        "宽度<select class='form-control input-sm' id='l"+index+"'><option value='1'>1</option><option value='2' selected>2</option><option value='3'>3</option><option value='4'>4</option><option value='6'>6</option><option value='8'>8</option><option value='10'>10</option><option value='12'>12</option></select>"+
-                        "偏移宽度<select class='form-control input-sm' id='o"+index+"'><option value='' selected>无</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select>"+
-                        "备注说明<input type='text' class='form-control' id='r"+index+"'>"+
-                        "<a class='btn btn-default btn-sm' onclick='save("+index+")'>保存</a>";
-                $(this).popover({
-                    container:'body',
-                    placement:'left',
-                    content:htm,
-                    html:true,
-                    trigger: 'click'
-                });
-                $(this).removeAttr("data-original-title");
-                $(this).removeAttr("title");
+            var htm="标签名/文本占位符<textarea class='form-control rows='2' id='n"+index+"'></textarea>"+
+                    "宽度<select class='form-control input-sm' id='l"+index+"'><option value='1'>1</option><option value='2' selected>2</option><option value='3'>3</option><option value='4'>4</option><option value='6'>6</option><option value='8'>8</option><option value='10'>10</option><option value='12'>12</option></select>"+
+                    "偏移宽度<select class='form-control input-sm' id='o"+index+"'><option value='' selected>无</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select>"+
+                    "备注说明<input type='text' class='form-control' id='r"+index+"'>"+
+                    "<a class='btn btn-default btn-sm' onclick='save("+index+")'>保存</a>";
+            $(this).popover({
+                container:'body',
+                placement:'left',
+                content:htm,
+                html:true,
+                trigger: 'click'
             });
+            $(this).removeAttr("data-original-title");
+            $(this).removeAttr("title");
         });
     }
     function save(i){
