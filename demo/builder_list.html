@@ -127,7 +127,6 @@
         $(".top>form>label,.top>form>select,.top>form>input,.top>form>a,.top>form>button,.top>form>.input-group,.top>table").click(function () {
             var obj = $(this).clone();
             $(obj).attr("id",index++);
-            $("#form").append(obj);
             if($(this).prop("tagName") == "TABLE"){
                 if ($("#content>table").length > 0) {
                     return false;
@@ -137,6 +136,8 @@
                 } else {
                     $("#content>.page").before(obj).trigger("create");
                 }
+            }else{
+                $("#form").append(obj);
             }
             initDate();
             initEdit();
