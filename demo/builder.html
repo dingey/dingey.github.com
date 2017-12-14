@@ -701,7 +701,8 @@
                     "宽度<select class='form-control input-sm' id='l"+index+"'><option value='1'>1</option><option value='2' selected>2</option><option value='3'>3</option><option value='4'>4</option><option value='6'>6</option><option value='8'>8</option><option value='10'>10</option><option value='12'>12</option></select>"+
                     "偏移宽度<select class='form-control input-sm' id='o"+index+"'><option value='' selected>无</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select>"+
                     "备注说明<input type='text' class='form-control' id='r"+index+"'>"+
-                    "<a class='btn btn-default btn-sm' onclick='save("+index+")'>保存</a>";
+                    "<a class='btn btn-default btn-sm' onclick='save("+index+")'>保存</a>"+
+                    "<a class='btn btn-danger btn-sm' onclick='del("+index+")'>删除</a>";
             $(this).popover({
                 container:'body',
                 placement:'left',
@@ -712,6 +713,11 @@
             $(this).removeAttr("data-original-title");
             $(this).removeAttr("title");
         });
+    }
+    function del(i) {
+        var e=$(".block>form>.form-group>label,.block>form>.form-group>div,.block>form>.form-group>p").eq(i);
+        $(e).click();
+        $(e).remove();
     }
     function save(i){
         var e=$(".block>form>.form-group>label,.block>form>.form-group>div,.block>form>.form-group>p").eq(i);
@@ -785,7 +791,7 @@
         $(".block>form>.form-group").draggable({revert: true, helper: 'clone'});//表单元素可拖动
         $(".block>form").droppable({ //droppable事件,即拖拽到文件夹时触发的事件
             drop: function (event, ui) {//释放时触发
-                ui.draggable.remove();
+                //ui.draggable.remove();
             }
         });
         $(".left>.form-group").click(function () {
