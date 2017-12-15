@@ -724,7 +724,11 @@
             }
         });
         $(e).click();
-        $(e).remove();
+        if($(e).parent().children().length==1){
+            $(e).parent().remove();
+        }else{
+            $(e).remove();
+        }
     }
     function save(i){
         var e;
@@ -821,13 +825,9 @@
             var blk = $(".block").clone();
             $(blk).find("form").attr("class", "form-horizontal");
             $(blk).find("form>div.form-group").each(function(){
-                if($(this).children().length<1){
-                    $(this).remove();
-                }else{
-                    $(this).children().each(function () {
-                        $(this).removeAttr("id");
-                    });
-                }
+                $(this).children().each(function () {
+                    $(this).removeAttr("id");
+                });
             });
             $("#modal-textarea").html(blk.html());
             $('.bs-example-modal-lg').modal({
@@ -848,13 +848,9 @@
         var blk = $(".block").clone();
         $(blk).find("form").attr("class", "form-horizontal");
         $(blk).find("form>div.form-group").each(function(){
-            if($(this).children().length<1){
-                $(this).remove();
-            }else{
-                $(this).children().each(function () {
-                    $(this).removeAttr("id");
-                });
-            }
+            $(this).children().each(function () {
+                $(this).removeAttr("id");
+            });
         });
         text = "<div class='container'>\n" + $(blk).html() + "</div>\n";
         $(html).find("script").each(function () {
