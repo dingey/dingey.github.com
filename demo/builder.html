@@ -821,9 +821,13 @@
             var blk = $(".block").clone();
             $(blk).find("form").attr("class", "form-horizontal");
             $(blk).find("form>div.form-group").each(function(){
-               $(this).children().each(function () {
-                 $(this).removeAttr("id");
-               });
+                if($(this).children().length<1){
+                    $(this).remove();
+                }else{
+                    $(this).children().each(function () {
+                        $(this).removeAttr("id");
+                    });
+                }
             });
             $("#modal-textarea").html(blk.html());
             $('.bs-example-modal-lg').modal({
@@ -844,9 +848,13 @@
         var blk = $(".block").clone();
         $(blk).find("form").attr("class", "form-horizontal");
         $(blk).find("form>div.form-group").each(function(){
-            $(this).children().each(function () {
-                $(this).removeAttr("id");
-            });
+            if($(this).children().length<1){
+                $(this).remove();
+            }else{
+                $(this).children().each(function () {
+                    $(this).removeAttr("id");
+                });
+            }
         });
         text = "<div class='container'>\n" + $(blk).html() + "</div>\n";
         $(html).find("script").each(function () {
