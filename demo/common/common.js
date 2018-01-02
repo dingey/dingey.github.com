@@ -193,7 +193,9 @@ function valid() {
             }
         }
     });
-    layer.msg(msg);
+    if(!a){
+        layer.msg(msg);
+    }
     return a;
 }
 //通用校验帮助文本
