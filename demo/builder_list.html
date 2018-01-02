@@ -59,23 +59,24 @@
             <tr>
                 <td class="id">1</td>
                 <td class="index">11</td>
-                <td>Slaughterhouse-Five</td>
+                <td>builder list</td>
                 <td><a onclick="edit(1)" class="btn btn-primary btn-xs">编辑</a></td>
             </tr>
             </tbody>
         </table>
         <p>分页</p>
-        <div class="col-xs-12 page" style="text-align: right">
+        <div class="col-xs-8 page" style="text-align: right">
             <a href="#">上一页</a>
             <a href="#">下一页</a>
-            ,当前第 1 页 ， 共 20 项 2 页，每页
-            <select style="height: 32px;" id="pgSize" onchange="changePgSize()">
+             当前第 1 页 ， 共 20 项 2 页，每页
+            <select style="height: 32px;" onchange="if(typeof(pageTo)=='function'){$('input[name=pageSize]').val($(this).val());pageTo(1);}">
                 <option value="10" selected>10</option>
                 <option value="20">20</option>
-                <option value="20">50</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
             </select> 项 到第 <input type="text"
                                   style="width:48px;height: 32px;" id="pgNum"> 页
-            <a class="btn btn-default" onclick="pageJunp()">GO</a>
+            <a class="btn btn-default" onclick="if(typeof(pageTo)=='function'){pageTo($('#pgNum').val());}">GO</a>
         </div>
     </div>
     <div class="row">
@@ -105,13 +106,6 @@
 <script src="https://dingey.github.io/demo/layer/layer.js"></script>
 <script>
     <!-- 分页-->
-    function changePgSize() {
-        $("input[name='pageSize']").val($("#pgSize").val());
-        pageTo();
-    }
-    function pageJunp() {
-        pageTo($("#pgNum").val())
-    }
     function pageTo(num) {
         if (num != undefined) {
             $("input[name='pageNum']").val(num);
