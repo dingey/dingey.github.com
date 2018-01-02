@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="Zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>自定义校验</title>
+    <link href="https://dingey.github.io/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://dingey.github.io/demo/summernote/summernote.css" rel="stylesheet">
+    <script src="https://dingey.github.io/js/jquery.min.js"></script>
+    <script src="https://dingey.github.io/js/bootstrap.min.js"></script>
+    <script src="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://dingey.github.io/js/jquery-ui.js"></script>
+    <script src="https://dingey.github.io/demo/layer/layer.js"></script>
+</head>
+<body>
+<div class="container">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">不为空:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" required name="" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">最小2字符</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" minlength="2" name="" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">爱好：</label>
+            <div class="col-sm-2">
+                <select class="form-control" required>
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">性别：</label>
+            <div class="col-sm-10">
+                <label class="radio-inline">
+                    <input type="radio" name="sex" required value="1">男
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="sex" required value="2">女
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">昵称：</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" required name="" value="">
+            </div>
+            <label class="col-sm-2 control-label">编号：</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" required name="" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">城市：</label>
+            <div class="col-sm-10">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="cityId" required value="100000">北京
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="cityId" required value="310000">杭州
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <a class="btn btn-primary" onclick="valid()">提交</a>
+                <a class="btn btn-default">返回</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    // 通用JS校验
+    function valid() {
+        var a = true;
+        var msg = "";
+        $("input,select,textarea").not(':disabled').each(function () {
+            if ($(this).attr("required") == true || $(this).attr("required") != undefined) {
+                //单选,多选
+                if($(this).attr("type")=="radio"&&$(this).attr("required")!= undefined&&$(this).attr("name")!= undefined){
+                    if($("input[type=radio][name='"+$(this).attr("name")+"']:checked").val()==undefined){
+                        a = false;
+                        var m=$(this).attr("required-msg");
+                        if(m==undefined&&$(this).parent().parent().prev().prop("tagName")=="LABEL"){
+                            m=$(this).parent().parent().parent().find("label:eq(0)").html().replace("：","").replace(":","")+"不能为空";
+                        }
+                        if(msg.indexOf(m)==-1){
+                            msg += m + ",";
+                        }
+                    }
+                }else if($(this).attr("type")=="checkbox"&&$(this).attr("required")!= undefined&&$(this).attr("name")!= undefined){
+                    if($("input[type=checkbox][name='"+$(this).attr("name")+"']:checked").val()==undefined){
+                        a = false;
+                        var m=$(this).attr("required-msg");
+                        if(m==undefined&&$(this).parent().parent().prev().prop("tagName")=="LABEL"){
+                            m=$(this).parent().parent().parent().find("label:eq(0)").html().replace("：","").replace(":","")+"不能为空";
+                        }
+                        if(msg.indexOf(m)==-1){
+                            msg += m + ",";
+                        }
+                    }
+                }else if ($(this).val() == "") {
+                    a = false;
+                    var m=$(this).attr("required-msg");
+                    if(m==undefined&&$(this).parent().prev().prop("tagName")=="LABEL"){
+                        m=$(this).parent().prev().html().replace("：","").replace(":","")+"不能为空";
+                    }
+                    if(msg.indexOf(m)==-1){
+                        msg += m + ",";
+                    }
+                }
+            }
+            //large-id:元素选择器;large-msg:验证消息
+            if ($(this).attr("large-id") != undefined && $(this).attr("large-id") != "") {
+                var lid = $(this).attr("large-id");
+                if (lid.indexOf(",") > 0) {
+                    var strs = new Array();
+                    strs = lid.split(",");
+                    var msgs = new Array();
+                    msgs = $(this).attr("large-msg").split(",");
+                    for (var i = 0; i < strs.length; i++) {
+                        if ($(this).val() < $(strs[i]).val()) {
+                            a = false;
+                            msg += msgs[i] + ",";
+                        }
+                    }
+                } else {
+                    if ($(this).val() < $(lid).val()) {
+                        a = false;
+                        msg += $(this).attr("large-msg") + ",";
+                    }
+                }
+            }
+            //less-id:元素选择器;less-msg:验证消息
+            if ($(this).attr("less-id") != undefined && $(this).attr("less-id") != "") {
+                var lid = $(this).attr("less-id");
+                if (lid.indexOf(",") > 0) {
+                    var strs = new Array();
+                    strs = lid.split(",");
+                    var msgs = new Array();
+                    msgs = $(this).attr("less-msg").split(",");
+                    for (var i = 0; i < strs.length; i++) {
+                        if ($(this).val() < $(strs[i]).val()) {
+                            a = false;
+                            msg += msgs[i] + ",";
+                        }
+                    }
+                } else {
+                    if ($(this).val() < $(lid).val()) {
+                        a = false;
+                        msg += $(this).attr("less-msg") + ",";
+                    }
+                }
+            }
+            //大于指定值
+            if ($(this).attr("large-val") != undefined && $(this).attr("large-val") != "") {
+                if ($(this).val() < $(this).attr("large-val")) {
+                    a = false;
+                    msg += $(this).attr("large-val-msg") + ",";
+                }
+            }
+            //小于指定值
+            if ($(this).attr("less-val") != undefined && $(this).attr("less-val") != "") {
+                if ($(this).val() < $(this).attr("less-val")) {
+                    a = false;
+                    msg += $(this).attr("less-val-msg") + ",";
+                }
+            }
+        });
+        layer.msg(msg);
+        return a;
+    }
+    //通用校验帮助文本
+    function validHelp(dom) {
+        if ($(dom).attr("minlength") != undefined && $(dom).attr("minlength") != "") {
+            var len = parseInt($(dom).attr("minlength"));
+            if ($(dom).val().length < len && !$(dom).next().hasClass("help-block")) {
+                var h = "<span class='help-block'>不能小于" + len + "个字符</span>";
+                $(dom).parent().addClass("has-error").append(h);
+            } else if ($(dom).val().length >= len && $(dom).parent().hasClass("has-error")) {
+                $(dom).parent().removeClass("has-error").find("span.help-block").remove();
+            }
+        } else if ($(dom).attr("required") != undefined) {
+            if (!$(dom).parent().hasClass("has-error") && $(dom).val() == "") {
+                var h = "<span class='help-block'>不能为空</span>";
+                $(dom).parent().addClass("has-error").append(h);
+            }else if($(dom).parent().hasClass("has-error")){
+                $(dom).parent().removeClass("has-error").find("span.help-block").remove();
+            }else if($(dom).attr("type")=="radio"&&$(dom).attr("name")!=""){
+                if($("input[type=radio][name='"+$(dom).attr("name")+"']:checked").val()==undefined){
+                    if($(dom).parent().parent().find("span.help-block").length<1){
+                        var h = "<span class='help-block'>必须选择一个</span>";
+                        $(dom).parent().parent().addClass("has-error").append(h);
+                    }
+                }else{
+                    $(dom).parent().parent().removeClass("has-error").find("span.help-block").remove();
+                }
+            }else if($(dom).attr("type")=="checkbox"&&$(dom).attr("name")!=""){
+                if($("input[type=checkbox][name='"+$(dom).attr("name")+"']:checked").val()==undefined){
+                    if($(dom).parent().parent().find("span.help-block").length<1){
+                        var h = "<span class='help-block'>必须选择一个</span>";
+                        $(dom).parent().parent().addClass("has-error").append(h);
+                    }
+                }else{
+                    $(dom).parent().parent().removeClass("has-error").find("span.help-block").remove();
+                }
+            }
+        }
+    }
+    $(function () {
+        $("input").not(':disabled').each(function () {
+            validHelp(this);
+        }).change(function () {
+            validHelp(this);
+        });
+    });
+</script>
+</body>
+</html>
