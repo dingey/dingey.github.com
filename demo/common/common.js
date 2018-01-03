@@ -73,16 +73,18 @@ function isNum(s){
     return false;
 }
 //保留两位小数的JS
-$(".num").keyup(function () {
-    var v = $(this).val();
-    v = v.replace(/[^\d.]/g, "");  //清除“数字”和“.”以外的字符
-    v = v.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
-    v = v.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-    v = v.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');//只能输入两个小数
-    if (v.indexOf(".") < 0 && v != "") {//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
-        v = parseFloat(v);
-    }
-    $(this).val(v);
+$(function(){
+    $(".num").keyup(function () {
+        var v = $(this).val();
+        v = v.replace(/[^\d.]/g, "");  //清除“数字”和“.”以外的字符
+        v = v.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+        v = v.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        v = v.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');//只能输入两个小数
+        if (v.indexOf(".") < 0 && v != "") {//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+            v = parseFloat(v);
+        }
+        $(this).val(v);
+    });
 })
 // 通用JS校验
 function valid() {
