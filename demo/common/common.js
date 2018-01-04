@@ -125,7 +125,7 @@ function valid() {
                     a = false;
                     var m = $(this).attr("required-msg");
                     if (m == undefined && $(this).parent().parent().prev().prop("tagName") == "LABEL") {
-                        m = $(this).parent().parent().parent().find("label:eq(0)").html().replace("：", "").replace(":", "") + "不能为空";
+                        m = $(this).parent().parent().prev().html().replace("：", "").replace(":", "") + "不能为空";
                     }
                     if (msg.indexOf(m) == -1) {
                         msg += m + "、";
@@ -136,7 +136,7 @@ function valid() {
                     a = false;
                     var m = $(this).attr("required-msg");
                     if (m == undefined && $(this).parent().parent().prev().prop("tagName") == "LABEL") {
-                        m = $(this).parent().parent().parent().find("label:eq(0)").html().replace("：", "").replace(":", "") + "不能为空";
+                        m = $(this).parent().parent().prev().html().replace("：", "").replace(":", "") + "不能为空";
                     }
                     if (msg.indexOf(m) == -1) {
                         msg += m + "、";
