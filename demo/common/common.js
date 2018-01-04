@@ -84,6 +84,9 @@ $(function(){
         if(v.split(".").length>2){
             v=v.split(".")[0]+"."+v.split(".")[1];
         }
+        if(v.indexOf('-')>=0){
+            v='-'+v.replace(/-/g,'');
+        }
         if(!v.endsWith(".")){
             v=Math.round(v*100)/100;
         }
