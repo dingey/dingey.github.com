@@ -79,7 +79,7 @@ $(function(){
         if(v==""||v=="-"){
             return false;
         }else {
-            v=v.replace(/\s/g, "").replace(/[^\d.]/g, "");;
+            v=v.replace(/[^\-\d.]/g,'');
         }
         if(v.split(".").length>2){
             v=v.split(".")[0]+"."+v.split(".")[1];
