@@ -74,14 +74,26 @@ function isNum(s){
 }
 //保留两位小数的JS
 $(function(){
-    $(".num").keyup(function () {
+    $(".float2").keyup(function () {
         var v = $(this).val();
-        v = v.replace(/[^\d.]/g, "");  //清除“数字”和“.”以外的字符
-        v = v.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
-        v = v.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-        v = v.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');//只能输入两个小数
-        if (v.indexOf(".") < 0 && v != "") {//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
-            v = parseFloat(v);
+        if(v==""||v=="-"){
+            return false;
+        }else {
+            v=v.replace(/\s/g, "").replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+        }
+        if(v.split(".").length>2){
+            v=v.split(".")[0]+"."+v.split(".")[1];
+        }
+        if(!v.endsWith(".")){
+            v=Math.round(v*100)/100;
+        }
+        $(this).val(v);
+    });
+    $(".int").keyup(function(){
+        var v = $(this).val();
+        v=v.replace(/[^\-\d]/g,'');
+        if(v.indexOf('-')>=0){
+            v='-'+v.replace(/-/g,'');
         }
         $(this).val(v);
     });
