@@ -74,6 +74,9 @@ function isNum(s){
 }
 //保留两位小数的JS
 $(function(){
+    initNumValid();
+})
+function initNumValid(){
     $(".float2").keyup(function () {
         var v = $(this).val();
         if(v==""||v=="-"){
@@ -100,7 +103,7 @@ $(function(){
         }
         $(this).val(v);
     });
-})
+}
 // 通用JS校验
 function valid() {
     var a = true;
