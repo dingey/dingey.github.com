@@ -48,6 +48,7 @@
             <label class="col-sm-2 control-label">爱好：</label>
             <div class="col-sm-2">
                 <select class="form-control" required>
+                    <option></option>
                     <option value="0">A</option>
                     <option value="1">B</option>
                 </select>
@@ -100,10 +101,15 @@
 <script>
     // 通用JS校验
     $(function () {
-        $("input,textarea").not(':disabled').each(function () {
+        $("input,select").not(':disabled').each(function () {
             validHelp(this);
         }).change(function () {
             validHelp(this);
+        });
+        $("textarea").not(':disabled').each(function () {
+            validHelp(this,true);
+        }).change(function () {
+            validHelp(this,true);
         });
     });
 </script>
