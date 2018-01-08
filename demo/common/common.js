@@ -245,13 +245,13 @@ function validHelp(dom) {
                     if($(dom).parent().parent().find("form-control-feedback").length>0){
                         $(dom).parent().parent().find("form-control-feedback").removeClass("glyphicon-ok").addClass("glyphicon-remove");
                     }else{
-                        $(dom).parent().parent().append("<span class='glyphicon glyphicon-remove form-control-feedback'></span>");
+                        $(dom).parent().parent().addClass("has-feedback").append("<span class='glyphicon glyphicon-remove form-control-feedback' style='top: 0px;'></span>");
                     }
                     $(dom).parent().parent().addClass("has-error").append(h);
                 }
             } else {
                 $(dom).parent().parent().removeClass("has-error").find("span.help-block").remove();
-                $(dom).parent().parent().addClass("has-success").find("glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+                $(dom).parent().parent().addClass("has-success").find(".glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
             }
         } else if ($(dom).attr("type") == "checkbox" && $(dom).attr("name") != "") {
             if ($("input[type=checkbox][name='" + $(dom).attr("name") + "']:checked").val() == undefined) {
@@ -260,13 +260,13 @@ function validHelp(dom) {
                     if($(dom).parent().parent().find("form-control-feedback").length>0){
                         $(dom).parent().parent().find("form-control-feedback").removeClass("glyphicon-ok").addClass("glyphicon-remove");
                     }else{
-                        $(dom).parent().parent().append("<span class='glyphicon glyphicon-remove form-control-feedback'></span>");
+                        $(dom).parent().parent().addClass("has-feedback").append("<span class='glyphicon glyphicon-remove form-control-feedback' style='top: 0px;'></span>");
                     }
                     $(dom).parent().parent().addClass("has-error").append(h);
                 }
             } else {
                 $(dom).parent().parent().removeClass("has-error").find("span.help-block").remove();
-                $(dom).parent().parent().addClass("has-success").find("glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+                $(dom).parent().parent().addClass("has-success").find(".glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
             }
         }else if (!$(dom).parent().hasClass("has-error") && $(dom).val() == "") {
             var h = "<span class='help-block'>不能为空</span>";
