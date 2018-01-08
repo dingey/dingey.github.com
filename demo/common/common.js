@@ -220,10 +220,18 @@ function valid() {
 }
 //通用校验帮助文本
 function validHelp(dom) {
+    if(!$(dom).parent().hasClass("has-feedback")){
+        $(dom).parent().addClass("has-feedback");
+    }
     if ($(dom).attr("minlength") != undefined && $(dom).attr("minlength") != "") {
         var len = parseInt($(dom).attr("minlength"));
         if ($(dom).val().length < len && !$(dom).next().hasClass("help-block")) {
             var h = "<span class='help-block'>不能小于" + len + "个字符</span>";
+            if(!$(dom).next().hasClass("form-control-feedback")){
+                $(dom).after("<span class='glyphicon glyphicon-remove form-control-feedback'></span>");
+            }else if($(dom).next().hasClass("glyphicon-ok")){
+                $(dom).next().removeClass("glyphicon-ok").addClass("glyphicon-remove");
+            }
             $(dom).parent().addClass("has-error").append(h);
         } else if ($(dom).val().length >= len && $(dom).parent().hasClass("has-error")) {
             $(dom).parent().removeClass("has-error").find("span.help-block").remove();
@@ -231,9 +239,15 @@ function validHelp(dom) {
     } else if ($(dom).attr("required") != undefined) {
         if (!$(dom).parent().hasClass("has-error") && $(dom).val() == "") {
             var h = "<span class='help-block'>不能为空</span>";
+            if(!$(dom).next().hasClass("form-control-feedback")){
+                $(dom).after("<span class='glyphicon glyphicon-remove form-control-feedback'></span>");
+            }else if($(dom).next().hasClass("glyphicon-ok")){
+                $(dom).next().removeClass("glyphicon-ok").addClass("glyphicon-remove");
+            }
             $(dom).parent().addClass("has-error").append(h);
         } else if ($(dom).parent().hasClass("has-error")) {
             $(dom).parent().removeClass("has-error").find("span.help-block").remove();
+            $(dom).parent().removeClass("has-error").find("span.glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
         } else if ($(dom).attr("type") == "radio" && $(dom).attr("name") != "") {
             if ($("input[type=radio][name='" + $(dom).attr("name") + "']:checked").val() == undefined) {
                 if ($(dom).parent().parent().find("span.help-block").length < 1) {
