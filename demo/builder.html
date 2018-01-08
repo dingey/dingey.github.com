@@ -732,7 +732,7 @@
         var len=$("#l"+i).val();
         var o=$("#o"+i).val();
         var p=$("#r"+i).val();
-        if($(e).prop("tagName") == "SPAN"){
+        if($(e).prop("tagName") == "SPAN"||$(e).prop("tagName") == "P"){
             $(e).html(text);
         }else if($(e).prop("tagName") == "LABEL"){
             if(text==""){
