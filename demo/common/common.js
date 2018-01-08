@@ -232,9 +232,9 @@ function validHelp(dom) {
             }else if($(dom).next().hasClass("glyphicon-ok")){
                 $(dom).next().removeClass("glyphicon-ok").addClass("glyphicon-remove");
             }
-            $(dom).parent().addClass("has-error").append(h);
+            $(dom).parent().addClass("has-error").removeClass("has-success").append(h);
         } else if ($(dom).val().length >= len && $(dom).parent().hasClass("has-error")) {
-            $(dom).parent().removeClass("has-error").find("span.help-block").remove();
+            $(dom).parent().removeClass("has-error").addClass("has-success").find("span.help-block").remove();
         }
     } else if ($(dom).attr("required") != undefined) {
         if (!$(dom).parent().hasClass("has-error") && $(dom).val() == "") {
@@ -244,10 +244,10 @@ function validHelp(dom) {
             }else if($(dom).next().hasClass("glyphicon-ok")){
                 $(dom).next().removeClass("glyphicon-ok").addClass("glyphicon-remove");
             }
-            $(dom).parent().addClass("has-error").append(h);
+            $(dom).parent().addClass("has-error").removeClass("has-success").append(h);
         } else if ($(dom).parent().hasClass("has-error")) {
-            $(dom).parent().removeClass("has-error").find("span.help-block").remove();
-            $(dom).parent().removeClass("has-error").find("span.glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+            $(dom).parent().removeClass("has-error").addClass("has-success").find("span.help-block").remove();
+            $(dom).parent().find("span.glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
         } else if ($(dom).attr("type") == "radio" && $(dom).attr("name") != "") {
             if ($("input[type=radio][name='" + $(dom).attr("name") + "']:checked").val() == undefined) {
                 if ($(dom).parent().parent().find("span.help-block").length < 1) {
