@@ -219,66 +219,77 @@ function valid() {
     return a;
 }
 //通用校验帮助文本
-function validHelp(dom) {
+function validHelp(dom,b) {
+    if(b==undefined){
+        b=false;
+    }
     if(!$(dom).parent().hasClass("has-feedback")){
         $(dom).parent().addClass("has-feedback");
     }
     if ($(dom).attr("minlength") != undefined && $(dom).attr("minlength") != "") {
         var len = parseInt($(dom).attr("minlength"));
-        if ($(dom).val().length < len && !$(dom).next().next().hasClass("help-block")) {
+        if ($(dom).val().length < len && $(dom).parent().find("span.help-block").length<1) {
             var h = "<span class='help-block'>不能小于" + len + "个字符</span>";
-            if(!$(dom).next().hasClass("form-control-feedback")){
+            if(b&&!$(dom).next().hasClass("form-control-feedback")){
                 $(dom).after("<span class='glyphicon glyphicon-remove form-control-feedback'></span>");
-            }else if($(dom).next().hasClass("glyphicon-ok")){
+            }else if(b&&$(dom).next().hasClass("glyphicon-ok")){
                 $(dom).next().removeClass("glyphicon-ok").addClass("glyphicon-remove");
             }
             $(dom).parent().addClass("has-error").removeClass("has-success").append(h);
         } else if ($(dom).val().length >= len && $(dom).parent().hasClass("has-error")) {
-            $(dom).parent().removeClass("has-error").addClass("has-success").find("span.help-block").remove();
-            $(dom).parent().find("span.glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+            $(dom).parent().removeClass("has-error").find("span.help-block").remove();
+            if(b){
+                $(dom).parent().addClass("has-success").find("span.glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+            }
         }
     } else if ($(dom).attr("required") != undefined) {
         if ($(dom).attr("type") == "radio" && $(dom).attr("name") != "") {
             if ($("input[type=radio][name='" + $(dom).attr("name") + "']:checked").val() == undefined) {
                 if ($(dom).parent().parent().find("span.help-block").length < 1) {
                     var h = "<span class='help-block'>必须选择一个</span>";
-                    if($(dom).parent().parent().find("form-control-feedback").length>0){
+                    if(b&&$(dom).parent().parent().find("form-control-feedback").length>0){
                         $(dom).parent().parent().find("form-control-feedback").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-                    }else{
+                    }else if(b){
                         $(dom).parent().parent().addClass("has-feedback").append("<span class='glyphicon glyphicon-remove form-control-feedback' style='top: 0px;'></span>");
                     }
                     $(dom).parent().parent().addClass("has-error").append(h);
                 }
             } else {
                 $(dom).parent().parent().removeClass("has-error").find("span.help-block").remove();
-                $(dom).parent().parent().addClass("has-success").find(".glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+                if(b){
+                    $(dom).parent().parent().addClass("has-success").find(".glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+                }
             }
         } else if ($(dom).attr("type") == "checkbox" && $(dom).attr("name") != "") {
             if ($("input[type=checkbox][name='" + $(dom).attr("name") + "']:checked").val() == undefined) {
                 if ($(dom).parent().parent().find("span.help-block").length < 1) {
                     var h = "<span class='help-block'>必须选择一个</span>";
-                    if($(dom).parent().parent().find("form-control-feedback").length>0){
+                    if(b&&$(dom).parent().parent().find("form-control-feedback").length>0){
                         $(dom).parent().parent().find("form-control-feedback").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-                    }else{
+                    }else if(b){
                         $(dom).parent().parent().addClass("has-feedback").append("<span class='glyphicon glyphicon-remove form-control-feedback' style='top: 0px;'></span>");
                     }
                     $(dom).parent().parent().addClass("has-error").append(h);
                 }
             } else {
                 $(dom).parent().parent().removeClass("has-error").find("span.help-block").remove();
-                $(dom).parent().parent().addClass("has-success").find(".glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+                if(b){
+                    $(dom).parent().parent().addClass("has-success").find(".glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+                }
             }
         }else if (!$(dom).parent().hasClass("has-error") && $(dom).val() == "") {
             var h = "<span class='help-block'>不能为空</span>";
-            if(!$(dom).next().hasClass("form-control-feedback")){
+            if(b&&!$(dom).next().hasClass("form-control-feedback")){
                 $(dom).after("<span class='glyphicon glyphicon-remove form-control-feedback'></span>");
-            }else if($(dom).next().hasClass("glyphicon-ok")){
+            }else if(b&&$(dom).next().hasClass("glyphicon-ok")){
                 $(dom).next().removeClass("glyphicon-ok").addClass("glyphicon-remove");
             }
             $(dom).parent().addClass("has-error").removeClass("has-success").append(h);
         } else if ($(dom).parent().hasClass("has-error")) {
-            $(dom).parent().removeClass("has-error").addClass("has-success").find("span.help-block").remove();
-            $(dom).parent().find("span.glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+            $(dom).parent().removeClass("has-error").find("span.help-block").remove();
+            if(b){
+                $(dom).parent().addClass("has-success").find("span.glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+            }
         }
     }
 }
