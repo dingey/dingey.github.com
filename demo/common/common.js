@@ -225,7 +225,7 @@ function validHelp(dom) {
     }
     if ($(dom).attr("minlength") != undefined && $(dom).attr("minlength") != "") {
         var len = parseInt($(dom).attr("minlength"));
-        if ($(dom).val().length < len && !$(dom).next().hasClass("help-block")) {
+        if ($(dom).val().length < len && !$(dom).next().next().hasClass("help-block")) {
             var h = "<span class='help-block'>不能小于" + len + "个字符</span>";
             if(!$(dom).next().hasClass("form-control-feedback")){
                 $(dom).after("<span class='glyphicon glyphicon-remove form-control-feedback'></span>");
