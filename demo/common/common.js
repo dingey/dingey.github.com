@@ -235,6 +235,7 @@ function validHelp(dom) {
             $(dom).parent().addClass("has-error").removeClass("has-success").append(h);
         } else if ($(dom).val().length >= len && $(dom).parent().hasClass("has-error")) {
             $(dom).parent().removeClass("has-error").addClass("has-success").find("span.help-block").remove();
+            $(dom).parent().find("span.glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
         }
     } else if ($(dom).attr("required") != undefined) {
         if (!$(dom).parent().hasClass("has-error") && $(dom).val() == "") {
