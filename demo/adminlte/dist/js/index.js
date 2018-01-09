@@ -1,7 +1,7 @@
 function println(s) {
     console.log(s);
 }
-var count=$("#tabs_head>li").size();
+var count=$("#tabs_head>li").length;
 println(count);
 function getCount() {
     count++;
