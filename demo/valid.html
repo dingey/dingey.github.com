@@ -101,6 +101,7 @@
 <script>
     // 通用JS校验
     $(function () {
+        initNumValid();
         $("input,select").not(':disabled').each(function () {
             validHelp(this);
         }).change(function () {
