@@ -138,6 +138,22 @@
 <script src="summernote/summernote.zh-CN.js"></script>
 <script src="layer/layer.js"></script>
 <script>
+    $(function () {
+        $("form:eq(0)").submit(function () {
+            var url = $(this).attr("action");
+            var param=$(this).serializeArray();
+            console.log("param1：" + param);
+            console.log("param2：" + $(this).serialize());
+            console.log("action：" + url);
+            console.log("submit：" + window.location.pathname);
+            if (url == undefined) {
+                url = window.location.pathname;
+            }
+            return false;
+        });
+    });
+</script>
+<script>
     <!-- 分页-->
     function changePgSize() {
         $("#pageSize").val($("#pgSize").val());
