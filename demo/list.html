@@ -177,18 +177,26 @@
                 }
                 $(this).remove();
                 document.body.appendChild(newScript);
-                var a=true,count=0;
+                var a=true,count=5;
                 newScript.onload=newScript.onreadystatechange=function(){
                     if(!this.readyState||this.readyState=='loaded'||this.readyState=='complete'){
                         a=false;
                     }
                     newScript.onload=newScript.onreadystatechange=null;
                 }
-                while(a&&count<5){
-                    setTimeout(function(){count++},50);
+                while(a&&count>0){
+                    count=repeat(5);
                 }
             })
         });
+    }
+    function repeat(i){
+        if(i>0){
+            i--;
+            setTimeout("repeat("+i+")",50);
+        }else{
+            return i;
+        }
     }
     $(function () {
         $("form:eq(0)").submit(function () {
