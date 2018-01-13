@@ -89,8 +89,8 @@
             </table>
             <div class="col-xs-12" style="float: right">
                 <a href="#" onclick="downCSv()" class="btn btn-primary">下载csv</a>
-                <a href="#" onclick="page('${pageInfo.prePage}')">上一页</a>
-                <a href="#" onclick="page('${pageInfo.nextPage}')">下一页</a>
+                <a href="#" onclick="page('1')">上一页</a>
+                <a href="#" onclick="page('2')">下一页</a>
                 ,当前第 1 页 ， 共 20 项 2 页，每页
                 <select style="height: 32px;" id="pgSize" onchange="changePgSize()">
                     <option value="10" selected>10</option>
@@ -177,6 +177,16 @@
                 }
                 $(this).remove();
                 document.body.appendChild(newScript);
+                var a=true,count=0;
+                newScript.onload=newScript.onreadystatechange=function(){
+                    if(!this.readyState||this.readyState=='loaded'||this.readyState=='complete'){
+                        a=false;
+                    }
+                    newScript.onload=newScript.onreadystatechange=null;
+                }
+                while(a&&count<5){
+                    setTimeout(function(){count++},50);
+                }
             })
         });
     }
