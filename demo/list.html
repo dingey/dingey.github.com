@@ -139,6 +139,7 @@
 <script src="summernote/summernote.zh-CN.js"></script>
 <script src="layer/layer.js"></script>
 <script>
+    var count=3;
     function page(num, size) {
         if (num == undefined) {
             num = 1;
@@ -177,7 +178,8 @@
                 }
                 $(this).remove();
                 document.body.appendChild(newScript);
-                var a=true,count=5;
+                var a=true;
+                count=3;
                 newScript.onload=newScript.onreadystatechange=function(){
                     if(!this.readyState||this.readyState=='loaded'||this.readyState=='complete'){
                         a=false;
