@@ -28,7 +28,7 @@
                 <label>标题</label>
                 <input type="text" name="title" class="form-control" placeholder="标题">
                 <div class="input-group">
-                    <input class="form-control date" name="date" placeholder="日期" />
+                    <input class="form-control date" name="date" placeholder="日期"/>
                 </div>
             </div>
             <button type="submit" class="btn btn-default">查询</button>
@@ -89,16 +89,16 @@
             </table>
             <div class="col-xs-12" style="float: right">
                 <a href="#" onclick="downCSv()" class="btn btn-primary">下载csv</a>
-                <a href="#" onclick="pageTo('${pageInfo.prePage}')">上一页</a>
-                <a href="#" onclick="pageTo('${pageInfo.nextPage}')">下一页</a>
+                <a href="#" onclick="page('${pageInfo.prePage}')">上一页</a>
+                <a href="#" onclick="page('${pageInfo.nextPage}')">下一页</a>
                 ,当前第 1 页 ， 共 20 项 2 页，每页
                 <select style="height: 32px;" id="pgSize" onchange="changePgSize()">
                     <option value="10" selected>10</option>
                     <option value="20">20</option>
-                    <option value="20">50</option>
+                    <option value="50">50</option>
                 </select> 项 到第 <input type="text"
                                       style="width:48px;height: 32px;" id="pgNum"> 页
-                <a class="btn btn-default" onclick="pageJunp()">GO</a>
+                <a class="btn btn-default" onclick="page($('#pgNum').val(),$('#pgSize').val())">GO</a>
             </div>
         </div>
     </div>
@@ -107,7 +107,8 @@
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="exampleModalLabel">模态框</h4>
             </div>
             <div class="modal-body">
@@ -138,74 +139,91 @@
 <script src="summernote/summernote.zh-CN.js"></script>
 <script src="layer/layer.js"></script>
 <script>
+    function page(num, size) {
+        if (num == undefined) {
+            num = 1;
+        }
+        if (size == undefined) {
+            size = 10;
+        }
+        var url = $("form:eq(0)").attr("action");
+        if (url == undefined) {
+            url = window.location.pathname;
+        }
+        var param = $("form:eq(0)").serializeArray();
+        if ($("form:eq(0)").serialize().indexOf("pageNum") == -1) {
+            param.push({name: "pageNum", value: num});
+        }
+        if ($("form:eq(0)").serialize().indexOf("pageSize") == -1) {
+            param.push({name: "pageSize", value: size});
+        }
+        $.ajax({
+            url: url,
+            data: param
+        }).done(function (data) {
+            data=data.substring(data.indexOf("<body"),data.lastIndexOf("</body>")+7);
+            document.body.innerHTML=data;
+            for (var i = 0; i < param.length; i++) {
+                if (param[i].name != undefined && param[i].name != "") {
+                    $("body").find("form:eq(0)").find("input[name='" + param[i].name + "'],select[name='" + param[i].name + "']").val(param[i].value);
+                }
+            }
+            $("body").find("script").each(function () {
+                var newScript = document.createElement('script');
+                newScript.type = 'text/javascript';
+                newScript.innerHTML = $(this).html();
+                if($(this).attr("src")!=undefined){
+                    newScript.src=$(this).attr("src");
+                }
+                $(this).remove();
+                document.body.appendChild(newScript);
+            })
+        });
+    }
     $(function () {
         $("form:eq(0)").submit(function () {
-            var url = $(this).attr("action");
-            var param=$(this).serializeArray();
-            console.log("param1：" + param);
-            console.log("param2：" + $(this).serialize());
-            console.log("action：" + url);
-            console.log("submit：" + window.location.pathname);
-            if (url == undefined) {
-                url = window.location.pathname;
-            }
+            page();
             return false;
         });
     });
 </script>
 <script>
-    <!-- 分页-->
-    function changePgSize() {
-        $("#pageSize").val($("#pgSize").val());
-        query();
-    }
-    function pageJunp() {
-        pageTo($("#pgNum").val())
-    }
-    function pageTo(num) {
-        $("#pageNum").val(num);
-        $("#_ba").load("list.html #ba", $("form").eq(0).serialize(), function () {
-            layer.msg('加载成功');
-        });
-    }
-</script>
-<script>
-    function edit(index){
-        if(index!=undefined){
+    function edit(index) {
+        if (index != undefined) {
             var id_td;
             $("tbody").find("td[class=id]").each(function () {
-                if($(this).html()==index){
-                    id_td=$(this);
+                if ($(this).html() == index) {
+                    id_td = $(this);
                 }
             });
-            var id=$(id_td).html();
-            var title=$(id_td).next().next().html();
+            var id = $(id_td).html();
+            var title = $(id_td).next().next().html();
             $("#id").val(id);
             $("#title").val(title);
-        }else {
-            $("#id").val($("tbody").find("tr").length+1);
+        } else {
+            $("#id").val($("tbody").find("tr").length + 1);
             $("#title").val("");
         }
         $(".bs-example-modal-sm").modal({backdrop: 'static', keyboard: false});
     }
-    function save(){
-        var exsits=false;
-        $("tbody").find("tr").each(function(){
-            var tr=this;
-            if($(tr).find("td").eq(1).html()==$("#id").val()){
+    function save() {
+        var exsits = false;
+        $("tbody").find("tr").each(function () {
+            var tr = this;
+            if ($(tr).find("td").eq(1).html() == $("#id").val()) {
                 $(tr).find("td").eq(3).html($("#title").val());
-                exsits=true;
+                exsits = true;
                 return false;
             }
         });
-        if(!exsits){
-            var len=$("tbody").find("tr").length;
-            var last=$("tbody").find("tr").eq(len-1).clone();
-            $(last).find("a").attr("onclick","edit("+(len+1)+")");
-            $(last).find("td").eq(1).html(len+1);
-            $(last).find("td").eq(2).html(parseInt($(last).find("td").eq(2).html())+1);
+        if (!exsits) {
+            var len = $("tbody").find("tr").length;
+            var last = $("tbody").find("tr").eq(len - 1).clone();
+            $(last).find("a").attr("onclick", "edit(" + (len + 1) + ")");
+            $(last).find("td").eq(1).html(len + 1);
+            $(last).find("td").eq(2).html(parseInt($(last).find("td").eq(2).html()) + 1);
             $(last).find("td").eq(3).html($("#title").val());
-            $("tbody").find("tr").eq(len-1).after(last);
+            $("tbody").find("tr").eq(len - 1).after(last);
         }
         $(".bs-example-modal-sm").modal('hide');
     }
@@ -219,8 +237,8 @@
                 }
         );
         $('.date').datetimepicker({
-            showTodayButton:true,
-            showClear:true,
+            showTodayButton: true,
+            showClear: true,
             defaultDate: "2017-11-11 11:11:11",
             locale: 'zh_CN',
             format: 'YYYY-MM-DD HH:mm:ss'
@@ -229,8 +247,8 @@
 </script>
 <script>
     function downCSv(name) {
-        if(name==undefined){
-            name=document.title;
+        if (name == undefined) {
+            name = document.title;
         }
         var csv = "";
         $("table>thead>tr>th").each(function () {
@@ -244,7 +262,7 @@
                 var tr1 = $(this).parent().parent();
                 $(tr1).find("td").each(function () {
                     if ($(this).find("input").length == 0) {
-                        csv = csv +""+ $(this).text().replace(/^\s+|\s+$/g, "").replace(/\n/g,"").replace(/\r/g,"")+",";
+                        csv = csv + "" + $(this).text().replace(/^\s+|\s+$/g, "").replace(/\n/g, "").replace(/\r/g, "") + ",";
                     }
                 });
                 csv = csv + "\n";
@@ -253,7 +271,7 @@
         //console.log(csv);
         // 创建隐藏的可下载链接
         var eleLink = document.createElement('a');
-        eleLink.download = name+".csv";
+        eleLink.download = name + ".csv";
         eleLink.style.display = 'none';
         // 字符内容转变成blob地址
         var blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
@@ -268,18 +286,18 @@
 </script>
 <script>
     <!-- 表格拖动行-->
-    var oriPosition,tdId,targetPosition,startIndex=0;
-    var fixHelperModified = function(e, tr) {
+    var oriPosition, tdId, targetPosition, startIndex = 0;
+    var fixHelperModified = function (e, tr) {
                 var $originals = tr.children();
                 var $helper = tr.clone();
-                $helper.children().each(function(index) {
+                $helper.children().each(function (index) {
                     $(this).width($originals.eq(index).width())
                 });
                 return $helper;
             },
-            updateIndex = function(e, ui) {
+            updateIndex = function (e, ui) {
                 $('td.index', ui.item.parent()).each(function (i) {
-                    $(this).html(i +startIndex);
+                    $(this).html(i + startIndex);
                 });
                 updateTargetPosition();
                 updatePosition();
@@ -287,25 +305,25 @@
     $("table>tbody").sortable({
         helper: fixHelperModified,
         stop: updateIndex,
-        start:function (event, ui) {
-            startIndex=$("table>tbody").find("tr").eq(0).find("td.index").text();
-            startIndex=parseInt(startIndex);
-            tdId=$(ui.item[0]).find("td.id").text();
-            oriPosition=$(ui.item[0]).find("td.index").text();
+        start: function (event, ui) {
+            startIndex = $("table>tbody").find("tr").eq(0).find("td.index").text();
+            startIndex = parseInt(startIndex);
+            tdId = $(ui.item[0]).find("td.id").text();
+            oriPosition = $(ui.item[0]).find("td.index").text();
         }
     }).disableSelection();
     function updatePosition() {
         $("td.id").each(function (i) {
-            if($(this).text()==tdId){
-                targetPosition=$(this).next().text();
+            if ($(this).text() == tdId) {
+                targetPosition = $(this).next().text();
             }
         });
         //console.log(oriPosition+"移动到"+targetPosition);
     }
     function updateTargetPosition() {
         $("#sort>tbody").find("td.id").each(function () {
-            if($(this).text()==tdId){
-                targetPosition=$(this).next().text();
+            if ($(this).text() == tdId) {
+                targetPosition = $(this).next().text();
             }
         })
         //console.log("update:"+targetPosition);
