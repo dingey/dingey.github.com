@@ -185,18 +185,12 @@
                     newScript.onload=newScript.onreadystatechange=null;
                 }
                 while(a&&count>0){
-                    count=repeat(5);
+                    setTimeout(function(){
+                        count--;
+                    },50);
                 }
             })
         });
-    }
-    function repeat(i){
-        if(i>0){
-            i--;
-            setTimeout("repeat("+i+")",50);
-        }else{
-            return i;
-        }
     }
     $(function () {
         $("form:eq(0)").submit(function () {
