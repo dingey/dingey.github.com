@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>列表</title>
     <link href="https://dingey.github.io/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://dingey.github.io/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="https://dingey.github.io/demo/summernote/summernote.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -27,9 +27,7 @@
                 </select>
                 <label>标题</label>
                 <input type="text" name="title" class="form-control" placeholder="标题">
-                <div class="input-group">
-                    <input class="form-control date" name="date" placeholder="日期"/>
-                </div>
+                <input class="form-control date" name="date" placeholder="日期"/>
             </div>
             <button type="submit" class="btn btn-default">查询</button>
             <a href="edit.html" class="btn btn-primary">edit</a>
@@ -132,14 +130,9 @@
 </div>
 <script src="https://dingey.github.io/js/jquery.min.js"></script>
 <script src="https://dingey.github.io/js/bootstrap.min.js"></script>
-<script src="https://dingey.github.io/js/moment-with-locales.js"></script>
-<script src="https://dingey.github.io/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 <script src="https://dingey.github.io/js/jquery-ui.js"></script>
-<script src="common/upload.js"></script>
-<script src="summernote/summernote.zh-CN.js"></script>
-<script src="layer/layer.js"></script>
 <script>
-    var count=3;
     function page(num, size) {
         if (num == undefined) {
             num = 1;
@@ -148,57 +141,17 @@
             size = 10;
         }
         var url = $("form:eq(0)").attr("action");
-        if (url == undefined) {
-            url = window.location.pathname;
-        }
-        var param = $("form:eq(0)").serializeArray();
-        if ($("form:eq(0)").serialize().indexOf("pageNum") == -1) {
-            param.push({name: "pageNum", value: num});
-        }
-        if ($("form:eq(0)").serialize().indexOf("pageSize") == -1) {
-            param.push({name: "pageSize", value: size});
-        }
-        $.ajax({
-            url: url,
-            data: param
-        }).done(function (data) {
-            data=data.substring(data.indexOf("<body"),data.lastIndexOf("</body>")+7);
-            document.body.innerHTML=data;
-            for (var i = 0; i < param.length; i++) {
-                if (param[i].name != undefined && param[i].name != "") {
-                    $("body").find("form:eq(0)").find("input[name='" + param[i].name + "'],select[name='" + param[i].name + "']").val(param[i].value);
-                }
-            }
-            $("body").find("script").each(function () {
-                var newScript = document.createElement('script');
-                newScript.type = 'text/javascript';
-                newScript.innerHTML = $(this).html();
-                if($(this).attr("src")!=undefined){
-                    newScript.src=$(this).attr("src");
-                }
-                $(this).remove();
-                document.body.appendChild(newScript);
-                var a=true;
-                count=3;
-                newScript.onload=newScript.onreadystatechange=function(){
-                    if(!this.readyState||this.readyState=='loaded'||this.readyState=='complete'){
-                        a=false;
-                    }
-                    newScript.onload=newScript.onreadystatechange=null;
-                }
-                while(a&&count>0){
-                    setTimeout(function(){
-                        count--;
-                    },50);
-                }
-            })
-        });
+
     }
     $(function () {
-        $("form:eq(0)").submit(function () {
-            page();
-            return false;
-        });
+        var search = window.location.search;
+        if (search.indexOf("?") != -1) {
+            var str = search.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                $("[name='" + strs[i].split("=")[0] + "']").val(decodeURIComponent(strs[i].split("=")[1].replace(/\+/g,"%20")));
+            }
+        }
     });
 </script>
 <script>
@@ -250,13 +203,7 @@
                             "checked", $(this).prop("checked"));
                 }
         );
-        $('.date').datetimepicker({
-            showTodayButton: true,
-            showClear: true,
-            defaultDate: "2017-11-11 11:11:11",
-            locale: 'zh_CN',
-            format: 'YYYY-MM-DD HH:mm:ss'
-        });
+        $('.date').datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});
     });
 </script>
 <script>
