@@ -103,6 +103,12 @@ function initNumValid(){
         }
         $(this).val(v);
     });
+    $(".unsigned").keyup(function(){
+        if(v.indexOf('-')>=0){
+            v=v.replace(/-/g,'');
+            $(this).val(v);
+        }
+    });
 }
 // 通用JS校验
 function valid() {
