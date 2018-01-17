@@ -85,18 +85,32 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="col-xs-12" style="float: right">
-                <a href="#" onclick="downCSv()" class="btn btn-primary">下载csv</a>
-                <a href="#" onclick="page('1')">上一页</a>
-                <a href="#" onclick="page('2')">下一页</a>
-                ,当前第 1 页 ， 共 20 项 2 页，每页
-                <select style="height: 32px;" id="pgSize" onchange="changePgSize()">
-                    <option value="10" selected>10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                </select> 项 到第 <input type="text"
-                                      style="width:48px;height: 32px;" id="pgNum"> 页
-                <a class="btn btn-default" onclick="page($('#pgNum').val(),$('#pgSize').val())">GO</a>
+            <div class="col-sm-4"><a href="#" onclick="downCSv()" class="btn btn-primary">下载csv</a></div>
+            <div class="col-sm-8 pull-right" style="padding-right: 0px;">
+                <div class="btn-toolbar pull-right" style="width: 653px;">
+                    <div class="input-group" style="width: 168px;">
+                        <span class="input-group-addon">每页</span>
+                        <select class="form-control">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span class="input-group-addon">条</span>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-default" style="cursor:text">共27项</a>
+                        <a class="btn btn-default">首页</a>
+                        <a class="btn btn-default">上一页</a>
+                        <a class="btn btn-default">下一页</a>
+                        <a class="btn btn-default">尾页</a>
+                    </div>
+                    <div class="input-group" style="width: 160px;">
+                        <span class="input-group-addon">第</span>
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn"><button class="btn btn-default">页 Go!</button></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -140,8 +154,17 @@
         if (size == undefined) {
             size = 10;
         }
-        var url = $("form:eq(0)").attr("action");
-
+        if ($("form:eq(0)").find("[name='pageNum']").length < 1) {
+            $("form:eq(0)").append("<input type='hidden' name='pageNum' value='" + num + "'>");
+        } else {
+            $("form:eq(0)").find("[name='pageNum']").val(num);
+        }
+        if ($("form:eq(0)").find("[name='pageSize']").length < 1) {
+            $("form:eq(0)").append("<input type='hidden' name='pageSize' value='" + size + "'>");
+        } else {
+            $("form:eq(0)").find("[name='pageNum']").val(size);
+        }
+        $("form:eq(0)").submit();
     }
     $(function () {
         var search = window.location.search;
