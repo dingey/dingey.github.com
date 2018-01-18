@@ -72,10 +72,19 @@ function isNum(s){
     }
     return false;
 }
-//保留两位小数的JS
 $(function(){
-    //initNumValid();
+    readlimit();
 })
+function readlimit() {
+    //只读元素限制
+    $("select[readonly]").each(function(){
+        $(this).attr('onfocus',"this.defaultIndex=this.selectedIndex;");
+        $(this).attr('onchange',"this.selectedIndex=this.defaultIndex;");
+    });
+    $("input[readonly],textarea[readonly]").click(function(event){
+        event.preventDefault();
+    });
+}
 function initNumValid(){
     $(".float2").keyup(function () {
         var v = $(this).val();

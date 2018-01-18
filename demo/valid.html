@@ -85,6 +85,39 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-sm-2 control-label">只读爱好：</label>
+            <div class="col-sm-2">
+                <select class="form-control" required readonly>
+                    <option value="0" selected>A</option>
+                    <option value="1">B</option>
+                </select>
+            </div>
+            <label class="col-sm-offset-2 col-sm-2 control-label">只读性别：</label>
+            <div class="col-sm-4">
+                <label class="radio-inline">
+                    <input type="radio" name="readsex" checked readonly required value="1">男
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="readsex" readonly required value="2">女
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">只读城市：</label>
+            <div class="col-sm-4">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="readcityId" readonly checked required value="100000">北京
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="readcityId" readonly required value="310000">杭州
+                </label>
+            </div>
+            <label class="col-sm-2 control-label">只读名称:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" required readonly name="name" value="alice">
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-sm-2 control-label">备注：</label>
             <div class="col-sm-10">
                 <textarea class="form-control" rows="3" required></textarea>
