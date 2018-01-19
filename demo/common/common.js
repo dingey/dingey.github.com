@@ -73,9 +73,9 @@ function isNum(s){
     return false;
 }
 $(function(){
-    readlimit();
+    readonly();
 })
-function readlimit() {
+function readonly() {
     //只读元素限制
     $("select[readonly]").each(function(){
         $(this).attr('onfocus',"this.defaultIndex=this.selectedIndex;");
