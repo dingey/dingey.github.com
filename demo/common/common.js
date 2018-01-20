@@ -86,7 +86,7 @@ function readonly() {
     });
 }
 function initNumValid(){
-    $(".float2").keyup(function () {
+    $("input[float2]").keyup(function () {
         var v = $(this).val();
         if(v==""||v=="-"){
             return false;
@@ -104,7 +104,7 @@ function initNumValid(){
         }
         $(this).val(v);
     });
-    $(".int").keyup(function(){
+    $("input[int]").keyup(function(){
         var v = $(this).val();
         v=v.replace(/[^\-\d]/g,'');
         if(v.indexOf('-')>=0){
@@ -112,7 +112,7 @@ function initNumValid(){
         }
         $(this).val(v);
     });
-    $(".unsigned").keyup(function(){
+    $("input[unsigned]").keyup(function(){
         if(v.indexOf('-')>=0){
             v=v.replace(/-/g,'');
             $(this).val(v);
