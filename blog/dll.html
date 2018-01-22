@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>博客</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="blog.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="nav.js"></script>
+    <script src="blog.js"></script>
+</head>
+<body>
+<pre>
+//dllmain.cpp
+#include &lt;windows.h&gt;
+HMODULE m_gModule;
+BOOL APIENTRY DllMain(HMODULE hModule,DWORD ul_reason_for_call,LPVOID lpReserved)
+{
+    switch (ul_reason_for_call)
+    {
+    case DLL_PROCESS_ATTACH:
+        m_gModule = (HMODULE)hModule;
+        break;
+    case DLL_THREAD_ATTACH:
+    case DLL_THREAD_DETACH:
+    case DLL_PROCESS_DETACH:
+        break;
+    }
+    return TRUE;
+}
+_declspec(dllexport) void ExportFunc(LPCTSTR pszContent)
+{
+    char sz[MAX_PATH];
+    ::GetModuleFileNameA(m_gModule, sz, MAX_PATH);
+    ::MessageBoxA(NULL, pszContent, strrchr(sz, '\\')+1, MB_OK);
+}
+//调用时
+#include &lt;Windows.h&gt;
+#include "dllmain.h"
+#pragma comment(lib, "DllDemo.lib")
+void main()
+{
+    ExportFunc("aaa");
+}
+//动态调用方法在生成DLL上写xx.def
+EXPORTS
+    ExportFunc
+//动态调用
+#include &lt;Windows.h&gt;
+//声明函数原型
+typedef void (*PFNEXPORTFUNC)(LPCTSTR);//PFNEXPORTFUNC定义一个函数指针类型
+
+int main(int argc, char* argv[])
+{
+    //加载DLL
+    HMODULE hModule = ::LoadLibrary("DllDemo.dll");
+    if (hModule != NULL)
+    {
+        //取得ProcFunc的地址
+        PFNEXPORTFUNC mExportFunc = (PFNEXPORTFUNC)GetProcAddress(hModule, "ExportFunc");
+        if (mExportFunc != NULL)
+        {
+            mExportFunc("DFA");
+        }
+        //卸载库
+        ::FreeLibrary(hModule);
+    }
+    return 0;
+}
+</pre>
+</body>
+</html>
