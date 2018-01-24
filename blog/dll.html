@@ -27,16 +27,16 @@
 //dllmain.cpp
 #include &lt;windows.h&gt;
 HMODULE m_gModule;
-BOOL APIENTRY DllMain(HMODULE hModule,DWORD ul_reason_for_call,LPVOID lpReserved)
+BOOL APIENTRY DllMain(HMODULE hModule,DWORD ul_reason_for_call,LPVOID lpReserved) // 指向自身的句柄,调用原因,隐式加载和显式加载
 {
     switch (ul_reason_for_call)
     {
-    case DLL_PROCESS_ATTACH:
+    case DLL_PROCESS_ATTACH://文件被映射到进程的地址空间时
         m_gModule = (HMODULE)hModule;
         break;
-    case DLL_THREAD_ATTACH:
-    case DLL_THREAD_DETACH:
-    case DLL_PROCESS_DETACH:
+    case DLL_THREAD_ATTACH://当DLL被从进程的地址空间解除映射时
+    case DLL_THREAD_DETACH://当进程创建一线程时，系统查看当前映射到进程地址空间中的所有DLL文件映像，并用值DLL_THREAD_ATTACH调用DLL的DllMain函数。
+    case DLL_PROCESS_DETACH://如果线程调用了ExitThread来结束线程（线程函数返回时，系统也会自动调用ExitThread），系统查看当前映射到进程空间中的所有DLL文件映像，并用DLL_THREAD_DETACH来调用DllMain函数，通知所有的DLL去执行线程级的清理工作。
         break;
     }
     return TRUE;
