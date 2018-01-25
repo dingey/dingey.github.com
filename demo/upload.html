@@ -71,12 +71,12 @@
                             <!-- Text input-->
                             <label class="col-sm-2 control-label" for="date1">* 时间1：</label>
                             <div class="col-sm-4">
-                                <input id="date1" type="text" placeholder="" name="date" class="form-control"
+                                <input id="date1" type="text" datetime name="date" class="form-control"
                                        value="" required>
                             </div>
                             <label class="col-sm-2 control-label" for="date2">* 时间2：</label>
                             <div class="col-sm-4">
-                                <input id="date2" type="text" placeholder="" name="date" class="form-control"
+                                <input id="date2" type="text" time name="date" class="form-control"
                                        value="" required>
                             </div>
                         </div>
@@ -154,12 +154,27 @@
 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script src="layer/layer.js"></script>
 <script>
-    $('#date1,#date2').datetimepicker({
-        showTodayButton:true,
-        showClear:true,
-        defaultDate: "2016-05-06 20:25",
-        locale: 'zh_CN',
-        format: 'YYYY-MM-DD HH:mm:ss'
+    $(function () {
+        $('[datetime]').datetimepicker({
+            showTodayButton:true,
+            showClear:true,
+            //defaultDate: "2018-01-01 20:25",
+            locale: 'zh_CN',
+            format: 'YYYY-MM-DD HH:mm:ss'
+        });
+        $('[date]').datetimepicker({
+            showTodayButton:true,
+            showClear:true,
+            //defaultDate: "2018-01-01",
+            locale: 'zh_CN',
+            format: 'YYYY-MM-DD'
+        });
+        $('[time]').datetimepicker({
+            showTodayButton:true,
+            showClear: true,
+            locale: 'zh_CN',
+            format: 'HH:mm:ss'
+        });
     });
 </script>
 <script>
