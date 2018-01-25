@@ -1,0 +1,346 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>列表</title>
+    <link href="https://dingey.github.io/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://dingey.github.io/demo/summernote/summernote.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .date-select, .time-select {
+            display: inline-block;
+        / / width: 100 %;
+            height: 28px;
+        / / padding: 6 px 12 px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        table tr td.new,table tr td.old {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-inline" id="form">
+                <label>创建时间</label>
+                <input class="form-control" datetime><label>--</label>
+                <input class="form-control date" placeholder="日期">
+            </form>
+        </div>
+        <div class="col-sm-4">
+            <input class="form-control date" placeholder="日期">
+            <div class="popover fade bottom in" role="tooltip" id="popover1"
+                 style="top: 39px; left: 121.375px; display: block;">
+                <div class="arrow" style="left: 50%;"></div>
+                <div class="popover-content" style="padding: 5px;">
+                    <table class=" table-condensed" style="width: 216px;height: 291px;">
+                        <thead>
+                        <tr>
+                            <th><span class="glyphicon glyphicon-arrow-left"></span></th>
+                            <th colspan="3">
+                                <select class="date-select">
+                                    <option>2017</option>
+                                    <option>2018</option>
+                                    <option>2019</option>
+                                    <option>2020</option>
+                                </select>年
+                            </th>
+                            <th colspan="2">
+                                <select class="time-select" onchange="repaintDay($(this).parent().parent().parent().next(),$(this).parent().prev().find('select').val(),$(this).val())">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option selected>9</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                </select>月
+                            </th>
+                            <th><span class="glyphicon glyphicon-arrow-right"></span></th>
+                        </tr>
+                        <tr>
+                            <th class="dow">日</th>
+                            <th class="dow">一</th>
+                            <th class="dow">二</th>
+                            <th class="dow">三</th>
+                            <th class="dow">四</th>
+                            <th class="dow">五</th>
+                            <th class="dow">六</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="day old">31</td>
+                            <td class="day">1</td>
+                            <td class="day">2</td>
+                            <td class="day">3</td>
+                            <td class="day">4</td>
+                            <td class="day">5</td>
+                            <td class="day">6</td>
+                        </tr>
+                        <tr>
+                            <td class="day">7</td>
+                            <td class="day">8</td>
+                            <td class="day">9</td>
+                            <td class="day">10</td>
+                            <td class="day">11</td>
+                            <td class="day">12</td>
+                            <td class="day">13</td>
+                        </tr>
+                        <tr>
+                            <td class="day">14</td>
+                            <td class="day">15</td>
+                            <td class="day">16</td>
+                            <td class="day">17</td>
+                            <td class="day">18</td>
+                            <td class="day">19</td>
+                            <td class="day">20</td>
+                        </tr>
+                        <tr>
+                            <td class="day">21</td>
+                            <td class="day">22</td>
+                            <td class="day">23</td>
+                            <td class="day">24</td>
+                            <td class="day active">25</td>
+                            <td class="day">26</td>
+                            <td class="day">27</td>
+                        </tr>
+                        <tr>
+                            <td class="day">28</td>
+                            <td class="day">29</td>
+                            <td class="day">30</td>
+                            <td class="day">31</td>
+                            <td class="day new">1</td>
+                            <td class="day new">2</td>
+                            <td class="day new">3</td>
+                        </tr>
+                        <tr>
+                            <td class="day new">4</td>
+                            <td class="day new">5</td>
+                            <td class="day new">6</td>
+                            <td class="day new">7</td>
+                            <td class="day new">8</td>
+                            <td class="day new">9</td>
+                            <td class="day new">10</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="7" style="height: 32px;">
+                                <span class="glyphicon glyphicon-screenshot btn" aria-hidden="true" title="当前日期" onclick="curDate($(this))"></span>
+                                <span class="glyphicon glyphicon-time btn" aria-hidden="true" title="选择时间" style="margin-left: 40px;"
+                                      onclick="$(this).parent().parent().parent().parent().hide().next().show()"></span>
+                                <span class="glyphicon glyphicon-remove pull-right btn" aria-hidden="true" title="清除"
+                                      onclick="clearv($(this),'d')"></span></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <table class=" table-condensed" style="width: 216px;height: 291px;display: none">
+                        <thead>
+                        <tr>
+                            <th class="text-center">时</th>
+                            <th class="text-center">分</th>
+                            <th class="text-center">秒</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-center">
+                        <tr>
+                            <td><span class="glyphicon glyphicon-chevron-up btn" aria-hidden="true" onclick="increase($(this),0,23,0)" onmousedown="increaseDown($(this),0,23,0)" onmouseup="holdUp()"></span></td>
+                            <td><span class="glyphicon glyphicon-chevron-up btn" aria-hidden="true" onclick="increase($(this),1,59,0)" onmousedown="increaseDown($(this),1,59,0)" onmouseup="holdUp()"></span></td>
+                            <td><span class="glyphicon glyphicon-chevron-up btn" aria-hidden="true" onclick="increase($(this),2,59,0)" onmousedown="increaseDown($(this),2,59,0)" onmouseup="holdUp()"></span></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control" value="0" onkeyup="limit($(this),23)"></td>
+                            <td><input type="text" class="form-control" value="0" onkeyup="limit($(this),59)"></td>
+                            <td><input type="text" class="form-control" value="0" onkeyup="limit($(this),59)"></td>
+                        </tr>
+                        <tr>
+                            <td><span class="glyphicon glyphicon-chevron-down btn" aria-hidden="true" onclick="decrease($(this),0,23,0)" onmousedown="decreaseDown($(this),0,23,0)" onmouseup="holdUp()"></span></td>
+                            <td><span class="glyphicon glyphicon-chevron-down btn" aria-hidden="true" onclick="decrease($(this),1,59,0)" onmousedown="decreaseDown($(this),1,59,0)" onmouseup="holdUp()"></span></td>
+                            <td><span class="glyphicon glyphicon-chevron-down btn" aria-hidden="true" onclick="decrease($(this),2,59,0)" onmousedown="decreaseDown($(this),2,59,0)" onmouseup="holdUp()"></span></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th class="today"><span class="glyphicon glyphicon-screenshot btn" aria-hidden="true" title="现在时刻" onclick="curTime($(this))"></span></th>
+                            <th class="text-center"><span class="glyphicon glyphicon-calendar btn" aria-hidden="true" title="选择日期"
+                                onclick="$(this).parent().parent().parent().parent().hide().prev().show()"></span></th>
+                            <th class="clear"><span class="glyphicon glyphicon-remove pull-right btn" aria-hidden="true" title="清除"
+                                                    onclick="clearv($(this),'t')"></span></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://dingey.github.io/js/jquery.min.js"></script>
+<script src="https://dingey.github.io/js/bootstrap.min.js"></script>
+<script src="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script>
+    <!--时间下拉选择 -->
+    var timeStart,timeEnd,time;//申明全局变量
+    function increaseDown(e1,i,max,min)//鼠标按下时触发
+    {
+        timeStart=new Date().getTime();//获取鼠标按下时的时间
+        time=setInterval(function()//setInterval会每100毫秒执行一次
+        {
+            timeEnd=new Date().getTime();//也就是每100毫秒获取一次时间
+            if(timeEnd-timeStart>500){
+                increase(e1,i,max,min);
+            }
+            if(timeEnd-timeStart>6000)//如果此时检测到的时间与第一次获取的时间差有1000毫秒
+            {
+                clearInterval(time);//便不再继续重复此函数 （clearInterval取消周期性执行）
+            }
+        },100);
+    }
+    function decreaseDown(e1,i,max,min)//鼠标按下时触发
+    {
+        timeStart=new Date().getTime();//获取鼠标按下时的时间
+        time=setInterval(function()//setInterval会每100毫秒执行一次
+        {
+            timeEnd=new Date().getTime();//也就是每100毫秒获取一次时间
+            if(timeEnd-timeStart>500){
+                decrease(e1,i,max,min);
+            }
+            if(timeEnd-timeStart>6000)//如果此时检测到的时间与第一次获取的时间差有1000毫秒
+            {
+                clearInterval(time);//便不再继续重复此函数 （clearInterval取消周期性执行）
+            }
+        },100);
+    }
+    function holdUp()
+    {
+        clearInterval(time);//如果按下时间不到1000毫秒便弹起，
+    }
+    //时间递增
+    function increase(e1,i,max,min){
+        var a=$(e1).parent().parent().next().find('input:eq('+i+')');
+        var v=parseInt($(a).val())+1;
+        if(v<=max){
+            $(a).val(v);
+        }else{
+            $(a).val(min);
+        }
+    }
+    //时间递减
+    function decrease(e1,i,max,min){
+        var a=$(e1).parent().parent().prev().find('input:eq('+i+')');
+        var v=parseInt($(a).val())-1;
+        if(v>=min){
+            $(a).val(v);
+        }else{
+            $(a).val(max);
+        }
+    }
+    //限制元素的输入数字的最大值
+    function limit(e,max){
+        var v=$(e).val().replace(/[^\d]/g,'');
+        if(v>max){
+            v=max;
+        }
+        $(e).val(v);
+    }
+    //清除选择时间
+    function clearv(e,t){
+        $(e).parent().parent().parent().parent().parent().parent().prev().val('');
+    }
+    //当前时间
+    function curTime(e){
+        var date = new Date();//获取系统当前时间
+        var tr=$(e).parent().parent().parent().prev().find("tr:eq(1)");
+        $(tr).find("input:eq(0)").val(date.getHours()); //获取当前小时数(0-23)
+        $(tr).find("input:eq(1)").val(date.getMinutes()); //获取当前分钟数(0-59)
+        $(tr).find("input:eq(2)").val(date.getSeconds()); //获取当前秒数(0-59)
+    }
+    //当前日期
+    function curDate(e) {
+        var myDate = new Date();//获取系统当前时间
+        var thead=$(e).parent().parent().parent().prev().prev();
+        $(thead).find("select:eq(0)").val(myDate.getFullYear());
+        $(thead).find("select:eq(1)").val(myDate.getMonth()+1);
+    }
+    //重绘日期
+    function repaintDay(tbody,year,month) {
+        var date=new Date(year,month,0);
+        var days=date.getDate();
+        var week=new Date(year,month-1,1).getDay();
+        var preMax=new Date(year,month-1,0).getDate();
+        console.log("时间："+year+"-"+month+" 该月共: "+days+"天；该月第一天是星期"+(week+1)+" ；上月最后一天："+preMax);
+        $(tbody).empty();
+        var count=0;
+        var h="<tr>";
+        if(week>0){
+            for(var i=0;i<week;i++){
+                count++;
+                h+="<td class='day old'>"+(preMax-week+i+1)+"</td>";
+                console.log((preMax-week+i+1));
+            }
+        }else{
+            for(var i=0;i<7;i++){
+                count++;
+                h+="<td class='day old'>"+(preMax-6+i)+"</td>";
+                console.log((preMax-6+i));
+            }
+            h+="</tr><tr>";
+        }
+        for(var i=0;i<days;i++){
+            count++;
+            h+="<td>"+(i+1)+"</td>";
+            if(count%7==0){
+                h+="</tr><tr>";
+            }
+        }
+        var len=42-count;
+        for(var i=0;i<len;i++){
+            count++;
+            h+="<td class='day new'>"+(i+1)+"</td>";
+            if(count%7==0){
+                h+="</tr>";
+            }
+        }
+        $(tbody).append(h);
+    }
+</script>
+<script>
+    function initDate() {
+        $('.date').datetimepicker({clearBtn: 1, todayBtn: 1, autoclose: 1});
+    }
+
+    $(function () {
+        initDate();
+        $("[datetime]").each(function (i) {
+            var htm = "标签名/文本占位符(表格：*分隔列,换行符分隔行)";
+            $(this).popover({
+                container: 'body',
+                placement: 'bottom',
+                content: htm,
+                html: true,
+                trigger: 'click'
+            });
+        });
+    });
+</script>
+</body>
+</html>
