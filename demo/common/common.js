@@ -86,18 +86,32 @@ function readonly() {
     });
 }
 function initNumValid(){
-    $("input[float2]").keyup(function () {
+    $("input[float]").keyup(function () {
         var v = $(this).val();
         if(v==""||v=="-"){
             return false;
-        }else {
-            v=v.replace(/[^\-\d.]/g,'');
+        }else if(v.startsWith("-")){
+            v="-"+v.replace(/[^\d.]/g,'');
+        }else{
+            v=v.replace(/[^\d.]/g,'');
         }
         if(v.split(".").length>2){
             v=v.split(".")[0]+"."+v.split(".")[1];
         }
-        if(v.indexOf('-')>=0){
-            v='-'+v.replace(/-/g,'');
+        if(!v.endsWith(".")){
+            v=Math.round(v*100)/100;
+        }
+        $(this).val(v);
+    });
+    $("input[ufloat]").keyup(function () {
+        var v = $(this).val();
+        if(v==""){
+            return false;
+        }else {
+            v=v.replace(/[^\d.]/g,'');
+        }
+        if(v.split(".").length>2){
+            v=v.split(".")[0]+"."+v.split(".")[1];
         }
         if(!v.endsWith(".")){
             v=Math.round(v*100)/100;
@@ -106,17 +120,17 @@ function initNumValid(){
     });
     $("input[int]").keyup(function(){
         var v = $(this).val();
-        v=v.replace(/[^\-\d]/g,'');
-        if(v.indexOf('-')>=0){
-            v='-'+v.replace(/-/g,'');
+        if(v.startsWith("-")){
+            v="-"+v.replace(/[^\d]/g,'');
+        }else{
+            v=v.replace(/[^\d]/g,'');
         }
         $(this).val(v);
     });
-    $("input[unsigned]").keyup(function(){
-        if(v.indexOf('-')>=0){
-            v=v.replace(/-/g,'');
-            $(this).val(v);
-        }
+    $("input[uint]").keyup(function(){
+        var v = $(this).val();
+        v=v.replace(/[^\d]/g,'');
+        $(this).val(v);
     });
 }
 // 通用JS校验
