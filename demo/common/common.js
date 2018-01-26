@@ -74,6 +74,7 @@ function isNum(s){
 }
 $(function(){
     readonly();
+    numValid();
 })
 function readonly() {
     //只读元素限制
@@ -85,7 +86,7 @@ function readonly() {
         event.preventDefault();
     });
 }
-function initNumValid(){
+function numValid(){
     $("input[float]").keyup(function () {
         var v = $(this).val();
         if(v==""||v=="-"){
