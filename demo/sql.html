@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>现金券辅助sql</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <h3 class="text-center">生成使用规则sql</h3>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <select class="form-control" id="type1">
+                    <option value="0">活动ID</option>
+                    <option value="1">现金券ID</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <input type="text" placeholder="券/活动ID" class="form-control" id="id1">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">使用说明</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="3" id="desc"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                <a class="btn btn-primary" onclick="gen1()">生成</a>
+                <button class="btn btn-default" type="reset">重置</button>
+                <a class="btn btn-primary" onclick="copyToClipboard('#sql1')">复制到剪切板</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                <textarea class="form-control" rows="3" id="sql1"></textarea>
+            </div>
+        </div>
+    </form>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <h3 class="text-center">生成时间sql</h3>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <select class="form-control" id="type2">
+                    <option value="0">活动ID</option>
+                    <option value="1">现金券ID</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <input type="text" placeholder="券/活动ID" class="form-control" id="id2">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">时间：</label>
+            <div class="col-sm-4">
+                <input type="text" datetime class="form-control" id="start">
+            </div>
+            <span style="height:34px;line-height: 34px;min-width: 14px;float: left">至</span>
+            <div class="col-sm-4">
+                <input type="text" datetime class="form-control" id="end">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                <a class="btn btn-primary" onclick="gen2()">生成</a>
+                <button class="btn btn-default" type="reset">重置</button>
+                <a class="btn btn-primary" onclick="copyToClipboard('#sql2')">复制到剪切板</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                <textarea class="form-control" rows="3" id="sql2"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://dingey.github.io/demo/layer/layer.js"></script>
+<script>
+    function gen1() {
+        var sql="UPDATE t_marketing_coupon SET coupon_use_rule='"+$("#desc").val()+"' WHERE "+($("#type1").val()=="0"?"marketing_activity_id=":"marketing_coupon_id=")+$("#id1").val()+";";
+        $("#sql1").val(sql);
+    }
+    function gen2() {
+        var sql1="";
+        var sql2="";
+        if($("#type2").val()==0){
+            sql1+="UPDATE t_marketing_activity SET activity_begin_time='"+$("#start").val()+"',activity_end_time='"+$("#end").val()+"' WHERE marketing_activity_id="+$("#id2").val()+";";
+            sql2+="UPDATE t_marketing_coupon SET activity_begin_time='"+$("#start").val()+"',activity_end_time='"+$("#end").val()+"' WHERE marketing_activity_id="+$("#id2").val()+";";
+        }else{
+            sql1+="UPDATE t_marketing_activity SET activity_begin_time='"+$("#start").val()+"',activity_end_time='"+$("#end").val()+"' WHERE marketing_activity_id=(SELECT marketing_activity_id from t_marketing_coupon WHERE marketing_coupon_id="+$("#id2").val()+");";
+            sql2+="UPDATE t_marketing_coupon SET activity_begin_time='"+$("#start").val()+"',activity_end_time='"+$("#end").val()+"' WHERE marketing_coupon_id="+$("#id2").val()+";";
+        }
+        sql1+="\r\n"+sql2;
+        $("#sql2").val(sql1);
+    }
+    $('[datetime]').datetimepicker({
+        showTodayButton:true,
+        showClear:true,
+        defaultDate: "2016-05-06 20:25",
+        locale: 'zh_CN',
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
+</script>
+<script>
+    function copyToClipboard (id) {
+        var text=$(id).val();
+        if(text.indexOf('-') !== -1) {
+            let arr = text.split('-');
+            text = arr[0] + arr[1];
+        }
+        var textArea = document.createElement("textarea");
+        textArea.style.position = 'fixed';
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        textArea.style.padding = '0';
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        textArea.style.background = 'transparent';
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? '成功复制到剪贴板' : '该浏览器不支持点击复制到剪贴板';
+            layer.msg(msg);
+        } catch (err) {
+            layer.msg('该浏览器不支持点击复制到剪贴板');
+        }
+        document.body.removeChild(textArea);
+    }
+</script>
+</body>
+</html>
