@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>空白</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="share/css/i_share.css">
+</head>
+<body>
+<br/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="button" class="btn btn-default btn-block" value="分享">
+        </div>
+    </div>
+</div>
+<div id="i_share" class="hide"></div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="share/js/i_share.js"></script>
+<script>
+    $('input').click(function () {
+        $('#i_share').removeClass('hide');
+    })
+    i_share.init({
+        title: '分享标题'
+        , description: '分享描述'
+        , url: location.href
+        , from: ''
+        , imgUrl: ''
+        //,fail: function(){}
+    });
+</script>
+</body>
+</html>
