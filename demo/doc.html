@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>api</title>
+    <link rel="stylesheet" href="css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">数据接口文档&nbsp;<span class="layui-badge layui-bg-gray">9</span></div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">用户</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#列表一">列表</a></dd>
+                        <dd><a href="#列表二">编辑</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="#解决方案">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#解决方案#列表一">列表一</a></dd>
+                        <dd><a href="#解决方案#超链接">超链接</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div class="layui-tab layui-tab-brief" lay-filter="demo">
+            <ul class="layui-tab-title">
+                <li class="layui-this"><span class="layui-badge">GET</span>&emsp;/admin/hi</li>
+                <li>调试</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="150">
+                            <col>
+                        </colgroup>
+                        <tr>
+                            <th><b>路径</b></th>
+                            <td colspan="3">/user</td>
+                        </tr>
+                        <tr>
+                            <th><b>标题</b></th>
+                            <td colspan="3">修改用户信息</td>
+                        </tr>
+                        <tr>
+                            <th><b>描述</b></th>
+                            <td colspan="3">修改用户基本信息</td>
+                        </tr>
+                        <tr>
+                            <th><b>Consumes</b></th>
+                            <td>application/json</td>
+                            <th><b>Produces</b></th>
+                            <td>*/*</td>
+                        </tr>
+                    </table>
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend><b>参数</b></legend>
+                    </fieldset>
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th><b>名称</b></th>
+                            <th><b>描述</b></th>
+                            <th><b>参数类型</b></th>
+                            <th><b>必填</b></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>name</td>
+                            <td>名称</td>
+                            <td>字符</td>
+                            <td>✔</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend><b>响应</b></legend>
+                    </fieldset>
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th><b>属性</b></th>
+                            <th><b>类型</b></th>
+                            <th><b>描述</b></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>整形</td>
+                            <td>主键</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="demo"></table>
+                    <div>
+                        <button class="layui-btn">执行</button>
+                    </div>
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>响应</legend>
+                    </fieldset>
+                    <div class="responseJson">
+                        <pre id="json-response"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="layui.all.js"></script>
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+
+        //展示已知数据
+        table.render({
+            elem: '#demo'
+            , cols: [[ //标题栏
+                {field: 'name', title: '参数名', sort: true}
+                , {field: 'value', title: '值', edit: 'text'}
+                , {field: 'desc', title: '描述', minWidth: 150}
+                , {field: 'type', title: '类型', width: 80}
+                , {field: 'required', title: '必填', width: 80}
+            ]]
+            , data: [{
+                "name": "unionid"
+                , "value": "owI24wiLVt0MI045iF1C1c8fIiGE"
+                , "desc": "用户的唯一微信ID"
+                , "type": "字符"
+                , "required": "✖"
+            }, {
+                "name": "store_id"
+                , "value": "30016"
+                , "desc": "店铺ID"
+                , "type": "数字"
+                , "required": "✔"
+            }]
+            //,skin: 'line' //表格风格
+            //, even: true
+            //,page: true //是否显示分页
+            //,limits: [5, 7, 10]
+            //,limit: 5 //每页默认显示的数量
+        });
+    });
+</script>
+</body>
+</html>
