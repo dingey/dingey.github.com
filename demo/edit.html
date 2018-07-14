@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>上传图片</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="summernote/summernote.css" rel="stylesheet">
+    <link href="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://dingey.github.io/demo/summernote/summernote.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -67,10 +67,11 @@
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="datetimepicker/bootstrap-datetimepicker.min.js"></script>
-<script src="common/upload.js"></script>
-<script src="summernote/summernote.zh-CN.js"></script>
-<script src="layer/layer.js"></script>
+<script src="https://dingey.github.io/demo/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="https://dingey.github.io/demo/common/upload.js"></script>
+<script src="https://dingey.github.io/demo/summernote/summernote.js"></script>
+<script src="https://dingey.github.io/demo/summernote/summernote-zh-CN.js"></script>
+<script src="https://dingey.github.io/demo/layer/layer.js"></script>
 <script>
     $(function () {
         $('#date1,#date2').datetimepicker({
@@ -80,6 +81,7 @@
         });
         var url = "";
         $("#message").summernote({
+            dialogsFade: true,
             height: 200,
             callbacks: {
                 onImageUpload: function (files) {
@@ -100,23 +102,6 @@
             parent.layer.close(index);
             layer.msg('保存成功');
         }, 2000);
-        /**
-         var b=true;var msg="错误：";
-         if($("#activityName").val()==""){
-            b=false;
-            msg+="活动名称不能为空；";
-        }
-         if(b){
-            $.post("save", $("form").eq(0).serialize(), function (data) {
-                if (data.message == "success") {
-                    window.location.href = "list.html";
-                }else{
-                    alert(data.data);
-                }
-            }, 'json')
-        }else{
-            alert(msg);
-        }**/
     }
 </script>
 </body>
