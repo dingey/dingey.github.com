@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>表单布局生成</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="build.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <br/>
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-horizontal" id="left">
+                <input type="file" style="display: none;">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">文本</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">文本</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="" value="">
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="form-control-static">备注文本</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">文本</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="" value="">
+                    </div>
+                    <span class="append-span">紧跟文本</span>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">文本</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="" value="">
+                    </div>
+                    <a class="btn btn-default">确定</a>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">文本</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" aria-label="">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">时间</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" datetime value="">
+                    </div>
+                    <span style="height:34px;line-height: 34px;min-width: 14px;float: left">至</span>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" datetime value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">下拉</label>
+                    <div class="col-sm-8">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">单选</label>
+                    <div class="col-sm-10">
+                        <label class="radio-inline">
+                            <input type="radio" name="radio" value="option1"> 1
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio" value="option2"> 2
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">多选</label>
+                    <div class="col-sm-10">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="checkbox" value="option1"> 1
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="checkbox" value="option2"> 2
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">文件上传</label>
+                    <div class="col-sm-10">
+                        <input type="file">
+                        <p class="help-block">上传说明</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">图片上传</label>
+                    <div class="col-sm-10">
+                        <img src="https://dingey.github.io/images/img.png" style="width: 86px;height: 81px;"
+                             onclick="$('input[type=file]')[0].click();">
+                        <input type="file" style="display: none">
+                        <p class="help-block">建议尺寸</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">描述</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <a class="btn btn-primary">确定</a>
+                        <a class="btn btn-default">返回</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" adjust title="自适应">
+                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" clear title="清空">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" higher title="增加边框下边距">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" lower title="减少边框下边距">
+                        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" preview title="预览">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-default" source title="源码">
+                        <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-default" download title="下载页面">
+                        <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            <br/>
+            <div class="row block" id="fc" style="min-height: 561px;">
+                <form class="form-horizontal">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="build.js" hide></script>
+</body>
+</html>
