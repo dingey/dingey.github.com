@@ -304,7 +304,11 @@ function delpopover() {
 
 $(function () {
     $("[adjust]").click(function () {
-        $("body>div").toggleClass("container", "container-fluid");
+        if( $("body>div").hasClass("container-fluid")){
+            $("body>div").removeClass("container-fluid").addClass("container");
+        }else {
+            $("body>div").removeClass("container").addClass("container-fluid");
+        }
     });
     $("[clear]").click(function () {
         $("#fc>form").empty();
