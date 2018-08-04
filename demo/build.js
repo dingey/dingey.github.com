@@ -208,7 +208,7 @@ function savepop() {
             } else if ($(a).find("input[type=text],input[type=password],textarea").length > 0) {
                 $(a).find("input[type=text],input[type=password],textarea").attr("placeholder", pop_val);
             } else if ($(a).find("p").length > 0) {
-                $(a).find("p").html(paop_val);
+                $(a).find("p").html(pop_val);
             } else if ($(a).find("[type=checkbox]").length > 0) {
                 v = pop_val.split(/[\s\n]/);
                 debug("checkbox:" + v.length);
