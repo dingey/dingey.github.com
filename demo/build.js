@@ -302,6 +302,10 @@ function delpopover() {
     $("div.popover").remove();
 }
 
+function clear(dom) {
+    $(dom).removeClass("ui-sortable").find("div,label,span,a").removeClass("ui-draggable").removeClass("ui-draggable-handle").removeClass("ui-sortable").removeClass("ui-droppable").removeClass("ui-draggable").removeClass("ui-sortable-handle").removeClass("ui-draggable-dragging").removeAttr("style").removeAttr("data-original-title").removeAttr("title");
+}
+
 $(function () {
     $("[adjust]").click(function () {
         if( $("body>div").hasClass("container-fluid")){
@@ -331,7 +335,7 @@ $(function () {
         $(".modal").remove();
         var a = $("#fc").clone().removeClass("ui-sortable");
         $(a).find("form").removeClass("ui-sortable");
-        $(a).find("div,label,span,a").removeClass("ui-draggable").removeClass("ui-draggable-handle").removeClass("ui-sortable").removeClass("ui-droppable").removeClass("ui-draggable").removeClass("ui-sortable-handle").removeAttr("style").removeAttr("data-original-title");
+        clear(a);
         $("body").append("<div class='modal fade'><div class='modal-dialog modal-lg'><div class='modal-content'><div class='modal-header'>源码</div> <div class='modal-body'><textarea style='min-height: 640px;' class='form-control' id='textarea'></textarea></div></div></div></div>");
         $("#textarea").val($(a).html());
         $('.modal').modal('show');
@@ -339,7 +343,7 @@ $(function () {
     $("[preview]").click(function () {
         $(".modal").remove();
         var a = $("#fc").clone().removeClass("ui-sortable");
-        $(a).find("div,label,span,a").removeClass("ui-draggable").removeClass("ui-draggable-handle").removeClass("ui-sortable").removeClass("ui-droppable").removeClass("ui-draggable").removeClass("ui-sortable-handle").removeAttr("style");
+        clear(a);
         $("body").append("<div class='modal fade'><div class='modal-dialog modal-lg'><div class='modal-content'><div class='modal-header'>预览</div> <div class='modal-body'>" + $(a).html() + "</div></div></div></div>");
         initData();
         $('.modal').modal('show');
@@ -349,7 +353,7 @@ $(function () {
         $(html).find("body").removeAttr("style");
         var a = $("#fc").clone().removeClass("ui-sortable");
         $(a).find("form").removeClass("ui-sortable");
-        $(a).find("div,label,span").removeClass("ui-draggable").removeClass("ui-draggable-handle").removeClass("ui-sortable").removeClass("ui-droppable").removeClass("ui-draggable").removeClass("ui-sortable-handle").removeAttr("style");
+        clear(a);
         $(html).find("div.container,div.container-fluid").empty().append($(a).html()).before("<br>\n");
         $(html).find("[hide]").remove();
         $(html).find("body").append("<script>\n$(function(){\n    $('[datetime]').datetimepicker({\n" +
