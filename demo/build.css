@@ -10,4 +10,8 @@
 .append-span {
     height: 34px;
     line-height: 34px;
+    float:left;
+}
+.form-group>.btn {
+    float:left;
 }
