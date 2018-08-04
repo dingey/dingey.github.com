@@ -330,6 +330,7 @@ $(function () {
     $("[source]").click(function () {
         $(".modal").remove();
         var a = $("#fc").clone().removeClass("ui-sortable");
+        $(a).find("form").removeClass("ui-sortable");
         $(a).find("div,label,span").removeClass("ui-draggable").removeClass("ui-draggable-handle").removeClass("ui-sortable").removeClass("ui-droppable").removeClass("ui-draggable").removeClass("ui-sortable-handle").removeAttr("style");
         $("body").append("<div class='modal fade'><div class='modal-dialog modal-lg'><div class='modal-content'><div class='modal-header'>源码</div> <div class='modal-body'><textarea style='min-height: 640px;' class='form-control' id='textarea'></textarea></div></div></div></div>");
         $("#textarea").val($(a).html());
@@ -346,6 +347,7 @@ $(function () {
         var html = $("html").clone();
         $(html).find("body").removeAttr("style");
         var a = $("#fc").clone().removeClass("ui-sortable");
+        $(a).find("form").removeClass("ui-sortable");
         $(a).find("div,label,span").removeClass("ui-draggable").removeClass("ui-draggable-handle").removeClass("ui-sortable").removeClass("ui-droppable").removeClass("ui-draggable").removeClass("ui-sortable-handle").removeAttr("style");
         $(html).find("div.container,div.container-fluid").empty().append($(a).html()).before("<br>\n");
         $(html).find("[hide]").remove();
