@@ -210,7 +210,7 @@ function savepop() {
             } else if ($(a).find("p").length > 0) {
                 $(a).find("p").html(paop_val);
             } else if ($(a).find("[type=checkbox]").length > 0) {
-                v = pop_val.split("\r\n");
+                v = pop_val.split(/[\s\n]/);
                 debug("checkbox:" + v.length);
                 $(a).empty();
                 for (var i = 0; i < v.length; i++) {
