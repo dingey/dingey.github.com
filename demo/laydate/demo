@@ -1,0 +1,3 @@
+lay('[datetime]').each(function(){laydate.render({elem: this,type: 'datetime'});});
+lay('[datetime]').each(function(){laydate.render({elem: this,type: 'time'});});
+lay('[datetime]').each(function(){laydate.render({elem: this,type: 'date'});});
