@@ -281,6 +281,14 @@ function valid() {
                 msg += $(this).attr("less-val-msg") + "、";
             }
         }
+        //正则匹配
+        if($(this).attr("pattern") != undefined && $(this).attr("pattern") != ""){
+            var reg=new RegExp($(this).attr("pattern"),"gm");
+            if(!reg.test($(this).val())){
+                a = false;
+                msg+=$(this).attr("pattern-msg") + "、";
+            }
+        }        
     });
     if (!a) {
         layer.msg(msg);
