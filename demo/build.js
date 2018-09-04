@@ -81,7 +81,7 @@ function rightSort() {
     $("#fc>form>div.form-group").sortable();//表单行内元素排序
 }
 
-var formElement = "#fc>form>div.form-group>div,#fc>form>div.form-group>label,#fc>form>div.form-group>span,#fc>form>div.form-group>a.btn,#fc>form>div.form-group>button";
+var formElement = "#fc>form>div.form-group>div,#fc>form>div.form-group>label,#fc>form>div.form-group>span,#fc>form>div.form-group>a.btn,#fc>form>div.form-group>button,#fc>form>div.form-group>p,#fc>form>div.form-group>div>a.btn";
 //鼠标移入边框
 $(function () {
     hoverBorder();
