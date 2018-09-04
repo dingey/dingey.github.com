@@ -81,7 +81,7 @@ function rightSort() {
     $("#fc>form>div.form-group").sortable();//表单行内元素排序
 }
 
-var formElement = "#fc>form>div.form-group>div,#fc>form>div.form-group>label,#fc>form>div.form-group>span,#fc>form>div.form-group>a.btn,#fc>form>div.form-group>button,#fc>form>div.form-group>p,#fc>form>div.form-group>div>a.btn";
+var formElement = "#fc>form>div.form-group>div,#fc>form>div.form-group>label,#fc>form>div.form-group>span,#fc>form>div.form-group>a.btn,#fc>form>div.form-group>button,#fc>form>div.form-group>p,#fc>form>div.form-group a.btn";
 //鼠标移入边框
 $(function () {
     hoverBorder();
@@ -114,7 +114,7 @@ function popover() {
     $(formElement).click(function () {
         var htm = "";
         $(formElement).popover('destroy');
-        if ($(this).prop("nodeName") == "LABEL" || $(this).prop("nodeName") == "SPAN" || $(this).prop("nodeName") == "A" || $(this).prop("nodeName") == "BUTTON") {
+        if ($(this).prop("nodeName") == "LABEL" || $(this).prop("nodeName") == "SPAN" || $(this).prop("nodeName") == "A" || $(this).prop("nodeName") == "BUTTON"|| $(this).prop("nodeName") == "P") {
             var v = $(this).text().trim();
             htm = "标签名<input id='pop-value' type='text' class='form-control' value='" + v + "'>";
         } else if ($(this).find("input[type=text],input[type=password],textarea").length > 0) {
