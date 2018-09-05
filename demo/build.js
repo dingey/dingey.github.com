@@ -81,7 +81,7 @@ function rightSort() {
     $("#fc>form>div.form-group").sortable();//表单行内元素排序
 }
 
-var formElement = "#fc>form>div.form-group>div,#fc>form>div.form-group>label,#fc>form>div.form-group>span,#fc>form>div.form-group>a.btn,#fc>form>div.form-group>button,#fc>form>div.form-group>p";
+var formElement = "#fc>form>div.form-group>div,#fc>form>div.form-group>label,#fc>form>div.form-group>span,#fc>form>div.form-group>a,#fc>form>div.form-group>button,#fc>form>div.form-group>p";
 //鼠标移入边框
 $(function () {
     hoverBorder();
@@ -90,18 +90,27 @@ $(function () {
 //鼠标移入边框
 function hoverBorder() {
     //row
-    $("#left>div,#fc>form>div.form-group").hover(function () {
+    $("#left>div").hover(function () {
         $(this).addClass("border");
     }, function () {
+        $(this).removeClass("border");
+    });
+    $("#fc>form>div.form-group").hover(function () {
+        $(this).addClass("border");
+        if ($(this).find("i.fa-close").length < 1) {
+            $(this).append("<i class=\"pull-right fa fa-close\" onclick='$(this).parent().remove()'></i>");
+        }
+    }, function () {
+        $(this).find("i.fa-close").remove();
         $(this).removeClass("border");
     });
     //row element
-    $(formElement).hover(function () {
-        $(this).parent().removeClass("border");
-        $(this).addClass("border");
-    }, function () {
-        $(this).removeClass("border");
-    });
+    // $(formElement).hover(function () {
+    //     $(this).parent().removeClass("border");
+    //     $(this).addClass("border");
+    // }, function () {
+    //     $(this).removeClass("border");
+    // });
 }
 
 //元素弹出
@@ -114,7 +123,7 @@ function popover() {
     $(formElement).click(function () {
         var htm = "";
         $(formElement).popover('destroy');
-        if ($(this).prop("nodeName") == "LABEL" || $(this).prop("nodeName") == "SPAN" || $(this).prop("nodeName") == "A" || $(this).prop("nodeName") == "BUTTON"|| $(this).prop("nodeName") == "P") {
+        if ($(this).prop("nodeName") == "LABEL" || $(this).prop("nodeName") == "SPAN" || $(this).prop("nodeName") == "A" || $(this).prop("nodeName") == "BUTTON" || $(this).prop("nodeName") == "P") {
             var v = $(this).text().trim();
             htm = "标签名<input id='pop-value' type='text' class='form-control' value='" + v + "'>";
         } else if ($(this).find("input[type=text],input[type=password],textarea").length > 0) {
@@ -156,12 +165,30 @@ function popover() {
                 "<option value='time'>时间</option>";
             htm += "</select>";
         }
+        if ($(this).prop("nodeName") == "P" || $(this).prop("nodeName") == "LABEL") {
+            htm += "字体颜色<select class='form-control input-sm' id='ft-value'>";
+            htm += "<option value=''>无</option>" +
+                "<option value='text-primary'>首选</option>" +
+                "<option value='text-success'>成功</option>" +
+                "<option value='text-info'>信息</option>" +
+                "<option value='text-warning'>警告</option>" +
+                "<option value='text-danger'>危险</option>";
+            htm += "</select>";
+            htm += "背景色<select class='form-control input-sm' id='bg-value'>";
+            htm += "<option value=''>无</option>" +
+                "<option value='bg-primary'>首选</option>" +
+                "<option value='bg-success'>成功</option>" +
+                "<option value='bg-info'>一般信息</option>" +
+                "<option value='bg-warning'>警告</option>" +
+                "<option value='bg-danger'>危险</option>";
+            htm += "</select>";
+        }
         if ($(this).prop("nodeName") == "A" || $(this).prop("nodeName") == "BUTTON") {
             htm += "按钮类型<select class='form-control input-sm' id='btn-value'>";
             htm += "<option value='btn btn-default'>默认</option>" +
                 "<option value='btn btn-primary'>首选</option>" +
                 "<option value='btn btn-success'>成功</option>" +
-                "<option value='btn btn-info'>一般信息</option>" +
+                "<option value='btn btn-info'>信息</option>" +
                 "<option value='btn btn-warning'>警告</option>" +
                 "<option value='btn btn-danger'>危险</option>" +
                 "<option value='btn btn-link'>链接</option>";
@@ -212,7 +239,9 @@ function savepop() {
             var pop_val = $("#pop-value").val();
             var col_val = $("#col-value").val();
             var btn_val = $("#btn-value").val();
-            if ($(a).prop("nodeName") == "LABEL" || $(this).prop("nodeName") == "SPAN" || $(this).prop("nodeName") == "A" || $(this).prop("nodeName") == "BUTTON"|| $(this).prop("nodeName") == "P") {
+            var bg_val = $("#bg-value").val();
+            var ft_val = $("#ft-value").val();
+            if ($(a).prop("nodeName") == "LABEL" || $(this).prop("nodeName") == "SPAN" || $(this).prop("nodeName") == "A" || $(this).prop("nodeName") == "BUTTON" || $(this).prop("nodeName") == "P") {
                 $(a).text(pop_val);
             } else if ($(a).find("input[type=text],input[type=password],textarea").length > 0) {
                 $(a).find("input[type=text],input[type=password],textarea").attr("placeholder", pop_val);
@@ -285,11 +314,43 @@ function savepop() {
                     $(a).removeClass(cv);
                 }
             }
+            if ($(a).attr("class").indexOf("bg-") != -1 || bg_val != "") {
+                var bg = cssVal($(this).attr("class"),"bg-");
+                if(bg!=""){
+                    $(a).removeClass(bg);
+                }
+                if(bg_val!=""){
+                    $(a).addClass(bg_val);
+                }
+            }
+            if ($(a).attr("class").indexOf("text-") != -1 || ft_val != "") {
+                var tv = cssVal($(this).attr("class"),"text-");
+                if(tv!=""){
+                    $(a).removeClass(tv);
+                }
+                if(ft_val!=""){
+                    $(a).addClass(ft_val);
+                }
+            }
             $("div.popover").remove();
             return;
         }
     }).attr("aria-describedby", "");
     $("div.popover").remove();
+}
+//获取包含类名的类
+function cssVal(classStr,cname){
+    if(classStr.indexOf(cname)!=-1){
+        var cs = classStr.split(" ");
+        var cv = "";
+        for (var i = 0; i < cs.length; i++) {
+            if (cs[i].indexOf(cname) != -1) {
+                cv=cs[i];
+            }
+        }
+        return cv;
+    }
+    return "";
 }
 
 //获取class里的列宽
@@ -335,7 +396,7 @@ function delpopover() {
 }
 
 function clear(dom) {
-    $(dom).removeClass("ui-sortable").find("div,label,span,a").removeClass("ui-draggable").removeClass("ui-draggable-handle").removeClass("ui-sortable").removeClass("ui-droppable").removeClass("ui-draggable").removeClass("ui-sortable-handle").removeClass("ui-draggable-dragging").removeAttr("style").removeAttr("data-original-title").removeAttr("aria-describedby").removeAttr("title");
+    $(dom).removeClass("ui-sortable").find("div,label,span,a,p").removeClass("ui-draggable").removeClass("ui-draggable-handle").removeClass("ui-sortable").removeClass("ui-droppable").removeClass("ui-draggable").removeClass("ui-sortable-handle").removeClass("ui-draggable-dragging").removeAttr("style").removeAttr("data-original-title").removeAttr("aria-describedby").removeAttr("title");
 }
 
 $(function () {
