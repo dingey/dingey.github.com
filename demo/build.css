@@ -20,4 +20,5 @@
 .form-group>i.fa-close {
     font-size: 22px;
     background-color: #eee;
+    cursor: pointer;
 }
