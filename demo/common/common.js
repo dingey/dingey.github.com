@@ -219,6 +219,8 @@ function valid() {
                 var m = $(this).attr("required-msg");
                 if (m == undefined && $(this).parent().prev().prop("tagName") == "LABEL") {
                     m = $(this).parent().prev().html().replace("：", "").replace(":", "") + "不能为空";
+                } else if (m == undefined && $(this).parent().parent().prev().prop("tagName") == "LABEL") {
+                    m = $(this).parent().parent().prev().text().replace("：", "").replace(":", "").replace("*", "") + "不能为空";
                 }
                 if (msg.indexOf(m) == -1) {
                     msg += m + "、";
