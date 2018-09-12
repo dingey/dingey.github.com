@@ -17,7 +17,7 @@
     float:left;
 }
 
-.form-group>i.fa-close {
+#fc i.fa-close {
     font-size: 22px;
     background-color: #eee;
     cursor: pointer;
