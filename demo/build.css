@@ -12,6 +12,12 @@
     line-height: 34px;
     float:left;
 }
+
 .form-group>.btn {
     float:left;
+}
+
+.form-group>i.fa-close {
+    font-size: 22px;
+    background-color: #eee;
 }
