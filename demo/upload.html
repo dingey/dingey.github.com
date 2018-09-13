@@ -1,25 +1,66 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
     <title>上传图片</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <style>
-        body{
+        body {
             padding: 10px;
+        }
+
+        .md {
+            position: absolute;
+            background-color: white;
+            border-top: 1px solid #e1e3e9;
+            border-bottom: 1px solid #e1e3e9;
+            font-size: 18px;
+        }
+
+        .md.fa-close {
+            border-right: 1px solid #e1e3e9;
+            margin-left: -20px;
+            width: 18px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+
+        .md.fa-eye {
+            margin-left: -40px;
+            width: 22px;
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+
+        .md.fa-upload {
+            border-left: 1px solid #e1e3e9;
+            margin-left: -60px;
+            width: 22px;
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+
+        .md.fa-eye:hover, .md.fa-close:hover, .md.fa-upload:hover {
+            background-color: #e1e3e9;
+        }
+
+        .multi {
+            float: left;
+        }
+
+        .multi > img {
+            max-height: 81px;
+            float: left;
         }
     </style>
 </head>
@@ -38,9 +79,15 @@
                             </select>
                         </div>
                         <div class="form-group pull-right">
-                            <a class="btn btn-primary" data-toggle="modal" href="remote.html" data-target=".bs-example-modal-lg">加载</a>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">大窗口</button>
-                            <button type="button" class="btn btn-primary" onclick="$('.bs-example-modal-sm').modal({backdrop: 'static', keyboard: false});">小窗口</button>
+                            <a class="btn btn-primary" data-toggle="modal" href="remote.html"
+                               data-target=".bs-example-modal-lg">加载</a>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lg">大窗口
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                    onclick="$('.bs-example-modal-sm').modal({backdrop: 'static', keyboard: false});">
+                                小窗口
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -60,7 +107,8 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">* 图片：</label>
                             <!-- File Upload -->
-                            <input type="hidden" name="contentPicUrl" id="contentPicUrl" value="${(adContent.contentPicUrl)!}">
+                            <input type="hidden" name="contentPicUrl" id="contentPicUrl"
+                                   value="${(adContent.contentPicUrl)!}">
                             <div class="col-sm-10">
                                 <input class="input-file" id="img" type="file"
                                        onchange="uploadImg('#','img','contentPicUrl','preview');">
@@ -68,11 +116,30 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">图片上传</label>
+                            <div class="col-sm-8">
+                                <div class="col-sm-12 mul">
+                                    <div class="multi">
+                                        <img src="https://dingey.github.io/images/img.png">
+                                    </div>
+                                    <div class="multi">
+                                        <img src="http://tx.haiqq.com/uploads/allimg/150325/1221313942-10.jpg">
+                                    </div>
+                                    <div class="multi">
+                                        <img src="http://imgsrc.baidu.com/imgad/pic/item/a1ec08fa513d2697f803bb745efbb2fb4216d8c3.jpg">
+                                    </div>
+                                </div>
+                                <input type="file" style="display: none">
+                                <br>
+                                <p class="help-block">建议尺寸:100*100</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <!-- Text input-->
                             <label class="col-sm-2 control-label" for="date1">* 时间1：</label>
                             <div class="col-sm-4">
-                                <input id="date1" type="text" datetime name="date" class="form-control"
-                                       value="" required>
+                                <input id="date1" type="text" datetime name="date" class="form-control" value=""
+                                       required>
                             </div>
                             <label class="col-sm-2 control-label" for="date2">* 时间2：</label>
                             <div class="col-sm-4">
@@ -103,7 +170,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title">Modal title</h4>
             </div>
             <div class="modal-body">
@@ -123,7 +191,8 @@
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="exampleModalLabel">New message</h4>
             </div>
             <div class="modal-body">
@@ -152,40 +221,61 @@
 <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script src="layer/layer.js"></script>
+<script src="https://dingey.github.io/demo/layer/layer.js"></script>
 <script>
     $(function () {
         $('[datetime]').datetimepicker({
-            showTodayButton:true,
-            showClear:true,
+            showTodayButton: true,
+            showClear: true,
             //defaultDate: "2018-01-01 20:25",
             locale: 'zh_CN',
             format: 'YYYY-MM-DD HH:mm:ss'
         });
         $('[date]').datetimepicker({
-            showTodayButton:true,
-            showClear:true,
+            showTodayButton: true,
+            showClear: true,
             //defaultDate: "2018-01-01",
             locale: 'zh_CN',
             format: 'YYYY-MM-DD'
         });
         $('[time]').datetimepicker({
-            showTodayButton:true,
+            showTodayButton: true,
             showClear: true,
             locale: 'zh_CN',
             format: 'HH:mm:ss'
         });
+        $(".multi").hover(function () {
+            $(this).append("<i class=\"md fa fa-upload\" onclick=\"$('input[type=file]')[0].click();\"></i>");
+            $(this).append("<i class=\"md fa fa-eye\" onclick='showImg($(this))'></i>");
+            $(this).append("<i class=\"md fa fa-close\" onclick='if($(this).parent().parent().find(\".multi\").length>1){$(this).parent().remove()}'></i>");
+        }, function () {
+            $(this).find("i").remove();
+            $(this).find("i").remove();
+        });
+        $(".mul").sortable();
     });
+
+    function showImg(img) {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: $(img).parent().find("img").css("width")+"px",
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: "<img src='" + $(img).parent().find("img").attr("src") + "'>"
+        });
+    }
 </script>
 <script>
     function save() {
         var index = layer.load(1, {
-            shade: [0.1,'#fff'] //0.1透明度的白色背景
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         setTimeout(function () {
             parent.layer.close(index);
             layer.msg('保存成功');
-        },2000);
+        }, 2000);
     }
 </script>
 <script>
@@ -196,14 +286,14 @@
      valueSetId:返回地址赋值框
      previewId: 预览元素ID
      */
-    function uploadImg(url,fileInputId, valueSetId, previewId) {
+    function uploadImg(url, fileInputId, valueSetId, previewId) {
         if ($('#' + fileInputId).val() == "") {
             alert("请选择图片后再点击上传");
             return;
         }
         var formData = new FormData();
         formData.append('img', $('#' + fileInputId)[0].files[0]);
-        var index = layer.load(1, {shade: [0.1,'#fff'] });
+        var index = layer.load(1, {shade: [0.1, '#fff']});
         $.ajax({
             url: url,
             type: 'POST',
@@ -214,7 +304,7 @@
             dataType: "html"
         }).done(function (data) {
             $("#" + valueSetId).val(data);
-            $("#" + previewId).attr('src',data);
+            $("#" + previewId).attr('src', data);
             parent.layer.close(index);
         }).fail(function () {
             alert("保存失败，服务器出错，或网络异常。");
