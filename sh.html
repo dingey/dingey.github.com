@@ -15,7 +15,7 @@ $ docker ps -a // 查看所有容器<br><br>
 $ docker ps -a -q // 查看所有容器ID<br>
 $ docker stop $(docker ps -a -q) //  stop停止所有容器 <br>
 $ docker  rm $(docker ps -a -q) //   remove删除所有容器 <br>
-docker run --name mynginx -d -p 80:80  -v /conf/nginx.conf:/etc/nginx/nginx.conf  -v /logs/nginx:/var/log/nginx -d docker.io/nginx
+docker run --name mynginx -d -p 80:80  -v /conf/nginx.conf:/etc/nginx/nginx.conf  -v /logs/nginx:/var/log/nginx -d docker.io/nginx <br>
 docker exec -i mynginx nginx -s reload <br>
 docker exec -it 9fbe362214a6  /bin/bash  <br>
 ﻿从主机复制到容器sudo docker cp host_path containerID:container_path <br>
