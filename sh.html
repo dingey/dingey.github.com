@@ -16,6 +16,7 @@ $ docker ps -a -q // 查看所有容器ID<br>
 $ docker stop $(docker ps -a -q) //  stop停止所有容器 <br>
 $ docker  rm $(docker ps -a -q) //   remove删除所有容器 <br>
 $ docker run -it -m 100M --oom-kill-disable ubuntu:16.04 /bin/bash //限制了容器内存100M 禁止OOM killer <br>
+docker update --memory 100m --memory-swap -1  <br>
 docker run --name mynginx -d -p 80:80  -v /conf/nginx.conf:/etc/nginx/nginx.conf  -v /logs/nginx:/var/log/nginx -d docker.io/nginx <br>
 docker exec -i mynginx nginx -s reload <br>
 docker exec -it 9fbe362214a6  /bin/bash  <br>
