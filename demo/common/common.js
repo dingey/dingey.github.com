@@ -75,7 +75,7 @@ function rename(o) {
         }
     }
     if (i != i_) {
-        $(o).find("a,button,input").each(function () {
+        $(o).find("a,button,input,img").each(function () {
             if ($(this).attr("onclick").indexOf(i_) != -1) {
                 $(this).attr("onclick", $(this).attr("onclick").replace(i_, i));
             }
