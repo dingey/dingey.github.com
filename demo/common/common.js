@@ -35,7 +35,7 @@ function renameOther(dom) {
  */
 function renameClone(id) {
     var o = $(id).clone();
-    $(o).find("input,select,textarea,a,button").each(function () {
+    $(o).find("input,select,textarea,a,button,img").each(function () {
         rename(this);
     })
     rename(o);
