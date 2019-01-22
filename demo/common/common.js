@@ -22,7 +22,7 @@ function renameOther(dom) {
                 if (len0 > len) {
                     count++;
                     $(this).attr("name", prefix + (len0 - 1) + surfix0);
-                    console.log(count+" : "+prefix + len0 + surfix0 + " -> " + prefix + (len0 - 1) + surfix0);
+                    //console.log(count+" : "+prefix + len0 + surfix0 + " -> " + prefix + (len0 - 1) + surfix0);
                 }
             })
         }
