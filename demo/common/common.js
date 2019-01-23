@@ -8,7 +8,7 @@ function remove(dom) {
 function renameOther(dom) {
     var i = $(dom).attr("id");
     var n = $(dom).attr("name");
-    if (n != undefined && n != "") {
+    if (n != undefined && n != ""&& $(dom).attr("type")!="radio"&& $(dom).attr("type")!="checkbox") {
         var re = /[A-Za-z]\[\d\]/;
         var len = 0;var count=0;
         if (n.match(re)) {
