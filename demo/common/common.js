@@ -78,10 +78,10 @@ function rename(o) {
     }
     if (i != i_) {
         $(o).find("a,button,input,img").each(function () {
-            if ($(this).attr("onclick").indexOf(i_) != -1) {
+            if ($(this).attr("onclick")!=undefined&&$(this).attr("onclick").indexOf(i_) != -1) {
                 $(this).attr("onclick", $(this).attr("onclick").replace(i_, i));
             }
-            if ($(this).attr("onchange").indexOf(i_) != -1) {
+            if ($(this).attr("onchange")!=undefined&&$(this).attr("onchange").indexOf(i_) != -1) {
                 $(this).attr("onchange", $(this).attr("onchange").replace(i_, i));
             }
         });
