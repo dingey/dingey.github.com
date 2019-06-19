@@ -13,20 +13,20 @@
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 146px;
-    height: 146px;
-    line-height: 146px;
+    width: 64px;
+    height: 64px;
+    line-height: 64px;
     text-align: center;
 }
 
 .avatar {
-    width: 146px;
-    height: 146px;
+    width: 64px;
+    height: 64px;
     display: block;
 }
 
 .el-upload--picture-card {
-    width: 146px;
-    height: 146px;
-    line-height: 146px;
+    width: 64px;
+    height: 64px;
+    line-height: 64px;
 }
