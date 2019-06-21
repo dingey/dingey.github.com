@@ -195,6 +195,7 @@ function down() {
         "        </el-col>\n"+
         "    </el-row>\n"+
         "</div>\n" +
+        "</body>\n"+
         "<script src=\"https://unpkg.com/vue/dist/vue.js\"></script>\n" +
         "<script src=\"https://unpkg.com/element-ui@2.9.1/lib/index.js\"></script>\n" +
         "<script>\n" +
