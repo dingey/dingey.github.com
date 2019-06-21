@@ -176,10 +176,13 @@ function down() {
         "<head>\n" +
         "    <meta charset=\"UTF-8\">\n" +
         "    <link rel=\"stylesheet\" href=\"https://unpkg.com/element-ui/lib/theme-chalk/index.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"https://dingey.github.io/demo/vue/vue-form.css\">\n"+
         "</head>\n" +
         "<body>\n" +
         "<div id=\"app\">\n" +
-        "<el-form ref=\"form\" :model=\"form\" label-width=\"80px\">";
+        "    <el-row>\n"+
+        "        <el-col :span=\"16\" :offset=\"4\">\n"+
+        "            <el-form ref=\"form\" :model=\"form\" label-width=\"80px\">\n";
     $("#show>form>div.el-form-item").each(function () {
         let sid = $(this).attr("sid");
         $("#right>el-form-item").each(function () {
@@ -188,7 +191,9 @@ function down() {
             }
         })
     });
-    htm += "</el-form>\n" +
+    htm += "            </el-form>\n" +
+        "        </el-col>\n"+
+        "    </el-row>\n"+
         "</div>\n" +
         "<script src=\"https://unpkg.com/vue/dist/vue.js\"></script>\n" +
         "<script src=\"https://unpkg.com/element-ui@2.9.1/lib/index.js\"></script>\n" +
