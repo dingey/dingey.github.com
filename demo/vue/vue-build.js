@@ -183,7 +183,7 @@ function down() {
     $("#show>form>div.el-form-item").each(function () {
         let sid = $(this).attr("sid");
         $("#right>el-form-item").each(function () {
-            if ($(this).attr("sid") == sid) {
+            if (sid!=undefined&&$(this).attr("sid") == sid) {
                 htm += $(this).clone().removeAttr("sid").prop("outerHTML");
             }
         })
