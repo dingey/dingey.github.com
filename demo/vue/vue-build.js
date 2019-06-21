@@ -62,7 +62,7 @@ function initDrag() {
 }
 
 function replaceLabel(str, n) {
-    return "<el-form-item label=\"" + n + "\"" + str.substr(str.indexOf(">"));
+    return str.substr(0, str.indexOf("label=")) + "label=\"" + n + "\"" + str.substr(str.indexOf(">"));
 }
 
 function replaceSize(str, n) {
