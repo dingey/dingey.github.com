@@ -101,7 +101,7 @@ function replaceValue(str, n) {
 $(function () {
     $("#left>div").click(function () {
         var o = eval($(this).attr("p"));
-        o = o.replace("<el-form-item ", "<el-form-item sid='" + getCount() + "' ");
+        o = o.replace("<el-form-item", "<el-form-item sid='" + getCount() + "' ");
 
         layer.open({
             title: '设置值',
