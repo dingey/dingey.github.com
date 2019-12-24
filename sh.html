@@ -2,7 +2,10 @@ java -jar -Dspring.profiles.active=prod -Dserver.port=8081 -Dlogging.path=logs/w
 <br>
 tail docker-data/java-pro-01/logs/ptq-service-*.log -f -n100
 <br>
+查看内存
 <br>
+ps -aux |sort -k4nr | head -n 10 |tr -s ' '|cut -d ' ' -f 4,11
+<br><br>
 git pull --no-commit origin master<br>
 git diff master target --binary > ../a.patch<br>
 git checkout yxzs<br><br><br>
